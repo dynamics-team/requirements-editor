@@ -209,6 +209,7 @@ function start() {
     });
 
     app.use(express.static(__dirname + '/public'));
+    app.use(express.static(__dirname + '/src/build'));
 
     mongoose.connection.once('open', function (err) {
         console.log('Connected to db');
