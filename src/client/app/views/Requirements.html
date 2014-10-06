@@ -1,6 +1,9 @@
 <div>
     <h1>Requirements</h1>
-    <ul>
-        <li ng-repeat="req in dataModel.requirements"><a class="btn btn-primary" ng-click="navigateToReq(req.title)"> {{req.title}}</a></li>
-    </ul>
+    <table class="table table-striped">
+        <tr ng-repeat="req in dataModel.requirements">
+            <td><a ng-click="navigateToReq(req.title)"> {{req.title}}</a></td>
+            <td><span><a class="btn btn-primary">Edit</a><a class="btn btn-warning">Duplicate</a><a class="btn btn-danger">Delete</a></span></td>
+        </tr>
+    </table>
 </div>
