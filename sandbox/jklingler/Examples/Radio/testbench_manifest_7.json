@@ -4,14 +4,14 @@
     "Created": "2013-11-25T22:24:37.2540414Z", 
     "Artifacts": [], 
     "TierLevel": 0, 
-    "DesignName": "WalkieTalkieDesign_1", 
+    "DesignName": "WalkieTalkieDesign_7", 
     "LimitChecks": [], 
     "Metrics": [
         {
             "Description": "The mass of the walkie-talkie; Must be less than 250 grams, ideal is 100", 
             "DisplayedName": null, 
             "GMEID": "id-0067-0002f4e7", 
-            "Value": 69, 
+            "Value": 0.084, 
             "ID": "9e5f5198-148f-45ad-8cb5-5cb3da18c253", 
             "Unit": "kg", 
             "Name": "WalkieTalkieMass"
@@ -20,7 +20,7 @@
             "Description": "The length of the walkie-talkie; Must be less than 150 mm, ideal is 80", 
             "DisplayedName": null, 
             "GMEID": "id-0067-0002f4e7", 
-            "Value": 69, 
+            "Value": 0.162, 
             "ID": "9e5f5198-148f-45ad-8cb5-5cb3da18c253", 
             "Unit": "m", 
             "Name": "WalkieTalkieLength"
@@ -29,7 +29,7 @@
             "Description": "The width across the face of the walkie-talkie; Must be less than 70 mm, ideal is 40", 
             "DisplayedName": null, 
             "GMEID": "id-0067-0002f4e7", 
-            "Value": 69, 
+            "Value": 0.043, 
             "ID": "9e5f5198-148f-45ad-8cb5-5cb3da18c253", 
             "Unit": "m", 
             "Name": "WalkieTalkieWidth"
@@ -38,7 +38,7 @@
             "Description": "The depth of the walkie-talkie; Must be less than 50 mm, ideal is 30", 
             "DisplayedName": null, 
             "GMEID": "id-0067-0002f4e7", 
-            "Value": 69, 
+            "Value": 0.035, 
             "ID": "9e5f5198-148f-45ad-8cb5-5cb3da18c253", 
             "Unit": "m", 
             "Name": "WalkieTalkieDepth"
@@ -47,7 +47,7 @@
             "Description": "The range of the walkie-talkie where communication confidence drops below 95%; Must be greater than 2000 m Line of Sight, ideal is 10000 m", 
             "DisplayedName": null, 
             "GMEID": "id-0067-0002f4e7", 
-            "Value": 69, 
+            "Value": 7596.139, 
             "ID": "9e5f5198-148f-45ad-8cb5-5cb3da18c253", 
             "Unit": "kg", 
             "Name": "Range"
@@ -56,7 +56,7 @@
             "Description": "The power consumed by the walkie-talkie while transmitting; must be less than 5 watts", 
             "DisplayedName": null, 
             "GMEID": "id-0067-0002f4e7", 
-            "Value": 69, 
+            "Value": 4.109, 
             "ID": "9e5f5198-148f-45ad-8cb5-5cb3da18c253", 
             "Unit": "kg", 
             "Name": "AvgPowerTx"
@@ -65,7 +65,7 @@
             "Description": "The power consumed by the walkie-talkie while receiving; must be less than 1 watt", 
             "DisplayedName": null, 
             "GMEID": "id-0067-0002f4e7", 
-            "Value": 69, 
+            "Value": 1.039, 
             "ID": "9e5f5198-148f-45ad-8cb5-5cb3da18c253", 
             "Unit": "kg", 
             "Name": "AvgPowerRx"
@@ -74,7 +74,7 @@
             "Description": "The power consumed by the walkie-talkie while idle; must be less than 0.5 watt", 
             "DisplayedName": null, 
             "GMEID": "id-0067-0002f4e7", 
-            "Value": 69, 
+            "Value": 0.027, 
             "ID": "9e5f5198-148f-45ad-8cb5-5cb3da18c253", 
             "Unit": "kg", 
             "Name": "AvgPowerIdle"
@@ -83,7 +83,7 @@
             "Description": "Battery Capacity in Watt-Hours", 
             "DisplayedName": null, 
             "GMEID": "id-0067-0002f4e7", 
-            "Value": 69, 
+            "Value": 4.879, 
             "ID": "9e5f5198-148f-45ad-8cb5-5cb3da18c253", 
             "Unit": "kg", 
             "Name": "BatteryCapacity"
@@ -92,7 +92,7 @@
             "Description": "The cost of the parts and materials to manufacture this walkie-talkie", 
             "DisplayedName": null, 
             "GMEID": "id-0067-0002f4e7", 
-            "Value": 69, 
+            "Value": 18.636, 
             "ID": "9e5f5198-148f-45ad-8cb5-5cb3da18c253", 
             "Unit": "kg", 
             "Name": "MaterialCost"
@@ -101,7 +101,7 @@
             "Description": "The time to assemble one walkie-talkie", 
             "DisplayedName": null, 
             "GMEID": "id-0067-0002f4e7", 
-            "Value": 69, 
+            "Value": 2.326, 
             "ID": "9e5f5198-148f-45ad-8cb5-5cb3da18c253", 
             "Unit": "kg", 
             "Name": "Labor"
@@ -110,7 +110,7 @@
             "Description": "The ratio of unit price to unit cost; reflects profitability", 
             "DisplayedName": null, 
             "GMEID": "id-0067-0002f4e7", 
-            "Value": 69, 
+            "Value": 2.831, 
             "ID": "9e5f5198-148f-45ad-8cb5-5cb3da18c253", 
             "Unit": "kg", 
             "Name": "ProfitRatio"

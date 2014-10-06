@@ -1,0 +1,205 @@
+{
+    "category": true,
+    "weightNeg": "Real [0,1]",
+    "description": "Performance of Walkie-Talkie Designs",
+    "weightPos": "Real [0,1]",
+    "Priority": 1,
+    "children": [
+        {
+            "name": "StaticMeasurements",
+            "weightNeg": "Real [0,1]",
+            "description": "weight and size",
+            "weightPos": "Real [0,1]",
+            "Priority": 1,
+            "children": [
+                {
+                    "KPP": "true",
+                    "function": "",
+                    "weightNeg": "Real [0,1]",
+                    "name": "Mass",
+                    "weightPos": "Real [0,1]",
+                    "description": "The mass of the walkie-talkie; Must be less than 250 grams, ideal is 100",
+                    "Priority": 1,
+                    "objective": 0.1,
+                    "testBench": "WalkieTalkieStaticMeasurements",
+                    "threshold": 0.25,
+                    "unit": "kg",
+                    "metricName": "WalkieTalkieMass"
+                },
+                {
+                    "KPP": "true",
+                    "function": "",
+                    "weightNeg": "Real [0,1]",
+                    "name": "Length",
+                    "weightPos": "Real [0,1]",
+                    "description": "The length of the walkie-talkie; Must be less than 150 mm, ideal is 80",
+                    "Priority": 1,
+                    "objective": 0.08,
+                    "testBench": "WalkieTalkieStaticMeasurements",
+                    "threshold": 0.15,
+                    "unit": "m",
+                    "metricName": "WalkieTalkieLength"
+                },
+                {
+                    "KPP": "true",
+                    "function": "",
+                    "weightNeg": "Real [0,1]",
+                    "name": "Width",
+                    "weightPos": "Real [0,1]",
+                    "description": "The width across the face of the walkie-talkie; Must be less than 70 mm, ideal is 40",
+                    "Priority": 1,
+                    "objective": 0.04,
+                    "testBench": "WalkieTalkieStaticMeasurements",
+                    "threshold": 0.07,
+                    "unit": "m",
+                    "metricName": "WalkieTalkieWidth"
+                },
+                {
+                    "KPP": "true",
+                    "function": "",
+                    "weightNeg": "Real [0,1]",
+                    "name": "Depth",
+                    "weightPos": "Real [0,1]",
+                    "description": "The depth of the walkie-talkie; Must be less than 50 mm, ideal is 30",
+                    "Priority": 1,
+                    "objective": 0.03,
+                    "testBench": "WalkieTalkieStaticMeasurements",
+                    "threshold": 0.05,
+                    "unit": "m",
+                    "metricName": "WalkieTalkieDepth"
+                }
+            ]
+        },
+        {
+            "name": "Performance",
+            "weightNeg": "Real [0,1]",
+            "description": "Range and Power Consumption",
+            "weightPos": "Real [0,1]",
+            "Priority": 1,
+            "children": [
+                {
+                    "KPP": "true",
+                    "function": "",
+                    "weightNeg": "Real [0,1]",
+                    "name": "LOSRange",
+                    "weightPos": "Real [0,1]",
+                    "description": "The range of the walkie-talkie where communication confidence drops below 95%; Must be greater than 2000 m Line of Sight, ideal is 10000 m",
+                    "Priority": 1,
+                    "objective": 10000,
+                    "testBench": "WalkieTalkiePerformance",
+                    "threshold": 2000,
+                    "unit": "m",
+                    "metricName": "Range"
+                },
+                {
+                    "KPP": "true",
+                    "function": "",
+                    "weightNeg": "Real [0,1]",
+                    "name": "PowerConsumedTransmitting",
+                    "weightPos": "Real [0,1]",
+                    "description": "The power consumed by the walkie-talkie while transmitting; must be less than 5 watts",
+                    "Priority": 1,
+                    "objective": 3.0,
+                    "testBench": "WalkieTalkiePerformance",
+                    "threshold": 5.0,
+                    "unit": "W",
+                    "metricName": "AvgPowerTx"
+                },
+                {
+                    "KPP": "true",
+                    "function": "",
+                    "weightNeg": "Real [0,1]",
+                    "name": "PowerConsumedReceiving",
+                    "weightPos": "Real [0,1]",
+                    "description": "The power consumed by the walkie-talkie while receiving; must be less than 1 watt",
+                    "Priority": 1,
+                    "objective": 0.4,
+                    "testBench": "WalkieTalkiePerformance",
+                    "threshold": 1.0,
+                    "unit": "W",
+                    "metricName": "AvgPowerRx"
+                },
+                {
+                    "KPP": "true",
+                    "function": "",
+                    "weightNeg": "Real [0,1]",
+                    "name": "PowerConsumedIdle",
+                    "weightPos": "Real [0,1]",
+                    "description": "The power consumed by the walkie-talkie while idle; must be less than 0.5 watt",
+                    "Priority": 1,
+                    "objective": 0.0,
+                    "testBench": "WalkieTalkiePerformance",
+                    "threshold": 0.5,
+                    "unit": "W",
+                    "metricName": "AvgPowerIdle"
+                },
+                {
+                    "KPP": "true",
+                    "function": "",
+                    "weightNeg": "Real [0,1]",
+                    "name": "BatteryCapacity",
+                    "weightPos": "Real [0,1]",
+                    "description": "Battery Capacity in Watt-Hours",
+                    "Priority": 1,
+                    "objective": 10.0,
+                    "testBench": "WalkieTalkiePerformance",
+                    "threshold": 2.0,
+                    "unit": "Wh",
+                    "metricName": "BatteryCapacity"
+                }
+            ]
+        },
+        {
+            "name": "Profitability",
+            "weightNeg": "Real [0,1]",
+            "description": "Cost of Manufacturing, Profit margin",
+            "weightPos": "Real [0,1]",
+            "Priority": 1,
+            "children": [
+                {
+                    "KPP": "true",
+                    "function": "",
+                    "weightNeg": "Real [0,1]",
+                    "name": "MaterialsCost",
+                    "weightPos": "Real [0,1]",
+                    "description": "The cost of the parts and materials to manufacture this walkie-talkie",
+                    "Priority": 1,
+                    "objective": 20,
+                    "testBench": "WalkieTalkieManufacturing",
+                    "threshold": 50,
+                    "unit": "dollars",
+                    "metricName": "MaterialCost"
+                },
+                {
+                    "KPP": "true",
+                    "function": "",
+                    "weightNeg": "Real [0,1]",
+                    "name": "LaborPerUnit",
+                    "weightPos": "Real [0,1]",
+                    "description": "The time to assemble one walkie-talkie",
+                    "Priority": 1,
+                    "objective": 1.0,
+                    "testBench": "WalkieTalkieManufacturing",
+                    "threshold": 2.0,
+                    "unit": "hours",
+                    "metricName": "Labor"
+                },
+                {
+                    "KPP": "true",
+                    "function": "",
+                    "weightNeg": "Real [0,1]",
+                    "name": "ProfitRatio",
+                    "weightPos": "Real [0,1]",
+                    "description": "The ratio of unit price to unit cost; reflects profitability",
+                    "Priority": 1,
+                    "objective": 3.0,
+                    "testBench": "WalkieTalkieManufacturing",
+                    "threshold": 1.2,
+                    "unit": "N/A",
+                    "metricName": "ProfitRatio"
+                }
+            ]
+        }
+    ],
+    "name": "Walkie-Talkie performance"
+}

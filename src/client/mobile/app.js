@@ -2,9 +2,9 @@
 
 var ReqApp = angular.module('RequirementsApp', [
     'ui.router',
-    'ionic'
+    'ionic',
 
-    // TODO: add templates include
+    'requirements.editor.templates'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
         'use strict';
@@ -15,12 +15,12 @@ var ReqApp = angular.module('RequirementsApp', [
         $stateProvider
             .state('index', {
                 url: "/index"
+            })
+            .state('requirements', {
+                url: "/requirements",
+                templateUrl: "/requirements-editor/templates/Requirements.html",
+                controller: "RequirementsController"
             });
-//            .state('requirements', {
-//                url: "/requirements",
-//                templateUrl: "/views/Requirements.html",
-//                controller: "RequirementsController"
-//            });
 //            .state('requirementDetails', {
 //                url: "/requirements/:requirementId",
 //                templateUrl: "/views/RequirementDetails.html",
