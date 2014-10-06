@@ -28,6 +28,7 @@ var ReqApp = angular.module('RequirementsApp', [
     })
     .run(function ($state) {
         'use strict';
+        $state.go('requirements');
     });
 
 // Include the Service

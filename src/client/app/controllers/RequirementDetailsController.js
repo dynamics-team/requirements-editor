@@ -3,10 +3,10 @@
  * Created by pmeijer on 10/6/2014.
  */
 
-angular.module('RequirementsApp').controller('RequirementDetailsController', function (RequirementsService, $scope, $state) {
+angular.module('RequirementsApp').controller('RequirementDetailsController', function (RequirementsService, $scope, $stateParams) {
     'use strict';
     console.log('RequirementDetailsController');
-    var reqName = $state.params.requirementId;
+    var reqName = $stateParams.requirementId;
     console.log(reqName);
     $scope.dataModel = {
         title: reqName,
