@@ -32,7 +32,39 @@
 
        this.getByName = function (name) {
            var deferred = $q.defer();
-           deferred.resolve({ title: name, children: []});
+           deferred.resolve({
+               title: name,
+               _id: "5432d9c75112f1e401066423",
+               __v: 0,
+               children: [ {
+                   "name": "Movement",
+                   "weightNeg": 1,
+                   "description": "Performance of the Vehicle Movement",
+                   "weightPos": 1,
+                   "Priority": 1,
+                   "children": [ {
+                       "weightNeg": 1,
+                       "name": "Speed",
+                       "description": "Speed and Accelerations",
+                       "weightPos": 1,
+                       "Priority": 1,
+                       "children": [{
+                           "KPP": true,
+                           "function": "f(x)",
+                           "weightNeg": 0.5,
+                           "name": "Acc20kph Full Throttle",
+                           "weightPos": 0.555556,
+                           "description": "",
+                           "Priority": 1,
+                           "objective": 11,
+                           "testBench": "FullSpeedForward",
+                           "threshold": 13,
+                           "unit": "s",
+                           "metricName": "Acc20kph"
+                       }]
+                   }]
+               }]
+           });
            return deferred.promise;
        };
    });

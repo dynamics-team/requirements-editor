@@ -8,14 +8,16 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
     console.log('RequirementDetailsController');
     var reqName = $stateParams.requirementId;
     console.log(reqName);
+
     $scope.dataModel = {
         title: reqName,
-        rawString: ''
+        children: []
     };
 
     RequirementsService.getByName(reqName)
         .then(function (data) {
             console.log(data);
+            $scope.dataModel.children = data.children;
             $scope.dataModel.rawString = JSON.stringify(data, null, 2);
         })
         .catch(function (reason) {

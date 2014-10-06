@@ -1,6 +1,16 @@
 <div>
     <h1>{{dataModel.title}}</h1>
-    {{dataModel.rawString}}
+    <script type="text/ng-template"  id="tree_item_renderer.html">
+        {{child.name}}
+        <ul class="requirement-graph">
+            <li class="requirement-graph-item" data-ng-repeat="child in child.children" ng-include="'tree_item_renderer.html'">
+        </ul>
+    </script>
+
+    <br>
+    <ul class="requirement-graph graph-root">
+        <li class="requirement-graph-item item-root" ng-repeat="child in dataModel.children" ng-include="'tree_item_renderer.html'"></li>
+    </ul>
     <br>
     <a class="btn navbar-btn" ui-sref="requirements">Back</a>
 </div>
