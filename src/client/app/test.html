@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <!-- Include CSS library dependencies -->
+    <link type="text/css" rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+    <title></title>
+</head>
+<body>
+<h1>index</h1>
+<a ui-sref="requirements">State 1</a>
+<!--<a ui-sref="workspaceDetails({workspaceId: 0})">State 2</a>-->
+
+<div ui-view></div>
+
+<!-- Include library dependencies -->
+<script src="../lib/angular/angular.min.js"></script>
+<script src="../lib/jquery/dist/jquery.min.js"></script>
+<script src="../lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="../lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<!--<script src="../lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>-->
+
+<!-- Include application -->
+<script src="requirements-editor.js"></script>
+<script src="requirements-editor-templates.js"></script>
+<!--<script src="/extlib/dist/app-templates.js"></script>-->
+
+<!-- Start the main application -->
+<script type="text/javascript">
+   angular.module('RequirementsApp').service('RequirementsService', function ($q) {
+       this.listAll = function () {
+           var deferred = $q.defer();
+           deferred.resolve([{ title: 'req1' }, { title: 'req2'}, { title: 'req3'}, { title: 'req4'}]);
+           return deferred.promise;
+       };
+
+       this.getByName = function (name) {
+           var deferred = $q.defer();
+           deferred.resolve({ title: name, children: []});
+           return deferred.promise;
+       };
+   });
+   angular.bootstrap(document, ['RequirementsApp']);
+</script>
+
+</body>
+</html>

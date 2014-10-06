@@ -14,7 +14,7 @@ var argv = require('yargs').argv,
     sourcePaths = {
 
         index: './src/client/app/index.html',
-
+        testIndex: './src/client/app/test.html',
         libraryModuleScript: './src/client/app/app.js',
         libraryScripts: [
             'src/client/app/**/*.js'
@@ -239,6 +239,9 @@ gulp.task('compile-library',
         gulp.src(sourcePaths.index)
             .pipe(gulp.dest(buildPaths.scripts));
 
+        gulp.src(sourcePaths.testIndex)
+            .pipe(gulp.dest(buildPaths.scripts));
+
         gulp.src(sourcePathsMobile.index)
             .pipe(gulp.dest(buildPathsMobile.scripts));
 
@@ -320,6 +323,7 @@ gulp.task('register-watchers', function (cb) {
         registerAppWatchers;
 
     gulp.watch(sourcePaths.index, [ 'compile-library', 'refresh-server' ]);
+    gulp.watch(sourcePaths.testIndex, [ 'compile-library', 'refresh-server' ]);
     gulp.watch(sourcePaths.libraryModuleScript, [ 'compile-library', 'refresh-server' ]);
     gulp.watch(sourcePaths.libraryScripts, [ 'compile-library', 'refresh-server' ]);
     gulp.watch(sourcePaths.libraryTemplates, [ 'compile-library-templates', 'refresh-server' ]);
