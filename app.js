@@ -40,7 +40,6 @@ function start() {
 
     var express = require('express');
     var app = express();
-    app.use(express.static(__dirname + '/public'));
     app.use(require('cookie-parser')());
     //app.use(express.bodyParser());
 
@@ -205,6 +204,8 @@ function start() {
             });
         }
     });
+
+    app.use(express.static(__dirname + '/public'));
 
     mongoose.connection.once('open', function (err) {
         console.log('Connected to db');
