@@ -15,12 +15,12 @@ var ReqApp = angular.module('RequirementsApp', [
         $stateProvider
             .state('index', {
                 url: "/index"
-            })
-            .state('requirements', {
-                url: "/requirements",
-                templateUrl: "/views/Requirements.html",
-                controller: "RequirementsController"
             });
+//            .state('requirements', {
+//                url: "/requirements",
+//                templateUrl: "/views/Requirements.html",
+//                controller: "RequirementsController"
+//            });
 //            .state('requirementDetails', {
 //                url: "/requirements/:requirementId",
 //                templateUrl: "/views/RequirementDetails.html",
