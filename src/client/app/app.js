@@ -1,7 +1,9 @@
 /*globals angular, console, window, require*/
 
 var ReqApp = angular.module('RequirementsApp', [
-    'ui.router'
+    'ui.router',
+
+    'requirements.editor.templates'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
         'use strict';
@@ -15,7 +17,7 @@ var ReqApp = angular.module('RequirementsApp', [
             })
             .state('requirements', {
                 url: "/requirements",
-                templateUrl: "/views/Requirements.html",
+                templateUrl: "/requirements-editor/templates/Requirements.html",
                 controller: "RequirementsController"
             });
 //            .state('requirementDetails', {

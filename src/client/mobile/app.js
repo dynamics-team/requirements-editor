@@ -1,10 +1,10 @@
-/**
- * Created by Zsolt on 10/6/2014.
- */
+/*globals console, window*/
 
 var ReqApp = angular.module('RequirementsApp', [
     'ui.router',
     'ionic'
+
+    // TODO: add templates include
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
         'use strict';
@@ -29,7 +29,7 @@ var ReqApp = angular.module('RequirementsApp', [
     })
     .run(function ($state, $ionicPlatform) {
         'use strict';
-        // TODO: Connect to database here, or at least check if REST is avaliable?
+        // TODO: Connect to database here, or at least check if REST is available?
 
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
