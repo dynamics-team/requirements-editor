@@ -40,4 +40,5 @@ ionic build android
 ionic emulate android
 ```
 
+On android emulator use `10.0.2.2` instead of `localhost`.
 
