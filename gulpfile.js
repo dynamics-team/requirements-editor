@@ -319,12 +319,14 @@ gulp.task('register-watchers', function (cb) {
     var i,
         registerAppWatchers;
 
+    gulp.watch(sourcePaths.index, [ 'compile-library', 'refresh-server' ]);
     gulp.watch(sourcePaths.libraryModuleScript, [ 'compile-library', 'refresh-server' ]);
     gulp.watch(sourcePaths.libraryScripts, [ 'compile-library', 'refresh-server' ]);
     gulp.watch(sourcePaths.libraryTemplates, [ 'compile-library-templates', 'refresh-server' ]);
     gulp.watch(sourcePaths.libraryStyles, [ 'compile-library-styles', 'refresh-server' ]);
     gulp.watch(sourcePaths.libraryImages, [ 'compile-library-images', 'refresh-server' ]);
 
+    gulp.watch(sourcePathsMobile.index, [ 'compile-library', 'refresh-server' ]);
     gulp.watch(sourcePathsMobile.libraryModuleScript, [ 'compile-library', 'refresh-server' ]);
     gulp.watch(sourcePathsMobile.libraryScripts, [ 'compile-library', 'refresh-server' ]);
     gulp.watch(sourcePathsMobile.libraryTemplates, [ 'compile-library-templates', 'refresh-server' ]);
