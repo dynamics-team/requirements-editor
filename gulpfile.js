@@ -42,6 +42,37 @@ var argv = require('yargs').argv,
         images: 'src/build/app/images'
     },
 
+    sourcePathsMobile = {
+
+        index: './src/client/mobile/index.html',
+
+        libraryModuleScript: './src/client/mobile/app.js',
+        libraryScripts: [
+            'src/client/mobile/**/*.js'
+        ],
+        libraryTemplates: [
+            'src/client/mobile/views/*.html'
+        ],
+        libraryStyles: [
+            'src/client/mobile/styles/*.scss'
+        ],
+        libraryImages: [
+            'src/client/**/*.png',
+            'src/client/**/*.jpg',
+            'src/client/**/*.svg'
+        ]
+    },
+
+    buildPathsMobile = {
+
+        root: 'src/build',
+
+        scripts: 'src/build/mobile',
+        templates: 'src/build/mobile/templates',
+        styles: 'src/build/mobile/styles',
+        images: 'src/build/mobile/images'
+    },
+
     gulp = require('gulp'),
     jshint = require('gulp-jshint'),
     browserify = require('browserify'),
@@ -79,6 +110,10 @@ gulp.task('lint-library', function () {
         .pipe(jshint())
         .pipe(jshint.reporter('default'));
 
+    gulp.src(sourcePathsMobile.libraryScripts)
+        .pipe(jshint())
+        .pipe(jshint.reporter('default'));
+
 });
 
 gulp.task('browserify-library', function () {
@@ -99,6 +134,24 @@ gulp.task('browserify-library', function () {
 
 });
 
+gulp.task('browserify-library-mobile', function () {
+
+    console.log('Browserifying library mobile...');
+
+    if (debugShim) {
+        process.env.BROWSERIFYSHIM_DIAGNOSTICS = 1;
+    }
+
+    return browserify({
+        entries: [sourcePathsMobile.libraryModuleScript],
+        debug: debug
+    })
+        .bundle()
+        .pipe(source(libraryName + '.js'))
+        .pipe(gulp.dest(buildPathsMobile.scripts));
+
+});
+
 gulp.task('compile-library-templates', function () {
 
     console.log('Compiling templates...');
@@ -113,6 +166,18 @@ gulp.task('compile-library-templates', function () {
             root: '/' + libraryName + '/'
         }))
         .pipe(gulp.dest(buildPaths.scripts));
+
+
+    gulp.src(sourcePathsMobile.libraryTemplates)
+        .pipe(rename(function (path) {
+            path.dirname = 'templates';
+        }))
+        .pipe(templateCache(libraryName + '-templates.js', {
+            module: libraryTemplatesModule,
+            standalone: true,
+            root: '/' + libraryName + '/'
+        }))
+        .pipe(gulp.dest(buildPathsMobile.scripts));
 });
 
 
@@ -121,6 +186,19 @@ gulp.task('compile-library-styles', function () {
     console.log('Compiling styles...');
 
     gulp.src(sourcePaths.libraryStyles)
+        // The onerror handler prevents Gulp from crashing when you make a mistake in your SASS
+        .pipe(sass({
+            errLogToConsole: true,
+            sourceComments: 'map'
+        }))
+        .pipe(rename(function (path) {
+            path.dirname = '';
+        }))
+        .pipe(concat(libraryName + '.css'))
+        .pipe(gulp.dest(buildPaths.root));
+
+
+    gulp.src(sourcePathsMobile.libraryStyles)
         // The onerror handler prevents Gulp from crashing when you make a mistake in your SASS
         .pipe(sass({
             errLogToConsole: true,
@@ -142,17 +220,27 @@ gulp.task('compile-library-images', function () {
             path.dirname = '';
         }))
         .pipe(gulp.dest(buildPaths.images));
+
+
+    gulp.src(sourcePathsMobile.libraryImages)
+        .pipe(rename(function (path) {
+            path.dirname = '';
+        }))
+        .pipe(gulp.dest(buildPathsMobile.images));
 });
 
 
 gulp.task('compile-library',
-    [ 'lint-library', 'browserify-library', 'compile-library-templates', 'compile-library-styles', 'compile-library-images'],
+    [ 'lint-library', 'browserify-library', 'browserify-library-mobile', 'compile-library-templates', 'compile-library-styles', 'compile-library-images'],
     function () {
         console.log('Compiling scripts...');
 
         // move index.html
         gulp.src(sourcePaths.index)
             .pipe(gulp.dest(buildPaths.scripts));
+
+        gulp.src(sourcePathsMobile.index)
+            .pipe(gulp.dest(buildPathsMobile.scripts));
 
         // move libraries
         gulp.src(['./src/client/lib/**/*.*'])
@@ -207,6 +295,12 @@ gulp.task('start-server', function () {
         });
     });
 
+    server.get('/mobile', function (req, res) {
+        res.sendFile(buildPathsMobile.index, {
+            root: buildPathsMobile.root
+        });
+    });
+
     server.listen(serverport);
     lrserver.listen(livereloadport);
 
@@ -230,6 +324,12 @@ gulp.task('register-watchers', function (cb) {
     gulp.watch(sourcePaths.libraryTemplates, [ 'compile-library-templates', 'refresh-server' ]);
     gulp.watch(sourcePaths.libraryStyles, [ 'compile-library-styles', 'refresh-server' ]);
     gulp.watch(sourcePaths.libraryImages, [ 'compile-library-images', 'refresh-server' ]);
+
+    gulp.watch(sourcePathsMobile.libraryModuleScript, [ 'compile-library', 'refresh-server' ]);
+    gulp.watch(sourcePathsMobile.libraryScripts, [ 'compile-library', 'refresh-server' ]);
+    gulp.watch(sourcePathsMobile.libraryTemplates, [ 'compile-library-templates', 'refresh-server' ]);
+    gulp.watch(sourcePathsMobile.libraryStyles, [ 'compile-library-styles', 'refresh-server' ]);
+    gulp.watch(sourcePathsMobile.libraryImages, [ 'compile-library-images', 'refresh-server' ]);
 
     return cb;
 });
