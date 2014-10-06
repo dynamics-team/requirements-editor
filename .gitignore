@@ -32,3 +32,5 @@ node_modules
 
 # The library is populated by node node_modules\bower\bin\bower install
 src/client/lib
+
+salts.json
