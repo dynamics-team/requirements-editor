@@ -7,7 +7,9 @@
 <a href="requirement/">requirements</a>
 
 <div ng-app="RequirementsApp" ng-controller="RequirementsController">
-    {{ dataModel.all}}
+    <ul>
+        <li ng-repeat="req in dataModel.requirements"><a ng-click="navigateToReq(req.title)"> {{req.title}}</a></li>
+    </ul>
 </div>
 </body>
 </html>
