@@ -2,8 +2,13 @@
     <h1>Requirements</h1>
     <table class="table table-striped">
         <tr ng-repeat="req in dataModel.requirements">
-            <td><a ng-click="navigateToReq(req.title)"> {{req.title}}</a></td>
-            <td><span><a class="btn btn-primary">Edit</a><a class="btn btn-warning">Duplicate</a><a class="btn btn-danger">Delete</a></span></td>
+            <td>
+                <a ui-sref="requirementDetails({ requirementId: req.title})">{{req.title}}</a>
+            </td>
+            <td><span>
+                <a class="btn btn-success">Duplicate</a>
+                <a class="btn btn-danger">Delete</a>
+            </span></td>
         </tr>
     </table>
 </div>

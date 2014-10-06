@@ -19,18 +19,19 @@ var ReqApp = angular.module('RequirementsApp', [
                 url: "/requirements",
                 templateUrl: "/requirements-editor/templates/Requirements.html",
                 controller: "RequirementsController"
+            })
+            .state('requirementDetails', {
+                url: "/requirementDetails/:requirementId",
+                templateUrl: "/requirements-editor/templates/RequirementDetails.html",
+                controller: "RequirementDetailsController"
             });
-//            .state('requirementDetails', {
-//                url: "/requirements/:requirementId",
-//                templateUrl: "/views/RequirementDetails.html",
-//                controller: "RequirementDetailsController"
-//            });
     })
     .run(function ($state) {
         'use strict';
     });
 
+// Include the Service
 require('./services/RequirementsService');
-
+// Include the controllers
 require('./controllers/RequirementsController');
-//require('./views/RequirementDetails.html');
+require('./controllers/RequirementDetailsController');
