@@ -1,0 +1,9 @@
+{
+    "Description": "A description of this metric", 
+    "DisplayedName": null, 
+    "GMEID": "id-0067-0002f4e7", 
+    "Value": "69", 
+    "ID": "9e5f5198-148f-45ad-8cb5-5cb3da18c253", 
+    "Unit": "SI unit", 
+    "Name": "MetricName"
+}

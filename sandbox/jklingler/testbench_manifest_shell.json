@@ -1,0 +1,14 @@
+{
+    "Status": "OK", 
+    "Parameters": [], 
+    "Created": "2013-11-25T22:24:37.2540414Z", 
+    "Artifacts": [], 
+    "TierLevel": 0, 
+    "DesignName": "MyDesign_123", 
+    "LimitChecks": [], 
+    "Metrics": [], 
+    "DesignID": "{d3fc0307-76aa-49b6-b38c-9e819872e08d}", 
+    "Steps": [], 
+    "TestBench": "MyTestBench", 
+    "PCCResults": {}
+}
