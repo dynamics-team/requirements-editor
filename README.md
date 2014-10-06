@@ -20,15 +20,24 @@ For development mode use: node node_modules/gulp/bin/gulp.js dev
 
 ## Build for mobile ##
 
+Assuming all dependencies are installed for android and iOS development.
+
 ```bash
 npm install -g cordova ionic
+
 ln -s src/build www
+
 cordova plugin add org.apache.cordova.device
 cordova plugin add org.apache.cordova.console
 cordova plugin add com.ionic.keyboard
+
 ionic platform add ios
 ionic build ios
 ionic emulate ios
+
+ionic platform add android
+ionic build android
+ionic emulate android
 ```
 
 
