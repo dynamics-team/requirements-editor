@@ -2,7 +2,7 @@
 
 var ReqApp = angular.module('RequirementsApp', [
     'ui.router',
-
+//    'ui.bootstrap',
     'requirements.editor.templates'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
