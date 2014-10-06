@@ -17,6 +17,7 @@ var fs = require('fs');
 var salts;
 try {
     salts = JSON.parse(fs.readFileSync('salts.json', {encoding: 'utf-8'}));
+    start();
 } catch (e) {
     if (e.errno && e.errno === 34 /* ENOENT */) {
         require('crypto').randomBytes(48, function(ex, buf) {
