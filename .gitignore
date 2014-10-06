@@ -29,3 +29,6 @@ node_modules
 
 # WebStorm temp directory
 .idea
+
+# The library is populated by node node_modules\bower\bin\bower install
+src/client/lib
