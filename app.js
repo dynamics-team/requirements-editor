@@ -44,6 +44,13 @@ function start() {
     app.use(require('cookie-parser')());
     //app.use(express.bodyParser());
 
+    var passport = require('passport'),
+        GoogleStrategy = require('passport-google').Strategy;
+
+    app.use('/', require('express-session')(SESSION_PARAMS));
+    app.use('/', passport.initialize());
+    app.use('/', passport.session());
+
     app.use(function (req, res, next) {
         if (req.isAuthenticated()) {
             return next();
@@ -54,17 +61,16 @@ function start() {
         res.redirect('/auth/google');
     });
 
+    var UserPermSchema = new Schema({
+        title: String,
+        write: Boolean,
+        read: Boolean
+    });
     var User = mongoose.model('User', new Schema({
         id: String,
-        displayName: String
+        displayName: String,
+        perms: [UserPermSchema]
     }));
-
-    var passport = require('passport'),
-        GoogleStrategy = require('passport-google').Strategy;
-
-    app.use('/', require('express-session')(SESSION_PARAMS));
-    app.use('/', passport.initialize());
-    app.use('/', passport.session());
 
     passport.use(new GoogleStrategy({
             returnURL: 'http://localhost:8844/auth/google/return',
