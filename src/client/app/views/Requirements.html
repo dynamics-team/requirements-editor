@@ -1,4 +1,6 @@
 <div>
     <h1>Requirements</h1>
-    {{dataModel.name}}
+    <ul>
+        <li ng-repeat="req in dataModel.requirements"><a ng-click="navigateToReq(req.title)"> {{req.title}}</a></li>
+    </ul>
 </div>

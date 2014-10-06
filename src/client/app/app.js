@@ -28,7 +28,6 @@ var ReqApp = angular.module('RequirementsApp', [
     })
     .run(function ($state) {
         'use strict';
-        // TODO: Connect to database here, or at least check if REST is avaliable?
     });
 
 require('./services/RequirementsService');

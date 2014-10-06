@@ -16,7 +16,7 @@ var ReqApp = angular.module('RequirementsApp', [])
                 .catch(function (reason) {
                     console.log(reason);
                 });
-        }
+        };
         RequirementsService.listAll()
             .then(function (data) {
                 console.log(data);
