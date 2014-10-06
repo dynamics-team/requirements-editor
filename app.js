@@ -127,8 +127,11 @@ function start() {
         children: {}
     }));
 
-    app.get('/requirement', function (req, res) {
-        Requirement.find({}, function (err, docs) {
+    app.get('/requirement/', function (req, res) {
+        Requirement.find({})
+            .select('-children')
+            .select('-__v')
+            .exec(function (err, docs) {
             res.json(docs);
         });
     });
@@ -139,7 +142,7 @@ function start() {
             return;
         }
         Requirement.find({ title: req.params.title}, function (err, docs) {
-            res.json(docs);
+            res.json(docs[0]);
         });
     });
 
