@@ -20,16 +20,20 @@
 
     <!-- your app's js -->
     <script src="requirements-editor.js"></script>
+    <script src="requirements-editor-templates.js"></script>
 </head>
 <body ng-app="RequirementsApp">
 
 <ion-pane>
     <ion-header-bar class="bar-stable">
-        <h1 class="title">Ionic Blank Starter</h1>
+        <h1 class="title">Requirements Editor</h1>
     </ion-header-bar>
 
     <ion-content>
+        <a ui-sref="requirements">State 1</a>
+        <!--<a ui-sref="workspaceDetails({workspaceId: 0})">State 2</a>-->
 
+        <div ui-view></div>
     </ion-content>
 
     <div class="tabs tabs-icon-top">
