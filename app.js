@@ -118,7 +118,16 @@ function start() {
            emails: [ { value: 'kevin.m.smyth@gmail.com' } ],
              name: { familyName: 'Smyth', givenName: 'Kevin' } }
              */
-            User.findOneAndUpdate({ id: identifier }, { id: identifier, displayName: profile.displayName }, {upsert: true}, function (err, user) {
+            var user = new User({ id: identifier, displayName: profile.displayName }).toObject();
+            var oldId = user._id;
+            delete user._id;
+            User.findOneAndUpdate({ id: identifier }, user, {upsert: true}, function (err, user) {
+                if (user._id !== oldId) {
+                    // index it
+                    user.index(function (err, res) {
+
+                    });
+                }
                 done(err, user);
             });
         }
