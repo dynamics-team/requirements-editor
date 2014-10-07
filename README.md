@@ -18,6 +18,13 @@ Visit http://localhost:8844/
 
 For development mode use: node node_modules/gulp/bin/gulp.js dev
 
+### Add a new requirement ###
+
+Make sure the file conforms to the expected format.
+
+`curl -d @sandbox/jklingler/Examples/Radio/TopLevelRequirementGroup.json  -H "Content-Type: application/json" http://127.0.0.1:8844/requirement/`
+
+
 ## Build for mobile ##
 
 Assuming all dependencies are installed for android and iOS development.
@@ -40,4 +47,5 @@ ionic build android
 ionic emulate android
 ```
 
+On android emulator use `10.0.2.2` instead of `localhost`.
 
