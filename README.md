@@ -16,7 +16,7 @@ node app.js
 
 Visit [http://localhost:8844/](http://localhost:8844/). On android emulator use `10.0.2.2` instead of `localhost`.
 
-For development mode use: node node_modules/gulp/bin/gulp.js dev
+For development mode use: `node node_modules/gulp/bin/gulp.js dev`
 
 ### Add a new requirement ###
 
