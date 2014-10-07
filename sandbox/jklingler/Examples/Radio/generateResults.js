@@ -58,17 +58,19 @@ var main = function () {
             }
 
             for (var i=0;i<numResults;i++) {
-                var tbName = requirement.testBench + "_" + (i + 1).toString();
+                var tbName = requirement.testBench;
+                //var tbName = requirement.testBench + "_" + (i + 1).toString();
                 var dName = designName + "_" + (i + 1).toString();
+                var uniqueName = tbName + '_' + dName;
                 var tb;
 
                 giveMetricValues(metric, requirement, resultsShouldPass);
 
-                if (testbenchJsons.hasOwnProperty(tbName)) {
-                    tb = testbenchJsons[tbName];
+                if (testbenchJsons.hasOwnProperty(uniqueName)) {
+                    tb = testbenchJsons[uniqueName];
                 } else {
                     tb = new Classes.TestBenchManifest(tbName, dName)
-                    testbenchJsons[tbName] = tb;
+                    testbenchJsons[uniqueName] = tb;
                 }
 
                 // These two lines are to remove the reference to the "Metric" object.
@@ -80,8 +82,10 @@ var main = function () {
         }
 
         for (name in testbenchJsons) {
-            var fName = name + ".json";
-            fs.writeFile(fName, JSON.stringify(testbenchJsons[name], null, 4), function(err) {
+            var fName = "testbench_manifest.json";
+            //var dirName = 'z' + Math.random().toString(36).substring(8);
+            fs.mkdir(name);
+            fs.writeFile(name + '/' + fName, JSON.stringify(testbenchJsons[name], null, 4), function(err) {
                 if(err) {
                     console.log(err);
                 } else {

@@ -1,0 +1,60 @@
+{
+    "Status": "OK",
+    "Parameters": [],
+    "Created": "",
+    "Artifacts": [],
+    "TierLevel": 0,
+    "DesignName": "MyDesign_3",
+    "LimitChecks": [],
+    "Metrics": [
+        {
+            "Description": "The range of the walkie-talkie where communication confidence drops below 95%; Must be greater than 2000 m Line of Sight, ideal is 10000 m",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 9838.852143846452,
+            "ID": null,
+            "Unit": "m",
+            "Name": "Range"
+        },
+        {
+            "Description": "The power consumed by the walkie-talkie while transmitting; must be less than 5 watts",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 5.146053475094959,
+            "ID": null,
+            "Unit": "W",
+            "Name": "AvgPowerTx"
+        },
+        {
+            "Description": "The power consumed by the walkie-talkie while receiving; must be less than 1 watt",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 0.717227455927059,
+            "ID": null,
+            "Unit": "W",
+            "Name": "AvgPowerRx"
+        },
+        {
+            "Description": "The power consumed by the walkie-talkie while idle; must be less than 0.5 watt",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 0.02460615843301639,
+            "ID": null,
+            "Unit": "W",
+            "Name": "AvgPowerIdle"
+        },
+        {
+            "Description": "Battery Capacity in Watt-Hours",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 9.33112864382565,
+            "ID": null,
+            "Unit": "Wh",
+            "Name": "BatteryCapacity"
+        }
+    ],
+    "DesignID": "",
+    "Steps": [],
+    "TestBench": "WalkieTalkiePerformance",
+    "PCCResults": {}
+}
