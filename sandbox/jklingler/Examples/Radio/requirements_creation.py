@@ -67,7 +67,6 @@ class Requirement(object):
         self.description = "Full-length, detailed description"
         self.weight_pos = 1.0  # Real [0,1]
         self.priority = 1  # any positive integer
-        self.children = []
         self.name = "Short but meaningful/readable description"
         self.objective = None
         self.threshold = None
