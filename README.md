@@ -6,7 +6,7 @@
 Start up mongodb on localhost.
 
 ```bash
-git clone https://github.com/dynamics-team/requirements-editor.git ./requirements-editor
+git clone https://github.com/dynamics-team/requirements-editor.git
 cd ./requirements-editor
 npm install
 node node_modules/bower/bin/bower install
