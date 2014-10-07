@@ -3,7 +3,7 @@
  * Created by pmeijer on 10/6/2014.
  */
 
-angular.module('RequirementsApp').controller('RequirementDetailsController', function (RequirementsService, $scope, $stateParams) {
+angular.module('RequirementsApp').controller('RequirementDetailsController', function (RequirementsService, $scope, $stateParams, $modal) {
     'use strict';
     var reqName = $stateParams.requirementId,
         getIdFcn = function (id) {
@@ -29,6 +29,23 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
 
     console.log('RequirementDetailsController');
     console.log(reqName);
+    $scope.edit = function (data) {
+        var modalInstance = $modal.open({
+            templateUrl: '/requirements-editor/templates/EditRequirement.html',
+            controller: 'EditRequirementController',
+            resolve: {
+                data: function () {
+                    return data;
+                }
+            }
+        });
+
+        modalInstance.result.then(function (data) {
+            console.log(data);
+        }, function () {
+            console.log('Modal dismissed at: ' + new Date());
+        });
+    };
 
     $scope.dataModel = {
         title: reqName,

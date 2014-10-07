@@ -18,10 +18,10 @@
         <table class="table table-striped">
             <tr ng-repeat="req in dataModel.flatRequirements">
                 <td>
-                    <a ui-sref="">{{req.name}}</a>
+                    <a>{{req.name}}</a>
                 </td>
                 <td class="edit-buttons" align="right">
-                    <a class="btn btn-primary">Edit</a>
+                    <a class="btn btn-primary" ng-click="edit(req)">Edit</a>
                     <a class="btn btn-success">Duplicate</a>
                     <a class="btn btn-danger">Delete</a>
                 </td>
@@ -34,10 +34,10 @@
         <table class="table table-striped">
             <tr ng-repeat="cat in dataModel.flatCategories">
                 <td>
-                    <a ui-sref="">{{cat.name}}</a>
+                    <a>{{cat.name}}</a>
                 </td>
                 <td class="edit-buttons" align="right">
-                    <a class="btn btn-primary">Edit</a>
+                    <a class="btn btn-primary" ng-click="edit(cat)">Edit</a>
                     <a class="btn btn-success">Duplicate</a>
                     <a class="btn btn-warning">New Child</a>
                     <a class="btn btn-danger">Delete</a>

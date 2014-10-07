@@ -2,7 +2,7 @@
 
 var ReqApp = angular.module('RequirementsApp', [
     'ui.router',
-//    'ui.bootstrap',
+    'ui.bootstrap',
     'requirements.editor.templates'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
@@ -38,3 +38,4 @@ require('./services/RequirementsService');
 // Include the controllers
 require('./controllers/RequirementsController');
 require('./controllers/RequirementDetailsController');
+require('./controllers/EditRequirementController');
