@@ -1,0 +1,10 @@
+<ion-view title="Requirements">
+    <ion-content class="padding">
+        <ion-list>
+            <ion-item ng-repeat="req in dataModel.requirements"  type="item-text-wrap" href="#/tab/requirements/{{req.title}}">
+                {{req.title}}
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>
+

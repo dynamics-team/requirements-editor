@@ -12,24 +12,48 @@ var ReqApp = angular.module('RequirementsApp', [
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
         'use strict';
-        // For any unmatched url, redirect to /workspaces
-        $urlRouterProvider.otherwise('/index');
-        //
-        // Now set up the states
+        // For any unmatched url, redirect to /tab/requirements
+        $urlRouterProvider.otherwise('/tab/requirements');
+
         $stateProvider
-            .state('index', {
-                url: "/index"
+            // setup an abstract state for the tabs directive
+            .state('tab', {
+                url: '/tab',
+                abstract: true,
+                templateUrl: 'templates/Tabs.html'
             })
-            .state('requirements', {
-                url: "/requirements",
-                templateUrl: "/requirements-editor/templates/Requirements.html",
-                controller: "RequirementsController"
+
+            // Each tab has its own nav history stack:
+
+            .state('tab.requirements', {
+                url: '/requirements',
+                views: {
+                    'tab-requirements': {
+                        templateUrl: 'templates/Requirements.html',
+                        controller: 'RequirementsController'
+                    }
+                }
+            })
+
+            .state('tab.requirement-detail', {
+                url: '/requirements/:requirementId',
+                views: {
+                    'tab-requirements': {
+                        templateUrl: 'templates/RequirementDetails.html',
+                        controller: 'RequirementDetailsController'
+                    }
+                }
+            })
+
+            .state('tab.search', {
+                url: '/search',
+                views: {
+                    'tab-search': {
+                        templateUrl: 'templates/Search.html',
+                        controller: 'SearchController'
+                    }
+                }
             });
-//            .state('requirementDetails', {
-//                url: "/requirements/:requirementId",
-//                templateUrl: "/views/RequirementDetails.html",
-//                controller: "RequirementDetailsController"
-//            });
     })
     .run(function ($state, $ionicPlatform, constants) {
         'use strict';
@@ -52,6 +76,28 @@ var ReqApp = angular.module('RequirementsApp', [
 
 
 require('./constants/constants.js');
+
+
+ReqApp.controller('SearchController', function ($scope) {
+    $scope.results = [
+        {
+            name: 'rq 1',
+            type: 'requirement'
+        },
+        {
+            name: 'score result 1',
+            type: 'score'
+        },
+        {
+            name: 'rq 2',
+            type: 'requirement'
+        },
+        {
+            name: 'test result 12',
+            type: 'test'
+        }
+    ];
+});
 
 // Include the Service
 require('../app/services/RequirementsService');

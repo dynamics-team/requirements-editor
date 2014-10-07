@@ -6,6 +6,9 @@
 <body>
 <a href="requirement/">requirements</a>
 
+<a href="mobile/">mobile</a>
+<a href="app/">app</a>
+
 <div ng-app="RequirementsApp" ng-controller="RequirementsController">
     <ul>
         <li ng-repeat="req in dataModel.requirements"><a ng-click="navigateToReq(req.title)"> {{req.title}}</a></li>

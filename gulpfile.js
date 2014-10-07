@@ -51,7 +51,7 @@ var argv = require('yargs').argv,
             'src/client/mobile/**/*.js'
         ],
         libraryTemplates: [
-            'src/client/mobile/views/*.html'
+            'src/client/mobile/templates/*.html'
         ],
         libraryStyles: [
             'src/client/mobile/styles/*.scss'
@@ -175,7 +175,7 @@ gulp.task('compile-library-templates', function () {
         .pipe(templateCache(libraryName + '-templates.js', {
             module: libraryTemplatesModule,
             standalone: true,
-            root: '/' + libraryName + '/'
+            root: ''
         }))
         .pipe(gulp.dest(buildPathsMobile.scripts));
 });

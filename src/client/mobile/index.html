@@ -22,34 +22,22 @@
     <script src="requirements-editor.js"></script>
     <script src="requirements-editor-templates.js"></script>
 </head>
-<body ng-app="RequirementsApp">
+<body ng-app="RequirementsApp" animation="slide-left-right-ios7">
 
-<ion-pane>
-    <ion-header-bar class="bar-stable">
-        <h1 class="title">Requirements Editor</h1>
-    </ion-header-bar>
+    <!--
+      The nav bar that will be updated as we navigate between views.
+    -->
+    <ion-nav-bar class="bar-stable nav-title-slide-ios7">
+        <ion-nav-back-button class="button-icon icon  ion-ios7-arrow-back">
+            Back
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <!--
+      The views will be rendered in the <ion-nav-view> directive below
+      Templates are in the /templates folder (but you could also
+      have templates inline in this html file if you'd like).
+    -->
+    <ion-nav-view></ion-nav-view>
 
-    <ion-content>
-        <a ui-sref="requirements">State 1</a>
-        <!--<a ui-sref="workspaceDetails({workspaceId: 0})">State 2</a>-->
-
-        <div ui-view></div>
-    </ion-content>
-
-    <div class="tabs tabs-icon-top">
-        <a class="tab-item" href="#/index">
-            <i class="icon ion-home"></i>
-            Home
-        </a>
-        <a class="tab-item" href="#/users">
-            <i class="icon ion-person-stalker"></i>
-            Users
-        </a>
-        <a class="tab-item">
-            <i class="icon ion-gear-a"></i>
-            Settings
-        </a>
-    </div>
-</ion-pane>
 </body>
 </html>
