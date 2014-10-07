@@ -60,15 +60,33 @@ function start() {
         res.redirect('/auth/google');
     });
 
-    var UserPermSchema = new Schema({
-        title: String,
-        write: Boolean,
-        read: Boolean
+    app.use(function (req, res, next) {
+        if (!req.session.passport.user) {
+            next();
+            return;
+        }
+        // test data
+        Requirement.find({ title: 'Radio Example'}, function (err, docs) {
+            if (docs.length === 0) {
+                var instance = new Requirement();
+                instance.title = 'Radio Example';
+
+                instance.children = [
+                    JSON.parse(fs.readFileSync('sandbox/jklingler/Examples/Radio/TopLevelRequirementGroup.json', {encoding: 'utf-8'}))
+                ];
+                instance.auth_read.push(req.session.passport.user);
+                instance.save(function (err) {
+                    next();
+                });
+            } else {
+                next();
+            }
+        });
     });
+
     var User = mongoose.model('User', new Schema({
         id: String,
-        displayName: String,
-        perms: [UserPermSchema]
+        displayName: String
     }));
 
     passport.use(new GoogleStrategy({
@@ -101,8 +119,7 @@ function start() {
     app.get('/auth/google', passport.authenticate('google'));
 
     app.get('/auth/google/return',
-        passport.authenticate('google', { successRedirect: '/',
-            failureRedirect: '/auth/login' }));
+        passport.authenticate('google', { successRedirect: '/', failureRedirect: '/auth/login' }));
 
     // app.get('/auth/login', TODO user didnt authorize us
 
@@ -124,11 +141,14 @@ function start() {
         author: ObjectId,
         version: Number,
         title: String,
-        children: {}
+        children: {},
+        auth_read: [String],
+        auth_write: [String],
+        auth_admin: [String]
     }));
 
     app.get('/requirement/', function (req, res) {
-        Requirement.find({})
+        Requirement.find({auth_read: req.session.passport.user})
             .select('-children')
             .select('-__v')
             .exec(function (err, docs) {
@@ -141,7 +161,11 @@ function start() {
             res.send(400);
             return;
         }
-        Requirement.find({ title: req.params.title}, function (err, docs) {
+        Requirement.find({ title: req.params.title, auth_read: req.session.passport.user}, function (err, docs) {
+            if (docs.length === 0) {
+                res.send(404);
+                return;
+            }
             res.json(docs[0]);
         });
     });
@@ -154,13 +178,17 @@ function start() {
         });
         req.on("end", function () {
             try {
-                var requirement = JSON.parse(bodyStr);
+                var requirement = new Requirement(JSON.parse(bodyStr));
             } catch (e) {
             }
             if (!requirement || !requirement.title) {
                 res.send(400);
                 return;
             }
+            requirement.auth_read.push(req.session.passport.user);
+            requirement.auth_write.push(req.session.passport.user);
+            requirement.auth_admin.push(req.session.passport.user);
+            // FIXME check if exists and no perms
             Requirement.findOneAndUpdate({title: requirement.title}, requirement, {upsert: true}, function (err, doc) {
                 if (err)
                     return res.send(500, { error: err });
@@ -179,35 +207,10 @@ function start() {
         });
     });
 
-    // test data
-    Requirement.find({ title: 'hello'}, function (err, docs) {
-        if (docs.length === 0) {
-            var instance = new Requirement();
-            instance.title = 'hello';
-            instance.children = [
-                {
-                    "name": "Movement",
-                    "weightNeg": 1,
-                    "description": "Performance of the Vehicle Movement",
-                    "weightPos": 1,
-                    "Priority": 1,
-                    "children": [
-                        {
-                            "weightNeg": 1,
-                            "name": "Speed",
-                            "description": "Speed and Accelerations",
-                            "weightPos": 1,
-                            "Priority": 1,
-                            "children": [ ]
-                        }
-                    ]
-                }
-            ];
-            instance.save(function (err) {
-            });
-        }
-    });
-
+    //app.use(function (req, res, next) {
+    //    console.log(req);
+    //    next();
+    //});
     app.use(express.static(__dirname + '/public'));
     app.use(express.static(__dirname + '/src/build'));
 
