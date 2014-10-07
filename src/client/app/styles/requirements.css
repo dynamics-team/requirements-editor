@@ -16,3 +16,8 @@ div.requirement-listing .edit-buttons-details {
   text-align: right; }
 div.requirement-listing span.details-header {
   font-weight: bold; }
+
+div.modal-body .row {
+  padding: 7px 1px; }
+  div.modal-body .row .title {
+    font-weight: bold; }
