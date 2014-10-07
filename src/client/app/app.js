@@ -17,12 +17,12 @@ var ReqApp = angular.module('RequirementsApp', [
             })
             .state('requirements', {
                 url: "/requirements",
-                templateUrl: "/requirements-editor/templates/Requirements.html",
+                templateUrl: "templates/Requirements.html",
                 controller: "RequirementsController"
             })
             .state('requirementDetails', {
                 url: "/requirementDetails/:requirementId",
-                templateUrl: "/requirements-editor/templates/RequirementDetails.html",
+                templateUrl: "templates/RequirementDetails.html",
                 controller: "RequirementDetailsController"
             });
     })

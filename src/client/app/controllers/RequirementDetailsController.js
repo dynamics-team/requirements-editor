@@ -42,7 +42,7 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
     console.log(reqName);
     $scope.edit = function (data) {
         var modalInstance = $modal.open({
-            templateUrl: '/requirements-editor/templates/EditRequirement.html',
+            templateUrl: 'templates/EditRequirement.html',
             controller: 'EditRequirementController',
             resolve: {
                 data: function () {

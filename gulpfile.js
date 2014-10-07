@@ -20,7 +20,7 @@ var argv = require('yargs').argv,
             'src/client/app/**/*.js'
         ],
         libraryTemplates: [
-            'src/client/app/views/*.html'
+            'src/client/app/templates/*.html'
         ],
         libraryStyles: [
             'src/client/app/styles/*.scss'
@@ -163,7 +163,7 @@ gulp.task('compile-library-templates', function () {
         .pipe(templateCache(libraryName + '-templates.js', {
             module: libraryTemplatesModule,
             standalone: true,
-            root: '/' + libraryName + '/'
+            root: ''
         }))
         .pipe(gulp.dest(buildPaths.scripts));
 
