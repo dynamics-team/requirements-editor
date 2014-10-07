@@ -197,14 +197,22 @@ function start() {
         });
     });
 
-    app.del('/requirement/:title', function (req, res) {
+    app['delete']('/requirement/:title', function (req, res) {
         if (!req.params.title) {
             res.send(400);
             return;
         }
-        Requirement.find({ title: req.params.title }).remove(function (doc) {
+        Requirement.find({ title: req.params.title, auth_admin: req.session.passport.user }).remove(function (doc) {
             res.send(200);
         });
+    });
+
+    app.get('/search/:query', function (req, res) {
+        if (!req.params.query) {
+            res.send(400);
+            return;
+        }
+        res.send('todo: search for ' + req.params.query);
     });
 
     //app.use(function (req, res, next) {
