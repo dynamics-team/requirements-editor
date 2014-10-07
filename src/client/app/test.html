@@ -61,32 +61,11 @@
                            "threshold": 13,
                            "unit": "s",
                            "metricName": "Acc20kph"
-                       },
-                       {
-                           "KPP": true,
-                           "function": "g(x)",
-                           "weightNeg": 0.7,
-                           "name": "Acc40kph Full Throttle",
-                           "weightPos": 0.3,
-                           "description": "",
-                           "Priority": 1,
-                           "objective": 17,
-                           "testBench": "FullSpeedForward",
-                           "threshold": 25,
-                           "unit": "s",
-                           "metricName": "Acc40kph"
                        }]
                    }]
                }]
            });
            return deferred.promise;
-       };
-
-       this.generateGuid = function () {
-           var s4 = function () {
-               return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-           };
-           return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
        };
    });
    angular.bootstrap(document, ['RequirementsApp']);
