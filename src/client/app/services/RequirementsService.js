@@ -3,9 +3,9 @@
  * Created by pmeijer on 10/6/2014.
  */
 
-angular.module('RequirementsApp').service('RequirementsService', function ($q, $http) {
+angular.module('RequirementsApp').service('RequirementsService', function ($q, $http, constants) {
     'use strict';
-    var baseUrl = 'http://localhost:8844/'; // TODO: This should probably be configurable
+    var baseUrl = constants.baseUrl;
     console.log('RequirementsService');
 
     this.listAll = function () {

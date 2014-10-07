@@ -1,4 +1,8 @@
-/*globals console, window*/
+/*globals console, window, angular, ionic*/
+
+/**
+ * @author lattmann / https://github.com/lattmann
+ */
 
 var ReqApp = angular.module('RequirementsApp', [
     'ui.router',
@@ -27,7 +31,7 @@ var ReqApp = angular.module('RequirementsApp', [
 //                controller: "RequirementDetailsController"
 //            });
     })
-    .run(function ($state, $ionicPlatform) {
+    .run(function ($state, $ionicPlatform, constants) {
         'use strict';
         // TODO: Connect to database here, or at least check if REST is available?
 
@@ -41,9 +45,18 @@ var ReqApp = angular.module('RequirementsApp', [
                 StatusBar.styleDefault();
             }
         });
+
+        console.log('Platform: ', ionic.Platform.platform());
+        console.log('Constants: ', constants);
     });
 
 
+require('./constants/constants.js');
+
+// Include the Service
 require('../app/services/RequirementsService');
+// Include the controllers
+require('../app/controllers/RequirementsController');
+require('../app/controllers/RequirementDetailsController');
 
 require('../app/controllers/RequirementsController');
