@@ -39,7 +39,6 @@ salts.json
 src/build
 
 # Mobile build
-hooks/
 platforms/
 plugins/
 www
