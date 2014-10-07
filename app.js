@@ -240,7 +240,16 @@ function start() {
         });
     });
 
-    // http://localhost:8844/search/twitter/?search_query=kimchy&per_page=1&page=2
+    // ELASTIC SEARCH API
+    // http://localhost:9200/_stats/
+    // http://localhost:9200/requirements-editor/requirement/_search
+    // http://localhost:9200/requirements-editor/user/_search
+
+    // http://localhost:9200/requirements-editor/user/_search?q=Zsolt
+    // http://localhost:9200/requirements-editor/requirement/_search?q=WalkieTalkieMass
+
+    // This server's API
+    // http://localhost:8844/search/?search_query=WalkieTalkieMass&per_page=1&page=1
     app.get('/search', function (req, res) {
         var pageNum = req.param('page', 1),
             perPage = req.param('per_page', 15),
