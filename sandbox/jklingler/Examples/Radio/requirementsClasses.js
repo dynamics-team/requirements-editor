@@ -2,6 +2,8 @@
  * Created by J on 10/7/2014.
  */
 
+//define(['classes'], function (Classes) {});
+
 var main = function () {
     'use strict';
 
@@ -11,23 +13,28 @@ var main = function () {
     var giveMetricValues = function (metricInstance, requirementInstance, shouldPass) {
         var difference = Math.abs(requirementInstance.objective - requirementInstance.threshold);
         var average = (requirementInstance.objective + requirementInstance.threshold)/2;
+        var randomNumber = Math.random();
+        var unitScale = (randomNumber - 0.5);
+//        metricInstance.objective = requirementInstance.objective;
+//        metricInstance.threshold = requirementInstance.threshold;
+//        metricInstance.shouldPass = shouldPass;
+//        metricInstance.average = average;
+//        metricInstance.difference = difference;
 
         if (shouldPass) {
-            metricInstance.Value = average + difference*(Math.random()*2 - 1);
+            metricInstance.Value = average + difference*unitScale;
         } else {
-            metricInstance.Value = average + difference*1.5*(Math.random()*2 - 1);
+            metricInstance.Value = average + difference*1.5*unitScale;
         }
     };
 
-    var generateTestBenchManifests = function (requirementsMap, designName) {
+    var generateTestBenchManifests = function (requirementsMap, designName, numberResults) {
         var testbenchJsons = {};
         var metricMap = {};
         var name;
 
         for (name in requirementsMap) {
             var requirement = requirementsMap[name];
-            var tbName = requirement.testBench;
-            var tb;
             var metricName = requirement.metricName;
             var metric;
 
@@ -38,20 +45,26 @@ var main = function () {
                 metricMap[metricName] = metric;
             }
 
-            giveMetricValues(metric, requirement, true);
+            for (var i=0;i<numberResults;i++) {
+                var tbName = requirement.testBench + "_" + (i + 1).toString();
+                var dName = designName + "_" + (i + 1).toString();
+                var tb;
 
-            if (testbenchJsons.hasOwnProperty(tbName)) {
-                tb = testbenchJsons[tbName];
-            } else {
-                tb = new TestbenchManifest(tbName, designName)
-                testbenchJsons[tbName] = tb;
+                giveMetricValues(metric, requirement, true);
+
+                if (testbenchJsons.hasOwnProperty(tbName)) {
+                    tb = testbenchJsons[tbName];
+                } else {
+                    tb = new TestbenchManifest(tbName, dName)
+                    testbenchJsons[tbName] = tb;
+                }
+
+                // These two lines are to remove the reference to the "Metric" object.
+                var metricString =JSON.stringify(metric, null, 4);
+                var metricJson = JSON.parse(metricString);
+
+                tb.Metrics.push(metricJson);
             }
-
-            // These two lines are to remove the reference to the "Metric" object.
-            var metricString =JSON.stringify(metric, null, 4);
-            var metricJson = JSON.parse(metricString);
-
-            tb.Metrics.push(metricJson);
         }
 
         for (name in testbenchJsons) {
@@ -78,7 +91,7 @@ var main = function () {
                 flatRequirementsMap = {},
                 requirements = new TopLevelRequirementsGroup(title, data, flatRequirementsMap);
 
-            generateTestBenchManifests(flatRequirementsMap, "MyDesign_1");
+            generateTestBenchManifests(flatRequirementsMap, "MyDesign", 5);
         });
     };
 
@@ -239,6 +252,11 @@ var main = function () {
         this.DisplayedName = null;
         this.GMEID = null;
         this.Value = null;
+//        this.objective = null;
+//        this.threshold = null;
+//        this.shouldPass = null;
+//        this.average = null;
+//        this.difference = null;
         this.ID = null;
         this.Unit = requirementInstance.unit;
         this.Name = requirementInstance.metricName;
