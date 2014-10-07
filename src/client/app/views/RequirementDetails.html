@@ -15,15 +15,40 @@
 
     <div class="requirement-listing requirements-table col-lg-4">
         <h3>Requirements</h3>
+        <div class="btn-group">
+            <label class="btn btn-default" ng-model="dataModel.requirementListingView" btn-radio="'Default'">Default</label>
+            <label class="btn btn-default" ng-model="dataModel.requirementListingView" btn-radio="'Edit'">Edit</label>
+            <label class="btn btn-default" ng-model="dataModel.requirementListingView" btn-radio="'Details'">Details</label>
+        </div>
         <table class="table table-striped">
             <tr ng-repeat="req in dataModel.flatRequirements">
                 <td>
                     <a>{{req.name}}</a>
                 </td>
-                <td class="edit-buttons" align="right">
+                <td class="edit-buttons" align="right" ng-show="dataModel.requirementListingView === 'Edit'">
                     <a class="btn btn-primary" ng-click="edit(req)">Edit</a>
                     <a class="btn btn-success">Duplicate</a>
                     <a class="btn btn-danger">Delete</a>
+                </td>
+                <td class="solo-description" align="left" ng-show="dataModel.requirementListingView === 'Default'">
+                    {{req.description}}
+                </td>
+                <td class="details" align="left" ng-show="dataModel.requirementListingView === 'Details'">
+                    <span class="details-header">Test-Bench :</span> {{req.testBench}}
+                    <br>
+                    <span class="details-header">Metric Name :</span> {{req.metricName}}
+                    <br>
+                    <span class="details-header">Objective :</span> {{req.objective}}
+                    <br>
+                    <span class="details-header">Threshold :</span> {{req.threshold}}
+                    <br>
+                    <span class="details-header">Unit :</span> {{req.unit}}
+                    <br>
+                    <div class="edit-buttons-details">
+                        <a class="btn btn-primary" ng-click="edit(req)">Edit</a>
+                        <a class="btn btn-success">Duplicate</a>
+                        <a class="btn btn-danger">Delete</a>
+                    </div>
                 </td>
             </tr>
         </table>

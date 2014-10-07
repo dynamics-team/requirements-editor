@@ -39,6 +39,36 @@ angular.module('RequirementsApp').service('RequirementsService', function ($q, $
         return deferred.promise;
     };
 
+    this.postRequirement = function (data) {
+        var deferred = $q.defer(),
+            url = baseUrl + 'requirement/';
+        $http.post(url, data)
+            .success(function (data, status, headers, config) {
+                deferred.resolve(data);
+            })
+            .error(function (data, status, headers, config) {
+                console.error(data);
+                deferred.reject(status);
+            });
+
+        return deferred.promise;
+    };
+
+    this.deleteByName = function (name) {
+        var deferred = $q.defer(),
+            url = baseUrl + 'requirement/' + name;
+        $http.get(url)
+            .success(function (data, status, headers, config) {
+                deferred.resolve(data);
+            })
+            .error(function (data, status, headers, config) {
+                console.error(data);
+                deferred.reject(status);
+            });
+
+        return deferred.promise;
+    };
+
     this.generateGuid = function () {
         var s4 = function () {
             return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);

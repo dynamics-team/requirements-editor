@@ -7,7 +7,7 @@
                     <a ui-sref="requirementDetails({ requirementId: req.title})">{{req.title}}</a>
                 </td>
                 <td class="edit-buttons" align="right">
-                    <a class="btn btn-success">Duplicate</a>
+                    <a class="btn btn-success" ng-click="duplicate(req.title)">Duplicate</a>
                     <a class="btn btn-danger">Delete</a>
                 </td>
             </tr>

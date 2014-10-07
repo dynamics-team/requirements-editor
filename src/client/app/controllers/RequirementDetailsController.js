@@ -25,6 +25,17 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
                     $scope.dataModel.flatRequirements[id] =  children[i];
                 }
             }
+        },
+        refreshData = function () {
+            RequirementsService.getByName(reqName)
+                .then(function (data) {
+                    console.log(data);
+                    $scope.dataModel.children = data.children;
+                    flatten(data.children);
+                })
+                .catch(function (reason) {
+                    console.log(reason);
+                });
         };
 
     console.log('RequirementDetailsController');
@@ -51,16 +62,10 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
         title: reqName,
         children: [],
         flatRequirements: {},
-        flatCategories: {}
+        flatCategories: {},
+        requirementListingView: 'Default',
+        categoryListingView: 'Default'
     };
 
-    RequirementsService.getByName(reqName)
-        .then(function (data) {
-            console.log(data);
-            $scope.dataModel.children = data.children;
-            flatten(data.children);
-        })
-        .catch(function (reason) {
-            console.log(reason);
-        });
+    refreshData();
 });

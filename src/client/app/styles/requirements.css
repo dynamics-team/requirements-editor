@@ -12,3 +12,7 @@ div.requirement-listing .btn-danger {
 div.requirement-listing td {
   padding: 4px;
   vertical-align: middle; }
+div.requirement-listing .edit-buttons-details {
+  text-align: right; }
+div.requirement-listing span.details-header {
+  font-weight: bold; }
