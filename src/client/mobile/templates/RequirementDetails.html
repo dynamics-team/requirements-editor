@@ -1,15 +1,25 @@
-<ion-view title="Requirement root - {{dataModel.title}}">
-    <ion-content padding="true">
+<ion-view>
+    <ion-header-bar>
+        <!--<div class="buttons">-->
+        <!--<button class="button button-icon icon ion-navicon"></button>-->
+        <!--</div>-->
+        <h1  class="title">Requirement root - {{dataModel.title}}</h1>
+        <!--<div class="buttons">-->
+        <!--<button class="button button-clear button-positive">Edit</button>-->
+        <!--</div>-->
+    </ion-header-bar>
 
-        <script type="text/ng-template"  id="tree_item_renderer.html">
-            {{child.name}}
-            <ul class="requirement-graph">
-                <li class="requirement-graph-item" data-ng-repeat="child in child.children" ng-include="'tree_item_renderer.html'">
-            </ul>
-        </script>
+    <ion-content class="padding">
 
-        <ul class="requirement-graph graph-root">
-            <li class="requirement-graph-item item-root" ng-repeat="child in dataModel.children" ng-include="'tree_item_renderer.html'"></li>
-        </ul>
+        <!--<script type="text/ng-template"  id="tree_item_renderer.html">-->
+            <!--{{child.name}}-->
+            <!--<ul class="requirement-graph">-->
+                <!--<li class="requirement-graph-item" data-ng-repeat="child in child.children" ng-include="'tree_item_renderer.html'">-->
+            <!--</ul>-->
+        <!--</script>-->
+
+        <!--<ul class="requirement-graph graph-root">-->
+            <!--<li class="requirement-graph-item item-root" ng-repeat="child in dataModel.children" ng-include="'tree_item_renderer.html'"></li>-->
+        <!--</ul>-->
     </ion-content>
 </ion-view>

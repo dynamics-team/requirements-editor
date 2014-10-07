@@ -1,8 +1,28 @@
-<ion-view title="Requirements">
+<ion-view>
+    <ion-header-bar>
+        <!--<div class="buttons">-->
+            <!--<button class="button button-icon icon ion-navicon"></button>-->
+        <!--</div>-->
+        <h1  class="title">Requirements</h1>
+        <!--<div class="buttons">-->
+            <!--<button class="button button-clear button-positive">Edit</button>-->
+        <!--</div>-->
+    </ion-header-bar>
+
     <ion-content class="padding">
         <ion-list>
             <ion-item ng-repeat="req in dataModel.requirements"  type="item-text-wrap" href="#/tab/requirements/{{req.title}}">
                 {{req.title}}
+
+                <ion-option-button class="button-balanced"
+                                   ng-click="duplicate(req)">
+                    Duplicate
+                </ion-option-button>
+
+                <ion-option-button class="button-assertive"
+                                   ng-click="delete(req)">
+                    Delete
+                </ion-option-button>
             </ion-item>
         </ion-list>
     </ion-content>
