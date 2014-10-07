@@ -5,15 +5,17 @@
  * curl -X DELETE http://127.0.0.1:8844/requirement/posted
  */
 
-var MONGO_CONNECTION = 'mongodb://localhost/requirements-editor'; // see http://docs.mongodb.org/manual/reference/connection-string/
-var SESSION_PARAMS = {
-    saveUninitialized: true,
-    resave: true,
-    cookie: { path: '/', httpOnly: true, secure: false, maxAge: 60 * 60 * 1000 }
-};
-
-
+var configFilename = 'config_localhost.json';
+if (process.argv.length > 2) {
+    configFilename = process.argv[2];
+}
+console.log('Using config file ' + configFilename);
 var fs = require('fs');
+var CONFIG = JSON.parse(fs.readFileSync(configFilename, {encoding: 'utf-8'}));
+
+var MONGO_CONNECTION = CONFIG.mongoConnection; // see http://docs.mongodb.org/manual/reference/connection-string/
+var SESSION_PARAMS = CONFIG.sessionParameters;
+
 var salts;
 try {
     salts = JSON.parse(fs.readFileSync('salts.json', {encoding: 'utf-8'}));
@@ -100,8 +102,8 @@ function start() {
     }));
 
     passport.use(new GoogleStrategy({
-            returnURL: 'http://localhost:8844/auth/google/return',
-            realm: 'http://localhost:8844/'
+            returnURL: CONFIG.publicUrl + '/auth/google/return',
+            realm: CONFIG.publicUrl + '/'
         },
         function (identifier, profile, done) {
             /**
@@ -267,7 +269,7 @@ function start() {
 
     mongoose.connection.once('open', function (err) {
         console.log('Connected to db');
-        var server = app.listen(8844, function () {
+        var server = app.listen(CONFIG.listenPort, function () {
             console.log('Listening on port %d', server.address().port);
         });
     });

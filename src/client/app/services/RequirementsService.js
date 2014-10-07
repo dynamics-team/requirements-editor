@@ -5,7 +5,8 @@
 
 angular.module('RequirementsApp').service('RequirementsService', function ($q, $http, constants) {
     'use strict';
-    var baseUrl = constants.baseUrl;
+    var self = this,
+        baseUrl = constants.baseUrl;
     console.log('RequirementsService');
 
     this.listAll = function () {
@@ -36,5 +37,12 @@ angular.module('RequirementsApp').service('RequirementsService', function ($q, $
             });
 
         return deferred.promise;
+    };
+
+    this.generateGuid = function () {
+        var s4 = function () {
+            return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+        };
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
     };
 });
