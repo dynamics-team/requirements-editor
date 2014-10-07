@@ -35,7 +35,8 @@ try {
 function start() {
     SESSION_PARAMS.secret = salts.session_secret;
 
-    var mongoose = require('mongoose');
+    var mongoose = require('mongoose'),
+        mongoosastic = require('mongoosastic');
     var mongooseConnection = mongoose.connect(MONGO_CONNECTION);
     var Schema = mongoose.Schema,
         ObjectId = Schema.ObjectId;
@@ -96,10 +97,15 @@ function start() {
         });
     });
 
-    var User = mongoose.model('User', new Schema({
-        id: String,
-        displayName: String
-    }));
+    var UserSchema = new Schema({
+            id: String,
+            displayName: String
+        });
+
+    // index users
+    UserSchema.plugin(mongoosastic, {index: 'requirements-editor'});
+
+    var User = mongoose.model('User', UserSchema);
 
     passport.use(new GoogleStrategy({
             returnURL: CONFIG.publicUrl + '/auth/google/return',
@@ -149,15 +155,21 @@ function start() {
             });
     });
 
-    var Requirement = mongoose.model('Requirement', new Schema({
-        author: ObjectId,
-        version: Number,
-        title: String,
-        children: {},
-        auth_read: [String],
-        auth_write: [String],
-        auth_admin: [String]
-    }));
+    var RequirementSchema = new Schema({
+            author: ObjectId,
+            version: Number,
+            title: String,
+            children: {},
+            auth_read: [String],
+            auth_write: [String],
+            auth_admin: [String]
+        });
+
+    // index requirements
+    // TODO: index nested document
+    RequirementSchema.plugin(mongoosastic, {index: 'requirements-editor'});
+
+    var Requirement = mongoose.model('Requirement', RequirementSchema);
 
     app.get('/requirement/', function (req, res) {
         Requirement.find({auth_read: req.session.passport.user})
@@ -220,20 +232,14 @@ function start() {
     });
 
     // http://localhost:8844/search/twitter/?search_query=kimchy&per_page=1&page=2
-    app.get('/search/:document_index', function (req, res) {
-        if (!req.params.document_index) {
-            res.send(400);
-            return;
-        }
-//        res.send('todo: search for ' + req.params.query);
-
-        var pageNum = req.param('page', 1);
-        var perPage = req.param('per_page', 15);
-        var userQuery = req.param('search_query', '');
-        var userId = req.session.userId;
+    app.get('/search', function (req, res) {
+        var pageNum = req.param('page', 1),
+            perPage = req.param('per_page', 15),
+            userQuery = req.param('search_query'),
+            userId = req.session.userId;
 
         esClient.search({
-            index: req.params.document_index,
+            index: 'requirements-editor',
             from: (pageNum - 1) * perPage,
             size: perPage,
             body: {
