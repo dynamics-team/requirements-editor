@@ -59,20 +59,20 @@ class RequirementsGroup(object):
 
 class Requirement(object):
 
-    def __init__(self):
+    def __init__(self, name=None, unit=None, description=None, threshold=None, objective=None, test_bench=None, metric_name=None):
 
         self.kpp = True
         self.function = ""
         self.weight_neg = 1.0  # Real [0,1]
-        self.description = "Full-length, detailed description"
+        self.description = description
         self.weight_pos = 1.0  # Real [0,1]
         self.priority = 1  # any positive integer
-        self.name = "Short but meaningful/readable description"
-        self.objective = None
-        self.threshold = None
-        self.test_bench = None
-        self.unit = None
-        self.metric_name = None
+        self.name = name
+        self.objective = objective
+        self.threshold = threshold
+        self.test_bench = test_bench
+        self.unit = unit
+        self.metric_name = metric_name
 
     def json(self):
 
