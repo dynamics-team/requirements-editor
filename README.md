@@ -4,6 +4,7 @@
 ## Install ##
 
 Start up mongodb on localhost.
+To support searches download and run [elastic search](http://www.elasticsearch.org/overview/elkdownloads/).
 
 ```bash
 git clone https://github.com/dynamics-team/requirements-editor.git

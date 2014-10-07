@@ -38,6 +38,16 @@ function start() {
     var Schema = mongoose.Schema,
         ObjectId = Schema.ObjectId;
 
+    var elasticsearch = require('elasticsearch');
+    var esClient = new elasticsearch.Client({
+        host: 'localhost:9200',
+        log: {
+            type: 'file',
+            level: 'trace',
+            path: 'elasticsearch.log'
+        }
+    });
+
     var express = require('express');
     var app = express();
     app.use(require('cookie-parser')());
@@ -207,12 +217,45 @@ function start() {
         });
     });
 
-    app.get('/search/:query', function (req, res) {
-        if (!req.params.query) {
+    // http://localhost:8844/search/twitter/?search_query=kimchy&per_page=1&page=2
+    app.get('/search/:document_index', function (req, res) {
+        if (!req.params.document_index) {
             res.send(400);
             return;
         }
-        res.send('todo: search for ' + req.params.query);
+//        res.send('todo: search for ' + req.params.query);
+
+        var pageNum = req.param('page', 1);
+        var perPage = req.param('per_page', 15);
+        var userQuery = req.param('search_query', '');
+        var userId = req.session.userId;
+
+        esClient.search({
+            index: req.params.document_index,
+            from: (pageNum - 1) * perPage,
+            size: perPage,
+            body: {
+                query: {
+                    match: {
+                        // match the query against all of
+                        // the fields in the posts index
+                        _all: userQuery
+                    }
+                }
+            }
+        }, function (error, response) {
+            if (error) {
+                // handle error
+                res.send(error);
+                return;
+            }
+
+            res.send({
+                results: response.hits.hits,
+                page: pageNum,
+                pages: Math.ceil(response.hits.total / perPage)
+            })
+        });
     });
 
     //app.use(function (req, res, next) {
@@ -227,5 +270,20 @@ function start() {
         var server = app.listen(8844, function () {
             console.log('Listening on port %d', server.address().port);
         });
+    });
+
+    // Test elastic search availability
+    esClient.ping({
+        // ping usually has a 100ms timeout
+        requestTimeout: 1000,
+
+        // undocumented params are appended to the query string
+        hello: "elasticsearch!"
+    }, function (error) {
+        if (error) {
+            console.trace('elasticsearch cluster is down!');
+        } else {
+            console.log('elasticsearch: All is well');
+        }
     });
 }
