@@ -7,27 +7,43 @@
         </ul>
     </script>
 
-    <br>
-    <div class="requirement-graph">
+    <div class="requirement-graph col-lg-4">
         <ul class="graph-root">
             <li class="requirement-graph-item item-root" ng-repeat="child in dataModel.children" ng-include="'tree_item_renderer.html'"></li>
         </ul>
     </div>
 
-    <br>
-    <div class="requirement-list">
+    <div class="requirement-listing requirements-table col-lg-4">
         <h3>Requirements</h3>
-        <ul>
-            <li class="requirement-list-item" ng-repeat="req in dataModel.flatRequirements"> {{req.name}}</li>
-        </ul>
+        <table class="table table-striped">
+            <tr ng-repeat="req in dataModel.flatRequirements">
+                <td>
+                    <a ui-sref="">{{req.name}}</a>
+                </td>
+                <td class="edit-buttons" align="right">
+                    <a class="btn btn-primary">Edit</a>
+                    <a class="btn btn-success">Duplicate</a>
+                    <a class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        </table>
     </div>
-    
-    <br>
-    <div class="category-list">
+
+    <div class="requirement-listing categories-table col-lg-4">
         <h3>Categories</h3>
-        <ul>
-            <li class="category-list-item" ng-repeat="cat in dataModel.flatCategories"> {{cat.name}}</li>
-        </ul>
+        <table class="table table-striped">
+            <tr ng-repeat="cat in dataModel.flatCategories">
+                <td>
+                    <a ui-sref="">{{cat.name}}</a>
+                </td>
+                <td class="edit-buttons" align="right">
+                    <a class="btn btn-primary">Edit</a>
+                    <a class="btn btn-success">Duplicate</a>
+                    <a class="btn btn-warning">New Child</a>
+                    <a class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        </table>
     </div>
     <!--<form role="form">-->
         <!--<div class="form-group">-->

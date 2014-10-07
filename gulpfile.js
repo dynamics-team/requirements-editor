@@ -195,7 +195,7 @@ gulp.task('compile-library-styles', function () {
             path.dirname = '';
         }))
         .pipe(concat(libraryName + '.css'))
-        .pipe(gulp.dest(buildPaths.root));
+        .pipe(gulp.dest(buildPaths.styles));
 
 
     gulp.src(sourcePathsMobile.libraryStyles)

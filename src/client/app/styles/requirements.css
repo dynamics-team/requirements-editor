@@ -1,0 +1,14 @@
+div.requirement-listing table {
+  border-style: solid;
+  border-width: 2px; }
+div.requirement-listing .btn-primary {
+  padding: 1px 16px; }
+div.requirement-listing .btn-success {
+  padding: 1px 3px; }
+div.requirement-listing .btn-warning {
+  padding: 1px 4px; }
+div.requirement-listing .btn-danger {
+  padding: 1px 4px; }
+div.requirement-listing td {
+  padding: 4px;
+  vertical-align: middle; }
