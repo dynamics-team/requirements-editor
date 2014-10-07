@@ -14,7 +14,7 @@ node node_modules/gulp/bin/gulp.js compile-all
 node app.js
 ```
 
-Visit http://localhost:8844/
+Visit [http://localhost:8844/](http://localhost:8844/). On android emulator use `10.0.2.2` instead of `localhost`.
 
 For development mode use: node node_modules/gulp/bin/gulp.js dev
 
@@ -46,6 +46,3 @@ ionic platform add android
 ionic build android
 ionic emulate android
 ```
-
-On android emulator use `10.0.2.2` instead of `localhost`.
-
