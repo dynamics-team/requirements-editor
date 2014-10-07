@@ -21,8 +21,16 @@ div.requirement-listing {
   };
   .edit-buttons-details {
     text-align: right;
-  }
+  };
   span.details-header {
     font-weight: bold;
+  };
+}
+div.modal-body {
+  .row {
+    padding: 7px 1px;
+    .title {
+      font-weight: bold;
+    }
   }
 }
