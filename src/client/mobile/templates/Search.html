@@ -8,6 +8,10 @@
         </div>
 
         <ion-list>
+            <ion-item>
+                {{window.location.origin}}
+            </ion-item>
+
             <ion-item ng-repeat="result in results">
                 {{result.name}} - {{result.type}}
             </ion-item>

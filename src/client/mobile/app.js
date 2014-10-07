@@ -73,6 +73,11 @@ var ReqApp = angular.module('RequirementsApp', [
 
         console.log('Platform: ', ionic.Platform.platform());
         console.log('Constants: ', constants);
+
+        if (window.location.origin + '/' !== constants.baseUrl) {
+            // redirect
+            window.location = constants.baseUrl;
+        }
     });
 
 
@@ -98,6 +103,8 @@ ReqApp.controller('SearchController', function ($scope) {
             type: 'test'
         }
     ];
+
+    $scope.window = window;
 });
 
 // Include the Service
