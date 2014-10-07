@@ -9,7 +9,7 @@ var MONGO_CONNECTION = 'mongodb://localhost/requirements-editor'; // see http://
 var SESSION_PARAMS = {
     saveUninitialized: true,
     resave: true,
-    cookie: { path: '/', httpOnly: true, secure: false, maxAge: 60000 }
+    cookie: { path: '/', httpOnly: true, secure: false, maxAge: 60 * 60 * 1000 }
 };
 
 
