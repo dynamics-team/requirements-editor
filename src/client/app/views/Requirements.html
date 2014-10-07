@@ -1,15 +1,15 @@
 <div>
     <h1>Requirements</h1>
-    <div class="requirement-listing">
+    <div class="requirement-listing col-lg-8" align="center">
         <table class="table table-striped">
             <tr ng-repeat="req in dataModel.requirements">
                 <td>
                     <a ui-sref="requirementDetails({ requirementId: req.title})">{{req.title}}</a>
                 </td>
-                <td><span>
+                <td class="edit-buttons" align="right">
                     <a class="btn btn-success">Duplicate</a>
                     <a class="btn btn-danger">Delete</a>
-                </span></td>
+                </td>
             </tr>
         </table>
     </div>
