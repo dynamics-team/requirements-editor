@@ -118,7 +118,7 @@ function start() {
            emails: [ { value: 'kevin.m.smyth@gmail.com' } ],
              name: { familyName: 'Smyth', givenName: 'Kevin' } }
              */
-            User.findOneAndUpdate({ id: identifier }, { id: identifier, displayName: profile.displayName }, {upsert: true}, function (err, user) {
+            User.findOneAndUpdate({ id: identifier }, new User({ id: identifier, displayName: profile.displayName }), {upsert: true}, function (err, user) {
                 done(err, user);
             });
         }
