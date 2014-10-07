@@ -11,15 +11,15 @@
 
     <ion-content class="padding">
 
-        <!--<script type="text/ng-template"  id="tree_item_renderer.html">-->
-            <!--{{child.name}}-->
-            <!--<ul class="requirement-graph">-->
-                <!--<li class="requirement-graph-item" data-ng-repeat="child in child.children" ng-include="'tree_item_renderer.html'">-->
-            <!--</ul>-->
-        <!--</script>-->
+        <script type="text/ng-template"  id="tree_item_renderer.html">
+            {{child.name}}
+            <ul class="requirement-graph">
+                <li class="requirement-graph-item" data-ng-repeat="child in child.children" ng-include="'tree_item_renderer.html'">
+            </ul>
+        </script>
 
-        <!--<ul class="requirement-graph graph-root">-->
-            <!--<li class="requirement-graph-item item-root" ng-repeat="child in dataModel.children" ng-include="'tree_item_renderer.html'"></li>-->
-        <!--</ul>-->
+        <ul class="requirement-graph graph-root">
+            <li class="requirement-graph-item item-root" ng-repeat="child in dataModel.children" ng-include="'tree_item_renderer.html'"></li>
+        </ul>
     </ion-content>
 </ion-view>

@@ -6,6 +6,7 @@
 
 var ReqApp = angular.module('RequirementsApp', [
     'ui.router',
+    'ui.bootstrap',
     'ionic',
 
     'requirements.editor.templates'
@@ -105,4 +106,4 @@ require('../app/services/RequirementsService');
 require('../app/controllers/RequirementsController');
 require('../app/controllers/RequirementDetailsController');
 
-require('../app/controllers/RequirementsController');
+require('../app/controllers/EditRequirementController');
