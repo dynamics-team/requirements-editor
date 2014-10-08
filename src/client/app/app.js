@@ -39,3 +39,4 @@ require('./services/RequirementsService');
 require('./controllers/RequirementsController');
 require('./controllers/RequirementDetailsController');
 require('./controllers/EditRequirementController');
+require('./controllers/NewRequirementController');

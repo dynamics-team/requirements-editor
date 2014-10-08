@@ -89,6 +89,19 @@
            };
            return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
        };
+
+       this.addNewRequirement = function (data) {
+           var deferred = $q.defer();
+           deferred.reject('Not Implemented!');
+           return deferred.promise;
+       };
+
+       this.updateRequirement = function (title, reqData) {
+           var deferred = $q.defer();
+           deferred.reject('Not Implemented!');
+           return deferred.promise;
+       };
+
    });
    angular.bootstrap(document, ['RequirementsApp']);
 </script>

@@ -1,0 +1,18 @@
+<form>
+    <div class="modal-header">
+        <h3 class="modal-title">New Requirement</h3>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6">
+                <span class="title">Name</span>
+                <input type="text" class="form-control" data-ng-model="data.name">
+            </div>
+        </div>
+    </div>
+    <!--TODO: Add users permissions-->
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</form>
