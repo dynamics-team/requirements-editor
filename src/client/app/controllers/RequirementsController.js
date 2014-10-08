@@ -80,4 +80,19 @@ angular.module('RequirementsApp').controller('RequirementsController', function 
                 console.error('Could not get getByName', reason);
             });
     };
+
+    $scope.deleteItem = function (title) {
+        RequirementsService.deleteByName(title)
+            .then(function (data) {
+                console.log(data);
+                refreshData();
+            })
+            .catch(function (reason) {
+                console.log(reason);
+            });
+    };
+
+    $scope.editUsers = function (title) {
+        console.log('')
+    };
 });

@@ -14,6 +14,11 @@ angular.module('RequirementsApp').service('RequirementsService', function ($q, $
             url = baseUrl + 'requirement/';
         $http.get(url)
             .success(function (data, status, headers, config) {
+                var currentUser = headers()['x-user-id'],
+                    i;
+                for (i = 0; i < data.length; i += 1) {
+                    data[i].permissionLevel = self._getPermissionLevel(currentUser, data[i]);
+                }
                 deferred.resolve(data);
             })
             .error(function (data, status, headers, config) {
@@ -29,6 +34,8 @@ angular.module('RequirementsApp').service('RequirementsService', function ($q, $
             url = baseUrl + 'requirement/' + name;
         $http.get(url)
             .success(function (data, status, headers, config) {
+                var currentUser = headers()['x-user-id'];
+                data.permissionLevel = self._getPermissionLevel(currentUser, data);
                 deferred.resolve(data);
             })
             .error(function (data, status, headers, config) {
@@ -69,10 +76,25 @@ angular.module('RequirementsApp').service('RequirementsService', function ($q, $
         return deferred.promise;
     };
 
+    this.getUsers = function () {
+        var deferred = $q.defer(),
+            url = baseUrl + 'user/';
+        $http.get(url)
+            .success(function (data, status, headers, config) {
+                deferred.resolve(data);
+            })
+            .error(function (data, status, headers, config) {
+                console.error(data);
+                deferred.reject(status);
+            });
+
+        return deferred.promise;
+    };
+
     this.deleteByName = function (name) {
         var deferred = $q.defer(),
             url = baseUrl + 'requirement/' + name;
-        $http.get(url)
+        $http.delete(url)
             .success(function (data, status, headers, config) {
                 deferred.resolve(data);
             })
@@ -101,11 +123,27 @@ angular.module('RequirementsApp').service('RequirementsService', function ($q, $
             flatRequirements: true,
             flatCategories: true,
             requirementDetails: true,
-            $$hashKey: true
+            $$hashKey: true,
+            permissionLevel: true
         };
         if (illegals[key]) {
             return undefined;
         }
         return value;
+    };
+
+    this._getPermissionLevel = function (currentUser, data) {
+        var level = 0;
+        if (data.auth_admin.indexOf(currentUser) > -1) {
+            level = 3;
+        } else if (data.auth_write.indexOf(currentUser) > -1) {
+            level = 2;
+        } else if (data.auth_read.indexOf(currentUser) > -1) {
+            level = 1;
+        } else {
+            console.warn('User did not have any permission for..', data);
+        }
+
+        return level;
     };
 });
