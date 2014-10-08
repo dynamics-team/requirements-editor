@@ -1,5 +1,6 @@
 <ion-view title="{{dataModel.title}}">
     <ion-content class="padding">
+        <a class="button button-clear button-dark" href="#/tab/requirements">View all requirements</a>
 
         <h2>Categories</h2>
         <ion-list>
@@ -10,6 +11,17 @@
                                    ng-click="edit(cat)">
                     Edit
                 </ion-option-button>
+
+                <ion-option-button class="button-balanced"
+                                   ng-click="duplicate(cat)">
+                    Duplicate
+                </ion-option-button>
+
+                <ion-option-button class="button-energized"
+                                   ng-click="newChild(cat)">
+                    New Child
+                </ion-option-button>
+
 
                 <ion-option-button class="button-assertive"
                                    ng-click="delete(cat)">

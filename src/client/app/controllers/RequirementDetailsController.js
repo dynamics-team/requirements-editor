@@ -12,7 +12,11 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
                 categoryId: true,
                 isSelected: true,
                 inSelections: true,
-                isReq: true
+                isReq: true,
+                flatRequirements: true,
+                flatCategories: true,
+                requirementDetails: true,
+                $$hashKey: true
             };
             if (illegals[key]) {
                 return undefined;
@@ -37,6 +41,9 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
             }
         },
         refreshData = function () {
+            $scope.dataModel.children = [];
+            $scope.dataModel.flatRequirements = {};
+            $scope.dataModel.flatCategories = {};
             RequirementsService.getByName(reqName)
                 .then(function (data) {
                     console.log(data);
@@ -44,7 +51,7 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
                     flatten(data.children);
                 })
                 .catch(function (reason) {
-                    console.log(reason);
+                    console.error('Could not get getByName', reason);
                 });
         },
         categorySelectionChanged = function (children, toAdd) {
@@ -76,13 +83,24 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
         });
 
         modalInstance.result.then(function (returnData) {
-            var key;
+            var key,
+                jsonStr;
             for (key in returnData) {
                 if (returnData.hasOwnProperty(key) && key !== 'isReq') {
                     data[key] = returnData[key];
                 }
             }
-            // TODO: Save to data-base and then refresh data
+            jsonStr = JSON.stringify($scope.dataModel, replacer, 0);
+            console.log(jsonStr);
+            console.log(JSON.parse(jsonStr));
+            RequirementsService.postRequirement(jsonStr)
+                .then(function (rData) {
+                    console.log('Data-base updated with changes, rData:', rData);
+                    refreshData();
+                })
+                .catch(function (reason) {
+                    console.error('Could not save requirement', reason);
+                });
         }, function () {
             console.log('Modal dismissed at: ' + new Date());
         });

@@ -208,7 +208,7 @@ gulp.task('compile-library-styles', function () {
             path.dirname = '';
         }))
         .pipe(concat(libraryName + '.css'))
-        .pipe(gulp.dest(buildPaths.root));
+        .pipe(gulp.dest(buildPathsMobile.styles));
 });
 
 gulp.task('compile-library-images', function () {

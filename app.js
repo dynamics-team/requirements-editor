@@ -2,6 +2,8 @@
  *
  * if you turn off auth, you can test like this:
  * curl -d {\"title\":\"posted\"} -H "Content-Type: application/json" http://127.0.0.1:8844/requirement/
+ * curl -X PUT -d {\"title\":\"posted\",\"children\":123} -H "Content-Type: application/json" http://127.0.0.1:8844/requirement/posted
+ * curl http://127.0.0.1:8844/requirement/posted
  * curl -X DELETE http://127.0.0.1:8844/requirement/posted
  */
 
@@ -65,6 +67,7 @@ function start() {
 
     app.use(function (req, res, next) {
         if (req.isAuthenticated()) {
+            // req.session.passport.user = req.session.passport.user || "fake";
             return next();
         }
         if (req.path.substr(0, 6) === '/auth/') {
@@ -173,6 +176,11 @@ function start() {
             auth_write: [String],
             auth_admin: [String]
         });
+    function cleanRequirement(doc) {
+        delete doc._id;
+        delete doc.__v;
+        return doc;
+    };
 
     // index requirements
     // TODO: index nested document
@@ -183,9 +191,8 @@ function start() {
     app.get('/requirement/', function (req, res) {
         Requirement.find({auth_read: req.session.passport.user})
             .select('-children')
-            .select('-__v')
             .exec(function (err, docs) {
-            res.json(docs);
+            res.json(docs.map(function (v) { return cleanRequirement(v.toObject()); }));
         });
     });
 
@@ -199,11 +206,11 @@ function start() {
                 res.send(404);
                 return;
             }
-            res.json(docs[0]);
+            res.json(cleanRequirement(docs[0].toObject()));
         });
     });
 
-    app.post('/requirement/', function (req, res) {
+    function getReqJSON(req, callback) {
         var bodyStr = '';
         req.setEncoding('utf8');
         req.on("data", function (chunk) {
@@ -211,21 +218,60 @@ function start() {
         });
         req.on("end", function () {
             try {
-                var requirement = new Requirement(JSON.parse(bodyStr));
+                var json = JSON.parse(bodyStr);
             } catch (e) {
             }
+            callback(json);
+        });
+    };
+
+    app.post('/requirement/', function (req, res) {
+        getReqJSON(req, function(requirement) {
             if (!requirement || !requirement.title) {
                 res.send(400);
                 return;
             }
-            requirement.auth_read.push(req.session.passport.user);
-            requirement.auth_write.push(req.session.passport.user);
-            requirement.auth_admin.push(req.session.passport.user);
-            // FIXME check if exists and no perms
-            Requirement.findOneAndUpdate({title: requirement.title}, requirement, {upsert: true}, function (err, doc) {
+            Requirement.findOne({title: requirement.title}, function (err, doc) {
+                if (err || doc)
+                    return res.send(409);
+                requirement = new Requirement(requirement);
+                requirement.auth_read = [req.session.passport.user];
+                requirement.auth_write = [req.session.passport.user];
+                requirement.auth_admin = [req.session.passport.user];
+                requirement.save(function (err) {
+                    if (err)
+                        return res.status(500).send({ error: err });
+                    res.status(200).send('created');
+                });
+            });
+        });
+    });
+
+    app.put('/requirement/:title', function (req, res) {
+        if (!req.params.title) {
+            res.send(400);
+            return;
+        }
+        getReqJSON(req, function(requirement) {
+            if (!requirement || !requirement.title) {
+                res.send(400);
+                return;
+            }
+            Requirement.findOne({title: requirement.title}, function (err, doc) {
                 if (err)
-                    return res.send(500, { error: err });
-                return res.json(doc);
+                    return res.status(500).end();
+                if (doc === null)
+                    return res.status(404).end();
+                RequirementSchema.eachPath(function (key) {
+                    if (key in requirement) {
+                        doc[key] = requirement[key];
+                    }
+                });
+                doc.save(function (err) {
+                    if (err)
+                        return res.status(500).send({ error: err });
+                    res.status(200).send('updated');
+                });
             });
         });
     });
@@ -235,8 +281,14 @@ function start() {
             res.send(400);
             return;
         }
-        Requirement.find({ title: req.params.title, auth_admin: req.session.passport.user }).remove(function (doc) {
-            res.send(200);
+        Requirement.findOneAndRemove({ title: req.params.title, auth_admin: req.session.passport.user }, {}, function(err, doc) {
+            if (err)
+                return res.send(500);
+            if (doc) {
+                res.send(200);
+            } else {
+                res.send(404);
+            }
         });
     });
 
@@ -249,26 +301,18 @@ function start() {
     // http://localhost:9200/requirements-editor/requirement/_search?q=WalkieTalkieMass
 
     // This server's API
-    // http://localhost:8844/search/?search_query=WalkieTalkieMass&per_page=1&page=1
+    // http://localhost:8844/search/?q=WalkieTalkieMass&per_page=1&page=1
     app.get('/search', function (req, res) {
         var pageNum = req.param('page', 1),
             perPage = req.param('per_page', 15),
-            userQuery = req.param('search_query'),
+            userQuery = req.param('q'),
             userId = req.session.userId;
 
         esClient.search({
             index: 'requirements-editor',
             from: (pageNum - 1) * perPage,
             size: perPage,
-            body: {
-                query: {
-                    match: {
-                        // match the query against all of
-                        // the fields in the posts index
-                        _all: userQuery
-                    }
-                }
-            }
+            q: userQuery
         }, function (error, response) {
             if (error) {
                 // handle error

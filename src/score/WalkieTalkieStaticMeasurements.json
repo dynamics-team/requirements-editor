@@ -1,0 +1,51 @@
+{
+    "Status": "OK",
+    "Parameters": [],
+    "Created": "",
+    "Artifacts": [],
+    "TierLevel": 0,
+    "DesignName": "MyDesign_1",
+    "LimitChecks": [],
+    "Metrics": [
+        {
+            "Description": "The mass of the walkie-talkie; Must be less than 250 grams, ideal is 100",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 0.045632548420690006,
+            "ID": null,
+            "Unit": "kg",
+            "Name": "WalkieTalkieMass"
+        },
+        {
+            "Description": "The length of the walkie-talkie; Must be less than 150 mm, ideal is 80",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 0.12325806295033544,
+            "ID": null,
+            "Unit": "m",
+            "Name": "WalkieTalkieLength"
+        },
+        {
+            "Description": "The width across the face of the walkie-talkie; Must be less than 70 mm, ideal is 40",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 0.057040294008329516,
+            "ID": null,
+            "Unit": "m",
+            "Name": "WalkieTalkieWidth"
+        },
+        {
+            "Description": "The depth of the walkie-talkie; Must be less than 50 mm, ideal is 30",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 0.035981284650042654,
+            "ID": null,
+            "Unit": "m",
+            "Name": "WalkieTalkieDepth"
+        }
+    ],
+    "DesignID": "",
+    "Steps": [],
+    "TestBench": "WalkieTalkieStaticMeasurements",
+    "PCCResults": {}
+}

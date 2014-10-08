@@ -81,36 +81,24 @@ var ReqApp = angular.module('RequirementsApp', [
     });
 
 
+// custom overrides
 require('./constants/constants.js');
 
 
-ReqApp.controller('SearchController', function ($scope) {
-    $scope.results = [
-        {
-            name: 'rq 1',
-            type: 'requirement'
-        },
-        {
-            name: 'score result 1',
-            type: 'score'
-        },
-        {
-            name: 'rq 2',
-            type: 'requirement'
-        },
-        {
-            name: 'test result 12',
-            type: 'test'
-        }
-    ];
-
+ReqApp.controller('DebugController', function ($scope) {
     $scope.window = window;
+    $scope.platform = ionic.Platform.platform();
+    $scope.device = ionic.Platform.device();
 });
 
 // Include the Service
 require('../app/services/RequirementsService');
+require('../app/services/SearchService');
+
 // Include the controllers
 require('../app/controllers/RequirementsController');
 require('../app/controllers/RequirementDetailsController');
 
 require('../app/controllers/EditRequirementController');
+
+require('../app/controllers/SearchController');
