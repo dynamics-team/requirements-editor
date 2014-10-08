@@ -50,14 +50,15 @@ var score = function () {
     var args = process.argv.slice(2),// get application arguments, i.e. file names passed in
         rqmtFileName = args[0], // get the requirement file
         designFileNames = [],
-        i;
+        i,
+        designName;
 
     for (i = 1; i < args.length; i += 1) {
         designFileNames.push(args[i]);
     }
 
-    processDesigns(designFileNames);
-    processRqmtFile(rqmtFileName);
+    designName = processDesigns(designFileNames);
+    processRqmtFile(rqmtFileName, designName);
 };
 
 /**
@@ -66,12 +67,18 @@ var score = function () {
  */
 var processDesigns = function (filenames) {
     var i,
-        design;
+        design,
+        designName;
 
     for (i = 0; i < filenames.length; i += 1) {
         design = require('./' + filenames[i]);
+        if (!designName) {
+            designName = design.DesignName;
+        }
         getMetricsFromDesign(design);
     }
+
+    return designName;
 };
 
 /**
@@ -106,10 +113,10 @@ var getMetricsFromDesign = function (design) {
  * value is information needed to calculate the score for each metric along with parentNode
  * @param filename - name of requirement file
  */
-var processRqmtFile = function (filename) {
+var processRqmtFile = function (filename, designName) {
     var root = require('./' + filename),
         result,
-        outFileName = path.resolve(__dirname, 'result_' + filename);
+        outFileName = path.join(__dirname, designName + '_result.json');
 
     root = processRqmt(root);
     result = generateOutput(root);
