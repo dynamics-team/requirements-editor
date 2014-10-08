@@ -36,7 +36,7 @@ function generateTestBenchManifests (requirementsMap, seedDesignName, numberResu
             var uniqueName = tbName + '_' + dName;
             var tb;
 
-            giveMetricValues(metric, requirement, resultsShouldPass);
+            giveMetricValues(metric, requirement);
 
             if (testbenchManifestGrid.hasOwnProperty(dName)) {
                 if (testbenchManifestGrid[dName].hasOwnProperty(tbName)) {
