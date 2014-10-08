@@ -6,6 +6,7 @@
 angular.module('RequirementsApp').controller('RequirementsController', function (RequirementsService, $scope) {
     'use strict';
     var refreshData = function () {
+        $scope.dataModel.requirements = [];
         RequirementsService.listAll()
             .then(function (data) {
                 console.log(data);
@@ -20,6 +21,21 @@ angular.module('RequirementsApp').controller('RequirementsController', function 
     };
     console.log('RequirementsController');
     refreshData();
+
+    $scope.create = function () {
+        var newReq = {
+            title: 'NewTest',
+            children: []
+        };
+        RequirementsService.postRequirement(JSON.stringify(newReq, null, 0))
+            .then(function (rData) {
+                console.log('Data-base updated with changes, rData:', rData);
+                refreshData();
+            })
+            .catch(function (reason) {
+                console.error('Could not save requirement', reason);
+            });
+    };
 
     $scope.duplicate = function (currTitle) {
         RequirementsService.getByName(currTitle)
