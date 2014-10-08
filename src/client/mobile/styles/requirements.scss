@@ -11,3 +11,8 @@ div.modal {
 
   overflow-y: scroll;
 }
+
+// fix up slide menus
+ion-option-button.button {
+  line-height: 49px;
+}
