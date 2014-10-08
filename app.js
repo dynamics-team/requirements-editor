@@ -2,6 +2,8 @@
  *
  * if you turn off auth, you can test like this:
  * curl -d {\"title\":\"posted\"} -H "Content-Type: application/json" http://127.0.0.1:8844/requirement/
+ * curl -X PUT -d {\"title\":\"posted\",\"children\":123} -H "Content-Type: application/json" http://127.0.0.1:8844/requirement/posted
+ * curl http://127.0.0.1:8844/requirement/posted
  * curl -X DELETE http://127.0.0.1:8844/requirement/posted
  */
 
@@ -225,7 +227,7 @@ function start() {
             }
             Requirement.findOne({title: requirement.title}, function (err, doc) {
                 if (err || doc)
-                    return res.status(409).send();
+                    return res.send(409);
                 requirement = new Requirement(requirement);
                 requirement.auth_read = [req.session.passport.user];
                 requirement.auth_write = [req.session.passport.user];
@@ -234,6 +236,45 @@ function start() {
                     if (err)
                         return res.status(500).send({ error: err });
                     res.status(200).send('created');
+                });
+            });
+        });
+    });
+
+    app.put('/requirement/:title', function (req, res) {
+        if (!req.params.title) {
+            res.send(400);
+            return;
+        }
+        var bodyStr = '';
+        req.setEncoding('utf8');
+        req.on("data", function (chunk) {
+            bodyStr += chunk.toString();
+        });
+        req.on("end", function () {
+            try {
+                var requirement = JSON.parse(bodyStr);
+            } catch (e) {
+            }
+            if (!requirement || !requirement.title) {
+                res.send(400);
+                return;
+            }
+            Requirement.findOne({title: requirement.title}, function (err, doc) {
+                if (err)
+                    return res.status(500).end();
+                if (doc === null)
+                    return res.status(404).end();
+                var docObj = doc.toObject();
+                RequirementSchema.eachPath(function (key) {
+                    if (key in requirement) {
+                        doc[key] = requirement[key];
+                    }
+                });
+                doc.save(function (err) {
+                    if (err)
+                        return res.status(500).send({ error: err });
+                    res.status(200).send('updated');
                 });
             });
         });
