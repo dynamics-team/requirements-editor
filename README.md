@@ -23,6 +23,15 @@ Visit [http://localhost:8844/](http://localhost:8844/). On android emulator use 
 
 For development mode use: `node node_modules/gulp/bin/gulp.js dev`
 
+For deployment use: 
+```bash
+...
+node app.js config_zsolt-ws.json
+...
+node node_modules\gulp\bin\gulp.js compile-all --config config_zsolt-ws.json`
+...
+```
+
 ### Add a new requirement ###
 
 Make sure the file conforms to the expected format.
