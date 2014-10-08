@@ -32,7 +32,7 @@ angular.module('RequirementsApp').controller('RequirementsController', function 
             modalInstance.result.then(function (newReq) {
                 defaultData.title = newReq.name;
                 //TODO: Add the users...
-                RequirementsService.addNewRequirement(JSON.stringify(defaultData, null, 0))
+                RequirementsService.addNewRequirement(JSON.stringify(defaultData, RequirementsService.jsonReplacer, 0))
                     .then(function (rData) {
                         console.log('Data-base updated with changes, rData:', rData);
                         refreshData();

@@ -6,23 +6,6 @@
 angular.module('RequirementsApp').controller('RequirementDetailsController', function (RequirementsService, $scope, $stateParams, $modal) {
     'use strict';
     var reqName = $stateParams.requirementId,
-        replacer = function (key, value) { // This will be used to clean-up the ui data before posting to the data-base.
-            var illegals = {
-                id: true,
-                categoryId: true,
-                isSelected: true,
-                inSelections: true,
-                isReq: true,
-                flatRequirements: true,
-                flatCategories: true,
-                requirementDetails: true,
-                $$hashKey: true
-            };
-            if (illegals[key]) {
-                return undefined;
-            }
-            return value;
-        },
         flatten = function (children, parentId) {
             var i,
                 id;
@@ -90,7 +73,7 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
                     data[key] = returnData[key];
                 }
             }
-            jsonStr = JSON.stringify({children: $scope.dataModel.children}, replacer, 0);
+            jsonStr = JSON.stringify({children: $scope.dataModel.children}, RequirementsService.jsonReplacer, 0);
             console.log(jsonStr);
             console.log(JSON.parse(jsonStr));
             RequirementsService.updateRequirement($scope.dataModel.title, jsonStr)

@@ -90,4 +90,22 @@ angular.module('RequirementsApp').service('RequirementsService', function ($q, $
         };
         return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
     };
+
+    this.jsonReplacer = function (key, value) {
+        var illegals = {
+            id: true,
+            categoryId: true,
+            isSelected: true,
+            inSelections: true,
+            isReq: true,
+            flatRequirements: true,
+            flatCategories: true,
+            requirementDetails: true,
+            $$hashKey: true
+        };
+        if (illegals[key]) {
+            return undefined;
+        }
+        return value;
+    };
 });
