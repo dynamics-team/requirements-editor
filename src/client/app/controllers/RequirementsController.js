@@ -39,7 +39,10 @@ angular.module('RequirementsApp').controller('RequirementsController', function 
                     })
                     .catch(function (reason) {
                         if (reason === 409) {
+                            console.warn('Name already existed in data-base..Could be from another user.');
                             promptNewRequirement({name: 'Name already existed in data-base..'});
+                        } else {
+                            console.error('Something went really wrong..');
                         }
                     });
             }, function () {
@@ -55,7 +58,6 @@ angular.module('RequirementsApp').controller('RequirementsController', function 
 
     $scope.create = function () {
         promptNewRequirement({
-            title: 'Enter unique name of requirement.',
             children: [{
                 "name": "RootCategory",
                 "weightNeg": 1,
@@ -68,6 +70,14 @@ angular.module('RequirementsApp').controller('RequirementsController', function 
     };
 
     $scope.duplicate = function (currTitle) {
-        promptNewRequirement({name: currTitle + '(Copy)'});
+        RequirementsService.getByName(currTitle)
+            .then(function (data) {
+                console.log('about ot duplicate', data);
+                delete data.title;
+                promptNewRequirement(data);
+            })
+            .catch(function (reason) {
+                console.error('Could not get getByName', reason);
+            });
     };
 });
