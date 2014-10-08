@@ -1,4 +1,7 @@
-exports.init = function(User, app) {
+var model = require('./model');
+var User =  model.User;
+
+exports.init = function(app) {
     var SESSION_PARAMS = global.CONFIG.sessionParameters;
 
     var passport = require('passport'),
