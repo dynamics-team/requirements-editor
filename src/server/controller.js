@@ -237,23 +237,33 @@ exports.init = function(app, esClient) {
         });
     });
 
+    var generateResults = require('../../sandbox/jklingler/generateResults');
     app.post('/generate_results/:requirement', function (req, res) {
-        if (!req.query.requirement)
+        if (!req.params.requirement) {
+            console.log('here');
             return res.send(400);
-        model.Requirement.findOne({title: req.query.requirement, auth_read: req.session.passport.user}, function (err, doc) {
+        }
+        model.Requirement.findOne({title: req.params.requirement, auth_read: req.session.passport.user}, function (err, doc) {
             if (err)
                 return res.send(500);
             var num = req.query.n || 1;
-            var results = generateResults(doc, num); // TODO
-            for (var i = 0; i < results.length; i++) {
+            var results = generateResults.generateResults(doc, num);
+            for (var i = 0; i < results.length; i += 1) {
                 var result = new model.Result();
                 result.requirement = req.query.requirement;
                 result.auth_read = doc.auth_read;
                 result.auth_write = doc.auth_write;
                 result.auth_admin = doc.auth_admin;
                 result.testbench_manifests = results[i];
-                result.save();
+                result.save(function (err) {
+                    if (err)
+                        console.log(err);
+                        //return res.status(500).send({ error: err });
+                    //res.status(200).send('created');
+                });
             }
+            // TODO: fix me we need to wait for all async calls and then return?
+            res.send(200);
         });
     });
 
