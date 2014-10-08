@@ -2,7 +2,7 @@
  *
  * if you turn off auth, you can test like this:
  * curl -d {\"title\":\"posted\"} -H "Content-Type: application/json" http://127.0.0.1:8844/requirement/
- * curl -X PUT -d {\"title\":\"posted\",\"children\":123} -H "Content-Type: application/json" http://127.0.0.1:8844/requirement/posted
+ * curl -X PUT -d {\"children\":123} -H "Content-Type: application/json" http://127.0.0.1:8844/requirement/posted
  * curl http://127.0.0.1:8844/requirement/posted
  * curl -X DELETE http://127.0.0.1:8844/requirement/posted
  */
@@ -180,7 +180,7 @@ function start() {
         delete doc._id;
         delete doc.__v;
         return doc;
-    };
+    }
 
     // index requirements
     // TODO: index nested document
@@ -253,11 +253,12 @@ function start() {
             return;
         }
         getReqJSON(req, function(requirement) {
-            if (!requirement || !requirement.title) {
+            if (!requirement) {
                 res.send(400);
                 return;
             }
-            Requirement.findOne({title: requirement.title}, function (err, doc) {
+            delete requirement.title; // we don't allow the title to be changed
+            Requirement.findOne({title: req.params.title}, function (err, doc) {
                 if (err)
                     return res.status(500).end();
                 if (doc === null)
