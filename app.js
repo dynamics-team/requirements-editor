@@ -90,7 +90,9 @@ function start() {
                 instance.children = [
                     JSON.parse(fs.readFileSync('sandbox/jklingler/Examples/Radio/TopLevelRequirementGroup.json', {encoding: 'utf-8'}))
                 ];
-                instance.auth_read.push(req.session.passport.user);
+                instance.auth_read = [req.session.passport.user];
+                instance.auth_write = [req.session.passport.user];
+                instance.auth_admin = [req.session.passport.user];
                 instance.save(function (err) {
                     next();
                 });
