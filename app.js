@@ -258,7 +258,7 @@ function start() {
                 return;
             }
             delete requirement.title; // we don't allow the title to be changed
-            Requirement.findOne({title: req.params.title}, function (err, doc) {
+            Requirement.findOne({title: req.params.title, auth_write: req.session.passport.user}, function (err, doc) {
                 if (err)
                     return res.status(500).end();
                 if (doc === null)
