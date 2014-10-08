@@ -1,14 +1,4 @@
-<ion-view>
-    <ion-header-bar>
-        <!--<div class="buttons">-->
-            <!--<button class="button button-icon icon ion-navicon"></button>-->
-        <!--</div>-->
-        <h1  class="title">Requirements</h1>
-        <!--<div class="buttons">-->
-            <!--<button class="button button-clear button-positive">Edit</button>-->
-        <!--</div>-->
-    </ion-header-bar>
-
+<ion-view title="Requirements">
     <ion-content class="padding">
         <ion-list>
             <ion-item ng-repeat="req in dataModel.requirements"  type="item-text-wrap" href="#/tab/requirements/{{req.title}}">

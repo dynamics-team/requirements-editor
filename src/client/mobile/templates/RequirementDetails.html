@@ -1,16 +1,7 @@
-<ion-view>
-    <ion-header-bar>
-        <!--<div class="buttons">-->
-        <!--<button class="button button-icon icon ion-navicon"></button>-->
-        <!--</div>-->
-        <h1  class="title">Requirement root - {{dataModel.title}}</h1>
-        <!--<div class="buttons">-->
-        <!--<button class="button button-clear button-positive">Edit</button>-->
-        <!--</div>-->
-    </ion-header-bar>
-
+<ion-view title="{{dataModel.title}}">
     <ion-content class="padding">
 
+        <h2>Categories</h2>
         <ion-list>
             <ion-item ng-repeat="cat in dataModel.flatCategories"  type="item-text-wrap">
                 {{cat.name}}
@@ -26,5 +17,32 @@
                 </ion-option-button>
             </ion-item>
         </ion-list>
+
+        <h2>Requirements</h2>
+        <div class="card" ng-repeat="req in dataModel.flatRequirements">
+            <div class="item item-divider">
+                {{req.name}}
+
+            </div>
+
+
+            <div class="item item-text-wrap">
+                <p>{{req.description}}</p>
+                <div>{{req.testBench}}.{{req.metricName}}</div>
+
+                    <span>Objective[{{req.objective}}] - </span>
+                    <span>Threshold[{{req.threshold}}] - </span>
+                    <span>Unit[{{req.unit}}]</span>
+
+                <div class="button-bar">
+                    <button class="button button-light button-clear button-positive" ng-click="edit(req)">Edit</button>
+                    <button class="button button-light button-clear button-balanced">Duplicate</button>
+                    <button class="button button-light button-clear button-assertive">Delete</button>
+                </div>
+            </div>
+            <!--<div class="item item-divider">-->
+                <!--I'm a Footer in a Card!-->
+            <!--</div>-->
+        </div>
     </ion-content>
 </ion-view>

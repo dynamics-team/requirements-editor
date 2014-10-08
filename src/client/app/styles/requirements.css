@@ -1,3 +1,5 @@
+div.requirement-listing span.title {
+  font-size: 24px; }
 div.requirement-listing table {
   border-style: solid;
   border-width: 2px; }
@@ -16,6 +18,12 @@ div.requirement-listing .edit-buttons-details {
   text-align: right; }
 div.requirement-listing span.details-header {
   font-weight: bold; }
+
+a.selected {
+  font-weight: bold; }
+
+a.in-selections {
+  background-color: lightgreen; }
 
 div.modal-body .row {
   padding: 7px 1px; }

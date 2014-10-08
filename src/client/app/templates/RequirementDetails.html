@@ -1,7 +1,7 @@
 <div>
     <h1>{{dataModel.title}}</h1>
     <script type="text/ng-template"  id="tree_item_renderer.html">
-        {{child.name}}
+        <a ng-class="{'selected': child.isSelected, 'in-selections': child.inSelections > 0}" ng-click="onSelection(child)">{{child.name}}</a>
         <ul class="requirement-graph">
             <li class="requirement-graph-item" data-ng-repeat="child in child.children" ng-include="'tree_item_renderer.html'">
         </ul>
@@ -13,27 +13,46 @@
         </ul>
     </div>
 
+    <div class="requirement-listing categories-table col-lg-4">
+        <span class="title">Categories</span>
+        <table class="table table-striped">
+            <tr class='row' ng-class="{'selected': cat.isSelected}" ng-repeat="cat in dataModel.flatCategories">
+                <td>
+                    <a ng-class="{'selected': cat.isSelected, 'in-selections': cat.inSelections > 0}" ng-click="onSelection(cat)">{{cat.name}}</a>
+                </td>
+                <td class="details" align="left">
+                    <span class="details-header">Description :</span> {{cat.description}}
+                    <br>
+                    <span class="details-header">Priority :</span> {{cat.Priority}}
+                    <br>
+                    <span class="details-header">WeightNeg :</span> {{cat.weightNeg}}
+                    <br>
+                    <span class="details-header">WeightPos :</span> {{cat.weightPos}}
+                    <br>
+                    <div class="edit-buttons-details">
+                        <a class="btn btn-primary" ng-click="edit(cat)">Edit</a>
+                        <a class="btn btn-success" ng-click="duplicate(cat)">Duplicate</a>
+                        <a class="btn btn-danger">Delete</a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
     <div class="requirement-listing requirements-table col-lg-4">
-        <h3>Requirements</h3>
-        <div class="btn-group">
-            <label class="btn btn-default" ng-model="dataModel.requirementListingView" btn-radio="'Default'">Default</label>
-            <label class="btn btn-default" ng-model="dataModel.requirementListingView" btn-radio="'Edit'">Edit</label>
-            <label class="btn btn-default" ng-model="dataModel.requirementListingView" btn-radio="'Details'">Details</label>
-        </div>
+        <span class="title">Requirements
+            <button class="btn btn-default" ng-model="dataModel.requirementDetails" btn-checkbox>Details</button>
+        </span>
+        <br>
         <table class="table table-striped">
             <tr ng-repeat="req in dataModel.flatRequirements">
                 <td>
-                    <a>{{req.name}}</a>
+                    <a ng-class="{'selected': req.isSelected, 'in-selections': req.inSelections > 0}" ng-click="onSelection(req)">{{req.name}}</a>
                 </td>
-                <td class="edit-buttons" align="right" ng-show="dataModel.requirementListingView === 'Edit'">
-                    <a class="btn btn-primary" ng-click="edit(req)">Edit</a>
-                    <a class="btn btn-success">Duplicate</a>
-                    <a class="btn btn-danger">Delete</a>
-                </td>
-                <td class="solo-description" align="left" ng-show="dataModel.requirementListingView === 'Default'">
+                <td class="solo-description" align="left" ng-show="dataModel.requirementDetails === false">
                     {{req.description}}
                 </td>
-                <td class="details" align="left" ng-show="dataModel.requirementListingView === 'Details'">
+                <td class="details" align="left" ng-show="dataModel.requirementDetails">
                     <span class="details-header">Test-Bench :</span> {{req.testBench}}
                     <br>
                     <span class="details-header">Metric Name :</span> {{req.metricName}}
@@ -46,7 +65,7 @@
                     <br>
                     <div class="edit-buttons-details">
                         <a class="btn btn-primary" ng-click="edit(req)">Edit</a>
-                        <a class="btn btn-success">Duplicate</a>
+                        <a class="btn btn-success" ng-click="duplicate(req)">Duplicate</a>
                         <a class="btn btn-danger">Delete</a>
                     </div>
                 </td>
@@ -54,37 +73,5 @@
         </table>
     </div>
 
-    <div class="requirement-listing categories-table col-lg-4">
-        <h3>Categories</h3>
-        <table class="table table-striped">
-            <tr ng-repeat="cat in dataModel.flatCategories">
-                <td>
-                    <a>{{cat.name}}</a>
-                </td>
-                <td class="edit-buttons" align="right">
-                    <a class="btn btn-primary" ng-click="edit(cat)">Edit</a>
-                    <a class="btn btn-success">Duplicate</a>
-                    <a class="btn btn-warning">New Child</a>
-                    <a class="btn btn-danger">Delete</a>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <!--<form role="form">-->
-        <!--<div class="form-group">-->
-            <!--<label for="exampleInputEmail1">Email address</label>-->
-            <!--<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-            <!--<label for="exampleInputPassword1">Password</label>-->
-            <!--<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">-->
-        <!--</div>-->
-        <!--<div class="checkbox">-->
-            <!--<label>-->
-                <!--<input type="checkbox"> Check me out-->
-            <!--</label>-->
-        <!--</div>-->
-        <!--<button type="submit" class="btn btn-default">Submit</button>-->
-    <!--</form>-->
     <a class="btn navbar-btn" ui-sref="requirements">Back</a>
 </div>

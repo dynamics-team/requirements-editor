@@ -1,4 +1,7 @@
 div.requirement-listing {
+  span.title {
+    font-size: 24px;
+  };
   table {
     border-style: solid;
     border-width: 2px;
@@ -19,12 +22,19 @@ div.requirement-listing {
     padding: 4px;
     vertical-align: middle;
   };
+
   .edit-buttons-details {
     text-align: right;
   };
   span.details-header {
     font-weight: bold;
   };
+}
+a.selected {
+  font-weight: bold;
+}
+a.in-selections {
+  background-color: lightgreen;
 }
 div.modal-body {
   .row {
