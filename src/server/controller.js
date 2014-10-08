@@ -1,7 +1,7 @@
 var model = require('./model');
 var express = require('express');
 
-exports.init = function(app) {
+exports.init = function(app, esClient) {
     var User =  model.User;
     // var UserSchema = model.UserSchema;
     var Requirement = model.Requirement;

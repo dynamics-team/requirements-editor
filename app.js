@@ -66,7 +66,7 @@ function start() {
     auth.init(app);
 
     var controller = require('./src/server/controller');
-    controller.init(app);
+    controller.init(app, esClient);
 
     function addTestData() {
         var model = require('./src/server/model');
