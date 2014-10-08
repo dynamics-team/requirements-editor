@@ -9,6 +9,7 @@ var ReqApp = angular.module('RequirementsApp', [
     'ui.bootstrap',
     'ionic',
 
+    'requirements.editor.config',
     'requirements.editor.templates'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
@@ -79,10 +80,6 @@ var ReqApp = angular.module('RequirementsApp', [
             window.location = constants.baseUrl;
         }
     });
-
-
-// custom overrides
-require('./constants/constants.js');
 
 
 ReqApp.controller('DebugController', function ($scope) {
