@@ -43,34 +43,6 @@ var ROUND = 1000;
 
 
 /**
- * pre-process the command line arguments - files
- * and post-process score results
- */
-
-var runScore = function () {
-    var args = process.argv.slice(2),// get application arguments, i.e. file names passed in
-        requirementObj = require('./' + args[0]), // get the requirement file
-        i,
-        design,
-        designName,
-        designObjects = [],
-        output,
-        outFileName;
-
-    for (i = 1; i < args.length; i += 1) {
-        design = require('./' + args[i]);
-        if (!designName) {
-            designName = design.DesignName;
-        }
-        designObjects.push(design); // get an array of testbench result objects
-    }
-
-    output = score(requirementObj, designObjects);
-    outFileName = path.join(__dirname, designName + '_result.json');
-    fs.writeFileSync(outFileName, JSON.stringify(output) , 'utf-8');
-};
-
-/**
  * score design file against requirement file
  */
 var score = function (requirementObj, testbenchObjArray) {
@@ -309,9 +281,3 @@ var convertUnit = function (unit, target) {
 
 
 module.exports = score;
-
-// main entry point
-var fs = require('fs');
-var path = require('path');
-
-runScore();
