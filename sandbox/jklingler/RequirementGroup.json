@@ -1,8 +1,0 @@
-{
-    "name": "Short but meaningful/readable description",
-    "weightNeg": "Real [0,1]",
-    "description": "Full-length, detailed description",
-    "weightPos": "Real [0,1]",
-    "Priority": "any positive integer",
-    "children": []
-}
