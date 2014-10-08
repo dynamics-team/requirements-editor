@@ -17,6 +17,10 @@ node app.js
 
 Visit [http://localhost:8844/](http://localhost:8844/). On android emulator use `10.0.2.2` instead of `localhost`.
 
+[http://localhost:8844/](http://localhost:8844/) redirects to desktop application
+[http://localhost:8844/app/](http://localhost:8844/app/) or to mobile application
+[http://localhost:8844/mobile/](http://localhost:8844/mobile/) based on the user agent type.
+
 For development mode use: `node node_modules/gulp/bin/gulp.js dev`
 
 ### Add a new requirement ###
