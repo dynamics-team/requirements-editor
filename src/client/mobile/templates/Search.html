@@ -3,17 +3,37 @@
         <div class="list list-inset">
             <label class="item item-input">
                 <i class="icon ion-search placeholder-icon"></i>
-                <input type="text" placeholder="Search">
+                <input type="text" placeholder="Search" data-ng-model="search_query" data-ng-change="search(search_query)">
             </label>
         </div>
 
-        <ion-list>
-            <ion-item>
-                {{window.location.origin}}
-            </ion-item>
+        <div data-ng-if="model.data.results && model.data.results.length > 0">
+            Found {{model.data.results.length}} {{model.data.page}}/{{model.data.pages}} page
+        </div>
 
-            <ion-item ng-repeat="result in results">
-                {{result.name}} - {{result.type}}
+        <div class="assertive" data-ng-if="model.data.message">
+            Search is not available. Message: {{model.data.message}}
+        </div>
+
+
+        <ion-list>
+            <ion-item ng-repeat="result in model.data.results">
+
+                <span data-ng-if="result._type !== 'requirement' && result._type !== 'user'">
+                    {{result._type}}
+                </span>
+
+                <!-- TODO: requirements search result template-->
+                <span data-ng-if="result._type === 'requirement'">
+                    {{result._type}}
+                    <a class="positive" href="#/tab/requirements/{{result._source.title}}">
+                        {{result._source.title}}
+                    </a>
+                </span>
+                <!-- TODO: user search result template-->
+                <span data-ng-if="result._type === 'user'">
+                    {{result._type}} {{result._source.displayName}}
+                </span>
             </ion-item>
         </ion-list>
     </ion-content>
