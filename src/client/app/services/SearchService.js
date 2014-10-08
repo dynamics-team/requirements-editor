@@ -12,7 +12,7 @@ angular.module('RequirementsApp').service('SearchService', function ($q, $http, 
 
     this.search = function (search_query) {
         var deferred = $q.defer(),
-            url = baseUrl + 'search/?search_query=' + search_query;
+            url = baseUrl + 'search/?q=' + encodeURIComponent(search_query);
         $http.get(url)
             .success(function (data, status, headers, config) {
                 deferred.resolve(data);

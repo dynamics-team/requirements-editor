@@ -249,26 +249,18 @@ function start() {
     // http://localhost:9200/requirements-editor/requirement/_search?q=WalkieTalkieMass
 
     // This server's API
-    // http://localhost:8844/search/?search_query=WalkieTalkieMass&per_page=1&page=1
+    // http://localhost:8844/search/?q=WalkieTalkieMass&per_page=1&page=1
     app.get('/search', function (req, res) {
         var pageNum = req.param('page', 1),
             perPage = req.param('per_page', 15),
-            userQuery = req.param('search_query'),
+            userQuery = req.param('q'),
             userId = req.session.userId;
 
         esClient.search({
             index: 'requirements-editor',
             from: (pageNum - 1) * perPage,
             size: perPage,
-            body: {
-                query: {
-                    match: {
-                        // match the query against all of
-                        // the fields in the posts index
-                        _all: userQuery
-                    }
-                }
-            }
+            q: userQuery
         }, function (error, response) {
             if (error) {
                 // handle error
