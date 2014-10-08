@@ -173,6 +173,14 @@ function start() {
             auth_write: [String],
             auth_admin: [String]
         });
+    if (!RequirementSchema.options.toObject) RequirementSchema.options.toObject = {};
+    RequirementSchema.options.toObject.transform = function (doc, ret, options) {
+        delete ret._id;
+        delete ret.__v;
+        delete ret.auth_read;
+        delete ret.auth_write;
+        delete ret.auth_admin;
+    };
 
     // index requirements
     // TODO: index nested document
@@ -183,9 +191,8 @@ function start() {
     app.get('/requirement/', function (req, res) {
         Requirement.find({auth_read: req.session.passport.user})
             .select('-children')
-            .select('-__v')
             .exec(function (err, docs) {
-            res.json(docs);
+            res.json(docs.map(function (v) { return v.toObject(); }));
         });
     });
 
@@ -199,7 +206,7 @@ function start() {
                 res.send(404);
                 return;
             }
-            res.json(docs[0]);
+            res.json(docs[0].toObject());
         });
     });
 
@@ -218,9 +225,9 @@ function start() {
                 res.send(400);
                 return;
             }
-            requirement.auth_read.push(req.session.passport.user);
-            requirement.auth_write.push(req.session.passport.user);
-            requirement.auth_admin.push(req.session.passport.user);
+            requirement.auth_read = [req.session.passport.user];
+            requirement.auth_write = [req.session.passport.user];
+            requirement.auth_admin = [req.session.passport.user];
             // FIXME check if exists and no perms
             Requirement.findOneAndUpdate({title: requirement.title}, requirement, {upsert: true}, function (err, doc) {
                 if (err)
