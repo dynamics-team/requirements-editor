@@ -14,9 +14,9 @@ if (process.argv.length > 2) {
 console.log('Using config file ' + configFilename);
 var fs = require('fs');
 var CONFIG = JSON.parse(fs.readFileSync(configFilename, {encoding: 'utf-8'}));
+global.CONFIG = CONFIG;
 
 var MONGO_CONNECTION = CONFIG.mongoConnection; // see http://docs.mongodb.org/manual/reference/connection-string/
-var SESSION_PARAMS = CONFIG.sessionParameters;
 
 var salts;
 try {
@@ -35,13 +35,10 @@ try {
 }
 
 function start() {
-    SESSION_PARAMS.secret = salts.session_secret;
+    CONFIG.sessionParameters.secret = salts.session_secret;
 
-    var mongoose = require('mongoose'),
-        mongoosastic = require('mongoosastic');
-    var mongooseConnection = mongoose.connect(MONGO_CONNECTION);
-    var Schema = mongoose.Schema,
-        ObjectId = Schema.ObjectId;
+    var mongoose = require('mongoose');
+    mongoose.connect(MONGO_CONNECTION);
 
     var elasticsearch = require('elasticsearch');
     var esClient = new elasticsearch.Client({
@@ -58,24 +55,14 @@ function start() {
     app.use(require('cookie-parser')());
     //app.use(express.bodyParser());
 
-    var passport = require('passport'),
-        GoogleStrategy = require('passport-google').Strategy;
+    var model = require('./src/server/model');
+    var User =  model.User;
+    var UserSchema = model.UserSchema;
+    var Requirement = model.Requirement;
+    var RequirementSchema = model.RequirementSchema;
 
-    app.use('/', require('express-session')(SESSION_PARAMS));
-    app.use('/', passport.initialize());
-    app.use('/', passport.session());
-
-    app.use(function (req, res, next) {
-        if (req.isAuthenticated()) {
-            // req.session.passport.user = req.session.passport.user || "fake";
-            res.set('X-User-Id', req.session.passport.user);
-            return next();
-        }
-        if (req.path.substr(0, 6) === '/auth/') {
-            return next();
-        }
-        res.redirect('/auth/google');
-    });
+    var auth = require('./src/server/auth_google');
+    auth.init(User, app);
 
     app.use(function (req, res, next) {
         if (!req.session.passport.user) {
@@ -103,66 +90,8 @@ function start() {
         });
     });
 
-    var UserSchema = new Schema({
-            id: String,
-            displayName: String
-        });
-
-    // index users
-    UserSchema.plugin(mongoosastic, {index: 'requirements-editor'});
-
-    var User = mongoose.model('User', UserSchema);
-
-    passport.use(new GoogleStrategy({
-            returnURL: CONFIG.publicUrl + '/auth/google/return',
-            realm: CONFIG.publicUrl + '/'
-        },
-        function (identifier, profile, done) {
-            /**
-             * identifier= https://www.google.com/accounts/o8/id?id=AIredacted
-             profile= { displayName: 'Kevin Smyth',
-           emails: [ { value: 'kevin.m.smyth@gmail.com' } ],
-             name: { familyName: 'Smyth', givenName: 'Kevin' } }
-             */
-            var user = new User({ id: identifier, displayName: profile.displayName }).toObject();
-            var oldId = user._id;
-            delete user._id;
-            User.findOneAndUpdate({ id: identifier }, user, {upsert: true}, function (err, user) {
-                if (user._id !== oldId) {
-                    // index it
-                    user.index(function (err, res) {
-
-                    });
-                }
-                done(err, user);
-            });
-        }
-    ));
-
-    passport.serializeUser(function (user, done) {
-        done(null, user.id);
-    });
-
-    passport.deserializeUser(function (id, done) {
-        User.findOne({ id: id}, function (err, user) {
-            done(err, user);
-        });
-    });
-
-    app.get('/auth/google', passport.authenticate('google'));
-
-    app.get('/auth/google/return',
-        passport.authenticate('google', { successRedirect: '/', failureRedirect: '/auth/login' }));
-
-    // app.get('/auth/login', TODO user didnt authorize us
-
-    app.get('/auth/', function (req, res) {
-        res.status(200).send(JSON.stringify(req.user));
-    });
-
     app.get('/user', function (req, res) {
         User.find({}, { type: 0 })
-            .select('-id')
             .select('-_id')
             .select('-__v')
             .exec(function (err, docs) {
@@ -170,26 +99,11 @@ function start() {
             });
     });
 
-    var RequirementSchema = new Schema({
-            author: ObjectId,
-            version: Number,
-            title: String,
-            children: {},
-            auth_read: [String],
-            auth_write: [String],
-            auth_admin: [String]
-        });
     function cleanRequirement(doc) {
         delete doc._id;
         delete doc.__v;
         return doc;
     }
-
-    // index requirements
-    // TODO: index nested document
-    RequirementSchema.plugin(mongoosastic, {index: 'requirements-editor'});
-
-    var Requirement = mongoose.model('Requirement', RequirementSchema);
 
     app.get('/requirement/', function (req, res) {
         Requirement.find({auth_read: req.session.passport.user})
