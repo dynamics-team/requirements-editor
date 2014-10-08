@@ -84,13 +84,18 @@ var main = function () {
         for (name in testbenchJsons) {
             var fName = "testbench_manifest.json";
             //var dirName = 'z' + Math.random().toString(36).substring(8);
-            fs.mkdir(name);
-            fs.writeFile(name + '/' + fName, JSON.stringify(testbenchJsons[name], null, 4), function(err) {
+            fs.mkdir(name, function (err) {
                 if(err) {
                     console.log(err);
-                } else {
-                    console.log("The file was saved!");
                 }
+
+                fs.writeFile(name + '/' + fName, JSON.stringify(testbenchJsons[name], null, 4), function(err) {
+                    if(err) {
+                        console.log(err);
+                    } else {
+                        console.log("The file was saved!");
+                    }
+                });
             });
         }
     };
