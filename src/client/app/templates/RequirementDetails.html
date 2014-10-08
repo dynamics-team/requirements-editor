@@ -16,7 +16,7 @@
     <div class="requirement-listing categories-table col-lg-4">
         <span class="title">Categories</span>
         <table class="table table-striped">
-            <tr class='row' ng-class="{'selected': cat.isSelected}" ng-repeat="cat in dataModel.flatCategories">
+            <tr class='row' data-ng-repeat="cat in dataModel.flatCategories | orderBy: 'name' ">
                 <td>
                     <a ng-class="{'selected': cat.isSelected, 'in-selections': cat.inSelections > 0}" ng-click="onSelection(cat)">{{cat.name}}</a>
                 </td>
@@ -34,7 +34,7 @@
                         <a class="btn btn-success" ng-click="duplicate(cat)">Duplicate</a>
                         <a class="btn btn-default" ng-click="createNew(cat, true)">New Requirement</a>
                         <a class="btn btn-warning" ng-click="createNew(cat, false)">New Category</a>
-                        <a class="btn btn-danger">Delete</a>
+                        <a class="btn btn-danger" ng-click="deleteItem(cat)">Delete</a>
                     </div>
                 </td>
             </tr>
@@ -47,7 +47,7 @@
         </span>
         <br>
         <table class="table table-striped">
-            <tr ng-repeat="req in dataModel.flatRequirements">
+            <tr class='row' data-ng-repeat="req in dataModel.flatRequirements | orderBy: 'name'">
                 <td>
                     <a ng-class="{'selected': req.isSelected, 'in-selections': req.inSelections > 0}" ng-click="onSelection(req)">{{req.name}}</a>
                 </td>
@@ -68,7 +68,7 @@
                     <div class="edit-buttons-details">
                         <a class="btn btn-primary" ng-click="edit(req)">Edit</a>
                         <a class="btn btn-success" ng-click="duplicate(req)">Duplicate</a>
-                        <a class="btn btn-danger">Delete</a>
+                        <a class="btn btn-danger" ng-click="deleteItem(req)">Delete</a>
                     </div>
                 </td>
             </tr>

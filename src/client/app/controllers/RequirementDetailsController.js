@@ -155,6 +155,44 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
         $scope.duplicate(defaultData);
     };
 
+    $scope.deleteItem = function (data) {
+        var categoryId = data.categoryId,
+            category,
+            i,
+            index = -1,
+            jsonStr;
+        if (!categoryId) {
+            console.warn('Cannot delete root category');
+            return;
+        }
+        category = $scope.dataModel.flatCategories[categoryId];
+        console.log('Found parent category', category);
+
+        for (i = 0; i < category.children.length; i += 1) {
+            if (category.children[i].id === data.id) {
+                index = i;
+                break;
+            }
+        }
+        if (index > -1) {
+            category.children.splice(index, 1);
+        } else {
+            console.error('Object was not in parent.children...', category, data);
+            return;
+        }
+        jsonStr = JSON.stringify({children: $scope.dataModel.children}, RequirementsService.jsonReplacer, 0);
+        console.log(jsonStr);
+        console.log(JSON.parse(jsonStr));
+        RequirementsService.updateRequirement($scope.dataModel.title, jsonStr)
+            .then(function (rData) {
+                console.log('Data-base updated with changes, rData:', rData);
+                refreshData();
+            })
+            .catch(function (reason) {
+                console.error('Could not save requirement', reason);
+            });
+    };
+
     $scope.dataModel = {
         title: reqName,
         children: [],
