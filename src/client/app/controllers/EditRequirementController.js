@@ -5,13 +5,19 @@
 
 angular.module('RequirementsApp').controller('EditRequirementController', function ($scope, $modalInstance, data) {
     'use strict';
+    var getNumber = function (value, range) {
+        if (typeof value === 'number' && value >= range.min && value <= range.max) {
+            return value;
+        }
+        return 1;
+    };
     $scope.data = {
         isReq: data.hasOwnProperty('children') === false,
         name: data.name,
         description: data.description,
-        weightNeg: data.weightNeg,
-        weightPos: data.weightPos,
-        Priority: data.Priority
+        weightNeg: getNumber(data.weightNeg, {min: 0, max: 1}),
+        weightPos: getNumber(data.weightPos, {min: 0, max: 1}),
+        Priority: getNumber(data.Priority, {min: 0, max: 99999999})
     };
 
     if ($scope.data.isReq) {
@@ -25,6 +31,8 @@ angular.module('RequirementsApp').controller('EditRequirementController', functi
     }
 
     $scope.ok = function () {
+        $scope.data.weightNeg = parseFloat($scope.data.weightNeg);
+        $scope.data.weightPos = parseFloat($scope.data.weightPos);
         $modalInstance.close($scope.data);
     };
 

@@ -6,18 +6,28 @@
 angular.module('RequirementsApp').controller('RequirementDetailsController', function (RequirementsService, $scope, $stateParams, $modal) {
     'use strict';
     var reqName = $stateParams.requirementId,
-        getIdFcn = function (id) {
-            return function () {
-                return id;
+        replacer = function (key, value) { // This will be used to clean-up the ui data before posting to the data-base.
+            var illegals = {
+                id: true,
+                categoryId: true,
+                isSelected: true,
+                inSelections: true,
+                isReq: true
             };
+            if (illegals[key]) {
+                return undefined;
+            }
+            return value;
         },
         flatten = function (children, parentId) {
             var i,
                 id;
             for (i = 0; i < children.length; i += 1) {
                 id = RequirementsService.generateGuid();
-                children[i].getId = getIdFcn(id);
-                children[i].getCategoryId = getIdFcn(parentId);
+                children[i].id = id;
+                children[i].categoryId = parentId;
+                children[i].isSelected = false;
+                children[i].inSelections = 0;
                 if (children[i].hasOwnProperty('children')) {
                     $scope.dataModel.flatCategories[id] = children[i];
                     flatten(children[i].children, id);
@@ -36,7 +46,21 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
                 .catch(function (reason) {
                     console.log(reason);
                 });
+        },
+        categorySelectionChanged = function (children, toAdd) {
+            var i;
+            for (i = 0; i < children.length; i += 1) {
+                if (children[i].hasOwnProperty('children')) {
+                    categorySelectionChanged(children[i].children, toAdd);
+                } else {
+                    children[i].inSelections += toAdd;
+                    if (children[i].inSelections < 0) {
+                        console.error('My logic is bad inSelection is negative...', children[i]);
+                    }
+                }
+            }
         };
+
 
     console.log('RequirementDetailsController');
     console.log(reqName);
@@ -51,8 +75,39 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
             }
         });
 
-        modalInstance.result.then(function (data) {
-            console.log(data);
+        modalInstance.result.then(function (returnData) {
+            var key;
+            for (key in returnData) {
+                if (returnData.hasOwnProperty(key) && key !== 'isReq') {
+                    data[key] = returnData[key];
+                }
+            }
+            // TODO: Save to data-base and then refresh data
+        }, function () {
+            console.log('Modal dismissed at: ' + new Date());
+        });
+    };
+
+    $scope.duplicate = function (data) {
+        var modalInstance,
+            categoryId = data.categoryId;
+        if (!categoryId) {
+            console.warn('Cannot duplicate root category');
+            return;
+        }
+        modalInstance = $modal.open({
+            templateUrl: 'templates/EditRequirement.html',
+            controller: 'EditRequirementController',
+            resolve: {
+                data: function () {
+                    return data;
+                }
+            }
+        });
+
+        modalInstance.result.then(function (returnData) {
+            console.warn(categoryId, returnData);
+            // TODO: Save to data-base and then refresh data
         }, function () {
             console.log('Modal dismissed at: ' + new Date());
         });
@@ -63,8 +118,32 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
         children: [],
         flatRequirements: {},
         flatCategories: {},
-        requirementListingView: 'Default',
-        categoryListingView: 'Default'
+        requirementDetails: false
+    };
+
+    $scope.onSelection = function (data) {
+        var toAdd,
+            categoryId,
+            parent;
+        data.isSelected = !data.isSelected;
+        if (data.isSelected) {
+            toAdd = 1;
+        } else {
+            toAdd = -1;
+        }
+        if (data.hasOwnProperty('children')) {
+            categorySelectionChanged(data.children, toAdd);
+        } else {
+            categoryId = data.categoryId;
+            while (categoryId) {
+                parent = $scope.dataModel.flatCategories[categoryId];
+                parent.inSelections += toAdd;
+                if (parent.inSelections < 0) {
+                    console.error('My logic is bad inSelection is negative...', parent);
+                }
+                categoryId = parent.categoryId;
+            }
+        }
     };
 
     refreshData();
