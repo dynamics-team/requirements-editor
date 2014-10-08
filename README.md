@@ -36,6 +36,6 @@ sudo npm install -g cordova ionic
 ./utils/build_mobile.sh
 
 
-ionic emulate ios
+ionic emulate ios --target="iPhone (Retina 4-inch)"
 ionic emulate android
 ```
