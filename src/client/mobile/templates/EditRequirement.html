@@ -1,17 +1,68 @@
+<div class="bar bar-header bar-light">
+    <h1 class="title">Edit requirement <span data-ng-if="!data.isReq">group</span></h1>
+</div>
+<ion-content>
 <div class="list">
     <label class="item item-input item-stacked-label">
-        <span class="input-label">Requirement Name</span>
+        <span class="input-label">Requirement name</span>
         <input type="text" placeholder="Name" data-ng-model="data.name">
     </label>
     <label class="item item-input item-stacked-label">
-        <span class="input-label">Requirement Name</span>
-        <input type="text" placeholder="Description" data-ng-model="data.description">
+        <span class="input-label">Requirement description</span>
+        <textarea placeholder="Description" data-ng-model="data.description"></textarea>
     </label>
 
-    <button class="button button-block button-positive" data-ng-click="ok()">
-        Save
-    </button>
-    <button class="button button-block button-assertive" data-ng-click="cancel()">
-        Cancel
-    </button>
+    <label class="item item-input item-stacked-label">
+        <span class="input-label">Priority</span>
+        <input type="number" min="0" data-ng-model="data.Priority">
+    </label>
+
+    <label class="item item-input item-stacked-label">
+        <span class="input-label">WeightPos [{{data.weightPos}}]</span>
+        <div class="range range-positive">
+            <input type="range" name="volume" min="0.0" max="1.0" step="0.01" data-ng-model="data.weightPos">
+        </div>
+    </label>
+
+    <label class="item item-input item-stacked-label">
+        <span class="input-label">weightNeg [{{data.weightNeg}}]</span>
+        <div class="range range-positive">
+            <input type="range" name="volume" min="0.0" max="1.0" step="0.01" data-ng-model="data.weightNeg">
+        </div>
+    </label>
+
+    <label class="item item-input item-stacked-label" ng-if="data.isReq">
+        <span class="input-label">Test bench name</span>
+        <input type="text" placeholder="TestBenchName" data-ng-model="data.testBench">
+    </label>
+
+    <label class="item item-input item-stacked-label" ng-if="data.isReq">
+        <span class="input-label">Metric name</span>
+        <input type="text" placeholder="MetricName" data-ng-model="data.metricName">
+    </label>
+
+    <label class="item item-input item-stacked-label" ng-if="data.isReq">
+        <span class="input-label">Objective</span>
+        <input type="number" data-ng-model="data.objective">
+    </label>
+
+    <label class="item item-input item-stacked-label" ng-if="data.isReq">
+        <span class="input-label">Threshold</span>
+        <input type="number" data-ng-model="data.threshold">
+    </label>
+
+    <label class="item item-input item-stacked-label" ng-if="data.isReq">
+        <span class="input-label">Unit</span>
+        <input type="text" placeholder="N/A" data-ng-model="data.unit">
+    </label>
+
+    <div class="button-bar">
+        <button class="button button-clear button-positive" data-ng-click="ok()">
+            Save
+        </button>
+        <button class="button button-clear button-assertive" data-ng-click="cancel()">
+            Cancel
+        </button>
+    </div>
 </div>
+</ion-content>
