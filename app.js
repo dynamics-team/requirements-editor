@@ -79,26 +79,42 @@ function start() {
                 return;
             }
             // test data
-            Requirement.find({ title: 'Radio Example'}, function (err, docs) {
-                if (docs.length === 0) {
-                    console.log('test data was added');
-                    var instance = new Requirement();
-                    instance.title = 'Radio Example';
+            var numberTestDataToCreate = 100;
+            var testDataCounter = numberTestDataToCreate;
+            var title = 'Radio Example ';
 
-                    instance.children = [
-                        JSON.parse(fs.readFileSync('sandbox/jklingler/Examples/Radio/TopLevelRequirementGroup.json', {encoding: 'utf-8'}))
-                    ];
-                    instance.auth_read = [req.session.passport.user];
-                    instance.auth_write = [req.session.passport.user];
-                    instance.auth_admin = [req.session.passport.user];
-                    instance.save(function (err) {
-                        dataCreated = true;
-                        next();
-                    });
-                } else {
+            var createTestDataCounterCallback = function () {
+                testDataCounter -= 1;
+
+                if (testDataCounter === 0) {
                     next();
                 }
-            });
+            };
+
+            for (var i=0;i<numberTestDataToCreate;i++) {
+                var extension = (Math.floor(Math.random()*1000)).toString();
+
+                Requirement.find({ title: title + extension}, function (err, docs) {
+                    if (docs.length === 0) {
+                        console.log('test data (' + i.toString() + ') was added: ' + extension);
+                        var instance = new Requirement();
+                        instance.title = title + extension;
+
+                        instance.children = [
+                            JSON.parse(fs.readFileSync('sandbox/jklingler/Examples/Radio/TopLevelRequirementGroup.json', {encoding: 'utf-8'}))
+                        ];
+                        instance.auth_read = [req.session.passport.user];
+                        instance.auth_write = [req.session.passport.user];
+                        instance.auth_admin = [req.session.passport.user];
+                        instance.save(function (err) {
+                            dataCreated = true;
+                            createTestDataCounterCallback();
+                        });
+                    } else {
+                        createTestDataCounterCallback();
+                    }
+                });
+            }
         });
     }
     addTestData();
