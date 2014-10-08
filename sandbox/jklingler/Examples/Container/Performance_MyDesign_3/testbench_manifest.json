@@ -1,0 +1,51 @@
+{
+    "Status": "OK",
+    "Parameters": [],
+    "Created": "",
+    "Artifacts": [],
+    "TierLevel": 0,
+    "DesignName": "MyDesign_3",
+    "LimitChecks": [],
+    "Metrics": [
+        {
+            "Description": "How fast does the material burn in ambient conditions",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 1.2531665691640228,
+            "ID": null,
+            "Unit": "mm/sec",
+            "Name": "BurnRate"
+        },
+        {
+            "Description": "Minimum pressure the wall materials can withstand",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 3.2691545113921165,
+            "ID": null,
+            "Unit": "kPa",
+            "Name": "MinPressureWall"
+        },
+        {
+            "Description": "Coefficient of kinetic friction between the containers",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 0.23230739347636697,
+            "ID": null,
+            "Unit": "",
+            "Name": "MuKinetic"
+        },
+        {
+            "Description": "Number of containers that can be stacked without failing",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 8.297349760308862,
+            "ID": null,
+            "Unit": "",
+            "Name": "MinHeightStack"
+        }
+    ],
+    "DesignID": "",
+    "Steps": [],
+    "TestBench": "Performance",
+    "PCCResults": {}
+}

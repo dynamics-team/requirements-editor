@@ -1,0 +1,78 @@
+{
+    "Status": "OK",
+    "Parameters": [],
+    "Created": "",
+    "Artifacts": [],
+    "TierLevel": 0,
+    "DesignName": "MyDesign_1",
+    "LimitChecks": [],
+    "Metrics": [
+        {
+            "Description": "Thickness of the container walls",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 0.007057193565415218,
+            "ID": null,
+            "Unit": "m",
+            "Name": "MaxThickness"
+        },
+        {
+            "Description": "Height of the Container",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 0.6650433086324483,
+            "ID": null,
+            "Unit": "m",
+            "Name": "Height"
+        },
+        {
+            "Description": "Width of the Container",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 0.7134085748111829,
+            "ID": null,
+            "Unit": "m",
+            "Name": "Width"
+        },
+        {
+            "Description": "Length of the Container",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 1.2249215778429061,
+            "ID": null,
+            "Unit": "m",
+            "Name": "Length"
+        },
+        {
+            "Description": "Mass of the Storage Container",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 8.495528523344547,
+            "ID": null,
+            "Unit": "kg",
+            "Name": "Mass"
+        },
+        {
+            "Description": "Thickness of the container walls",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 0.0041648234953172505,
+            "ID": null,
+            "Unit": "m",
+            "Name": "MinThickness"
+        },
+        {
+            "Description": "Coefficient of static friction between the containers",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 0.23862238922156392,
+            "ID": null,
+            "Unit": "",
+            "Name": "MuStatic"
+        }
+    ],
+    "DesignID": "",
+    "Steps": [],
+    "TestBench": "PhysicalTraits",
+    "PCCResults": {}
+}

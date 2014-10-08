@@ -7,15 +7,15 @@ import datetime
 
 class TopLevelRequirementsGroup(object):
 
-    def __init__(self):
+    def __init__(self, name):
 
         self.category = True
         self.weight_neg = 1.0  # Real [0,1]
-        self.description = "Full-length, detailed description"
+        self.description = None
         self.weight_pos = 1.0  # Real [0,1]
         self.priority = 1  # any positive integer
-        self.children = []
-        self.name = "Short but meaningful/readable description"
+        self.children = {}
+        self.name = name
 
     def json(self):
 
@@ -25,7 +25,7 @@ class TopLevelRequirementsGroup(object):
             "description": self.description,
             "weightPos": self.weight_pos,
             "Priority": self.priority,
-            "children": [r_group.json for r_group in self.children],
+            "children": [r_group.json() for key, r_group in self.children.iteritems()],
             "name": self.name
         }
 
@@ -34,14 +34,14 @@ class TopLevelRequirementsGroup(object):
 
 class RequirementsGroup(object):
 
-    def __init__(self):
+    def __init__(self, name):
 
         self.weight_neg = 1.0  # Real [0,1]
-        self.description = "Full-length, detailed description"
+        self.description = None
         self.weight_pos = 1.0  # Real [0,1]
         self.priority = 1  # any positive integer
-        self.children = []
-        self.name = "Short but meaningful/readable description"
+        self.children = {}
+        self.name = name
 
     def json(self):
 
@@ -50,7 +50,7 @@ class RequirementsGroup(object):
             "description": self.description,
             "weightPos": self.weight_pos,
             "Priority": self.priority,
-            "children": [r_group.json for r_group in self.children],
+            "children": [r_group.json() for key, r_group in self.children.iteritems()],
             "name": self.name
         }
 
@@ -68,8 +68,8 @@ class Requirement(object):
         self.weight_pos = 1.0  # Real [0,1]
         self.priority = 1  # any positive integer
         self.name = name
-        self.objective = objective
-        self.threshold = threshold
+        self.objective = float(objective)
+        self.threshold = float(threshold)
         self.test_bench = test_bench
         self.unit = unit
         self.metric_name = metric_name
@@ -158,7 +158,7 @@ class Manifest(object):
             "TierLevel": self.tier_level,
             "DesignName": self.design_name,
             "LimitChecks": self.limit_checks,
-            "Metrics": [m.json for m in self.metrics],
+            "Metrics": [m.json() for m in self.metrics],
             "DesignID": self.design_id,
             "Steps": self.steps,
             "TestBench": self.testbench,
