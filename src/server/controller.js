@@ -237,7 +237,7 @@ exports.init = function(app, esClient) {
         });
     });
 
-    var generateResults = require('../../sandbox/jklingler/generateResults');
+    var generateResults = require('../../sandbox/jklingler/scripts/generateResults');
     app.post('/generate_results/:requirement', function (req, res) {
         if (!req.params.requirement) {
             console.log('here');
