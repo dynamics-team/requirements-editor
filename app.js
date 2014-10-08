@@ -9,9 +9,10 @@ curl http://127.0.0.1:8844/result/TestResult
 curl -X PUT -d {\"auth_admin\":[\"fake\",\"fake2\"]} -H "Content-Type: application/json" http://127.0.0.1:8844/requirement/posted
 curl http://127.0.0.1:8844/requirement/posted
 curl http://127.0.0.1:8844/result/TestResult
+curl http://127.0.0.1:8844/score/?requirement=posted^&result=TestResult
 curl -X DELETE http://127.0.0.1:8844/result/TestResult
 curl -X DELETE http://127.0.0.1:8844/requirement/posted
- */
+*/
 
 var configFilename = 'config_localhost.json';
 if (process.argv.length > 2) {
