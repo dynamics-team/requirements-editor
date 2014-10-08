@@ -82,6 +82,11 @@ function giveMetricValues (metricInstance, requirementInstance) {
     metricInstance.Value = average + difference*unitScale;
 }
 
+function saveFile(tbManifestObject) {
+    var uniqueName = tbManifestObject.DesignName + '_' + tbManifestObject.TestBench;
+    fs.mkdirSync(uniqueName);
+    fs.writeFileSync(uniqueName + '/testbench_manifest.json', JSON.stringify(tbManifestObject, null, 4));
+}
 
 var main = function () {
 
@@ -106,7 +111,12 @@ var main = function () {
             //title = splitPath[splitPath.length - 1].split('.')[0],
 
         var result = generateResults(requirementsObject, numberResultsToGenerate);
-        JSON.stringify(result, null, 4);
+
+        for (var i=0;i<result.length;i++) {
+            for (var j=0;j<result[i].length;j++) {
+                saveFile(result[i][j]);
+            }
+        }
     });
 };
 
