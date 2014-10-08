@@ -55,7 +55,7 @@ function start() {
     app.use(require('cookie-parser')());
     //app.use(express.bodyParser());
 
-    var auth = require('./src/server/auth_google');
+    var auth = require('./src/server/auth_google_oauth2');
     //var auth = require('./src/server/auth_fake');
     auth.init(app);
 
