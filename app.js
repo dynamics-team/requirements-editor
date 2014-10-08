@@ -65,6 +65,7 @@ function start() {
 
     app.use(function (req, res, next) {
         if (req.isAuthenticated()) {
+            // req.session.passport.user = req.session.passport.user || "fake";
             return next();
         }
         if (req.path.substr(0, 6) === '/auth/') {
@@ -173,13 +174,10 @@ function start() {
             auth_write: [String],
             auth_admin: [String]
         });
-    if (!RequirementSchema.options.toObject) RequirementSchema.options.toObject = {};
-    RequirementSchema.options.toObject.transform = function (doc, ret, options) {
-        delete ret._id;
-        delete ret.__v;
-        delete ret.auth_read;
-        delete ret.auth_write;
-        delete ret.auth_admin;
+    function cleanRequirement(doc) {
+        delete doc._id;
+        delete doc.__v;
+        return doc;
     };
 
     // index requirements
@@ -192,7 +190,7 @@ function start() {
         Requirement.find({auth_read: req.session.passport.user})
             .select('-children')
             .exec(function (err, docs) {
-            res.json(docs.map(function (v) { return v.toObject(); }));
+            res.json(docs.map(function (v) { return cleanRequirement(v.toObject()); }));
         });
     });
 
@@ -206,7 +204,7 @@ function start() {
                 res.send(404);
                 return;
             }
-            res.json(docs[0].toObject());
+            res.json(cleanRequirement(docs[0].toObject()));
         });
     });
 
@@ -218,21 +216,25 @@ function start() {
         });
         req.on("end", function () {
             try {
-                var requirement = new Requirement(JSON.parse(bodyStr));
+                var requirement = JSON.parse(bodyStr);
             } catch (e) {
             }
             if (!requirement || !requirement.title) {
                 res.send(400);
                 return;
             }
-            requirement.auth_read = [req.session.passport.user];
-            requirement.auth_write = [req.session.passport.user];
-            requirement.auth_admin = [req.session.passport.user];
-            // FIXME check if exists and no perms
-            Requirement.findOneAndUpdate({title: requirement.title}, requirement, {upsert: true}, function (err, doc) {
-                if (err)
-                    return res.send(500, { error: err });
-                return res.json(doc);
+            Requirement.findOne({title: requirement.title}, function (err, doc) {
+                if (err || doc)
+                    return res.status(409).send();
+                requirement = new Requirement(requirement);
+                requirement.auth_read = [req.session.passport.user];
+                requirement.auth_write = [req.session.passport.user];
+                requirement.auth_admin = [req.session.passport.user];
+                requirement.save(function (err) {
+                    if (err)
+                        return res.status(500).send({ error: err });
+                    res.status(200).send('created');
+                });
             });
         });
     });
@@ -242,8 +244,14 @@ function start() {
             res.send(400);
             return;
         }
-        Requirement.find({ title: req.params.title, auth_admin: req.session.passport.user }).remove(function (doc) {
-            res.send(200);
+        Requirement.findOneAndRemove({ title: req.params.title, auth_admin: req.session.passport.user }, {}, function(err, doc) {
+            if (err)
+                return res.send(500);
+            if (doc) {
+                res.send(200);
+            } else {
+                res.send(404);
+            }
         });
     });
 
