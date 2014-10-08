@@ -90,7 +90,7 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
                     data[key] = returnData[key];
                 }
             }
-            jsonStr = JSON.stringify($scope.dataModel, replacer, 0);
+            jsonStr = JSON.stringify({children: $scope.dataModel.children}, replacer, 0);
             console.log(jsonStr);
             console.log(JSON.parse(jsonStr));
             RequirementsService.updateRequirement($scope.dataModel.title, jsonStr)

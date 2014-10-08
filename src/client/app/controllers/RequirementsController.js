@@ -24,8 +24,49 @@ angular.module('RequirementsApp').controller('RequirementsController', function 
 
     $scope.create = function () {
         var newReq = {
-            title: 'NewTest',
-            children: []
+            title: 'NewTest2',
+            children: [ {
+                "name": "Movement",
+                "weightNeg": 1,
+                "description": "Performance of the Vehicle Movement",
+                "weightPos": 1,
+                "Priority": 1,
+                "children": [ {
+                    "weightNeg": 1,
+                    "name": "Speed",
+                    "description": "Speed and Accelerations",
+                    "weightPos": 1,
+                    "Priority": 1,
+                    "children": [{
+                        "KPP": true,
+                        "function": "f(x)",
+                        "weightNeg": 0.5,
+                        "name": "Acc20kph Full Throttle",
+                        "weightPos": 0.555556,
+                        "description": "Time to reach 20kph on flat ground.",
+                        "Priority": 1,
+                        "objective": 11,
+                        "testBench": "FullSpeedForward",
+                        "threshold": 13,
+                        "unit": "s",
+                        "metricName": "Acc20kph"
+                    },
+                        {
+                            "KPP": true,
+                            "function": "g(x)",
+                            "weightNeg": 0.7,
+                            "name": "Acc40kph Full Throttle",
+                            "weightPos": 0.3,
+                            "description": "Time to reach 40kph on flat ground.",
+                            "Priority": 1,
+                            "objective": 17,
+                            "testBench": "FullSpeedForward",
+                            "threshold": 25,
+                            "unit": "s",
+                            "metricName": "Acc40kph"
+                        }]
+                }]
+            }]
         };
         RequirementsService.addNewRequirement(JSON.stringify(newReq, null, 0))
             .then(function (rData) {
