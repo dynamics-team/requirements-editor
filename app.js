@@ -1,10 +1,16 @@
 /**
  *
  * if you user auth_fake, you can test like this:
- * curl -d {\"title\":\"posted\"} -H "Content-Type: application/json" http://127.0.0.1:8844/requirement/
- * curl -X PUT -d {\"children\":123} -H "Content-Type: application/json" http://127.0.0.1:8844/requirement/posted
- * curl http://127.0.0.1:8844/requirement/posted
- * curl -X DELETE http://127.0.0.1:8844/requirement/posted
+curl -d {\"title\":\"posted\"} -H "Content-Type: application/json" http://127.0.0.1:8844/requirement/
+curl -X PUT -d {\"children\":123} -H "Content-Type: application/json" http://127.0.0.1:8844/requirement/posted
+curl -d {\"name\":\"TestResult\",\"requirement\":\"posted\"} http://127.0.0.1:8844/result/
+curl -X PUT -d {\"testbench_manifests\":[{\"m1\":1}]} http://127.0.0.1:8844/result/TestResult
+curl http://127.0.0.1:8844/result/TestResult
+curl -X PUT -d {\"auth_admin\":[\"fake\",\"fake2\"]} -H "Content-Type: application/json" http://127.0.0.1:8844/requirement/posted
+curl http://127.0.0.1:8844/requirement/posted
+curl http://127.0.0.1:8844/result/TestResult
+curl -X DELETE http://127.0.0.1:8844/result/TestResult
+curl -X DELETE http://127.0.0.1:8844/requirement/posted
  */
 
 var configFilename = 'config_localhost.json';
@@ -65,7 +71,11 @@ function start() {
     function addTestData() {
         var model = require('./src/server/model');
         var Requirement = model.Requirement;
+        var dataCreated = false;
         app.use(function (req, res, next) {
+            if (dataCreated) {
+                return next();
+            }
             if (!req.session.passport.user) {
                 next();
                 return;
@@ -83,6 +93,7 @@ function start() {
                     instance.auth_write = [req.session.passport.user];
                     instance.auth_admin = [req.session.passport.user];
                     instance.save(function (err) {
+                        dataCreated = true;
                         next();
                     });
                 } else {

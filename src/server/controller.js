@@ -105,7 +105,12 @@ exports.init = function(app) {
                 doc.save(function (err) {
                     if (err)
                         return res.status(500).send({ error: err });
-                    res.status(200).send('updated');
+                    var auth = {auth_read: doc.auth_read, auth_write: doc.auth_write, auth_admin: doc.auth_admin};
+                    model.Result.update({requirement: doc.title}, auth, function (err, doc) {
+                        if (err)
+                            return res.status(500).send(err);
+                        res.status(200).send('updated');
+                    });
                 });
             });
         });
@@ -117,6 +122,111 @@ exports.init = function(app) {
             return;
         }
         Requirement.findOneAndRemove({ title: req.params.title, auth_admin: req.session.passport.user }, {}, function(err, doc) {
+            if (err)
+                return res.send(500);
+            model.Result.remove({ requirement: req.params.title }, function(err, docResult) {
+                if (err)
+                    return res.send(500);
+                if (doc) {
+                    res.send(200);
+                } else {
+                    res.send(404);
+                }
+            });
+        });
+    });
+
+
+    app.get('/result/', function (req, res) {
+        model.Result.find({auth_read: req.session.passport.user})
+            .select('-testbench_manifests')
+            .exec(function (err, docs) {
+                res.json(docs.map(function (v) { return cleanRequirement(v.toObject()); }));
+            });
+    });
+
+    app.get('/result/:name', function (req, res) {
+        if (!req.params.name) {
+            res.send(400);
+            return;
+        }
+        model.Result.find({ name: req.params.name, auth_read: req.session.passport.user}, function (err, docs) {
+            if (docs.length === 0) {
+                res.send(404);
+                return;
+            }
+            res.json(cleanRequirement(docs[0].toObject()));
+        });
+    });
+
+    app.post('/result/', function (req, res) {
+        getReqJSON(req, function(result) {
+            if (!result || !result.requirement || !result.name) {
+                res.send(400);
+                return;
+            }
+            Requirement.findOne({title: result.requirement}, function (err, requirement) {
+                if (err)
+                    return res.send(500);
+                if (!requirement)
+                    return res.status(404).send('Cannot find requirement');
+                model.Result.findOne({name: result.name}, function (err, doc) {
+                    if (err)
+                        return res.send(500);
+                    if (doc)
+                        return res.status(409).send('Already exists');
+                    result = new model.Result(result);
+                    result.auth_read = requirement.auth_read;
+                    result.auth_write = requirement.auth_write;
+                    result.auth_admin = requirement.auth_admin;
+                    result.save(function (err) {
+                        if (err)
+                            return res.status(500).send({ error: err });
+                        res.status(200).send('created');
+                    });
+                });
+            });
+        });
+    });
+
+    app.put('/result/:name', function (req, res) {
+        if (!req.params.name) {
+            res.send(400);
+            return;
+        }
+        getReqJSON(req, function(result) {
+            if (!result) {
+                res.send(400);
+                return;
+            }
+            ['name', 'auth_read', 'auth_write', 'auth_admin'].forEach(function(key) {
+                delete result[key]; // we don't allow these to be changed
+            });
+            model.Result.findOne({name: req.params.name, auth_write: req.session.passport.user}, function (err, doc) {
+                if (err)
+                    return res.status(500).end();
+                if (doc === null)
+                    return res.status(404).end();
+                model.ResultSchema.eachPath(function (key) {
+                    if (key in result) {
+                        doc[key] = result[key];
+                    }
+                });
+                doc.save(function (err) {
+                    if (err)
+                        return res.status(500).send({ error: err });
+                    res.status(200).send('updated');
+                });
+            });
+        });
+    });
+
+    app['delete']('/result/:name', function (req, res) {
+        if (!req.params.name) {
+            res.send(400);
+            return;
+        }
+        model.Result.findOneAndRemove({ name: req.params.name, auth_admin: req.session.passport.user }, {}, function(err, doc) {
             if (err)
                 return res.send(500);
             if (doc) {
