@@ -1,0 +1,78 @@
+{
+    "Status": "OK",
+    "Parameters": [],
+    "Created": "",
+    "Artifacts": [],
+    "TierLevel": 0,
+    "DesignName": "MyDesign_1",
+    "LimitChecks": [],
+    "Metrics": [
+        {
+            "Description": "number of drive wheels",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 3.941868708934635,
+            "ID": null,
+            "Unit": "",
+            "Name": "Traction"
+        },
+        {
+            "Description": "number of seats",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 4.241748061496764,
+            "ID": null,
+            "Unit": "",
+            "Name": "Seating"
+        },
+        {
+            "Description": "space above a 1.9 m tall person",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 0.12408438667887821,
+            "ID": null,
+            "Unit": "m",
+            "Name": "Headroom"
+        },
+        {
+            "Description": "Minimum lifetime of the car in miles",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 183676.8661160022,
+            "ID": null,
+            "Unit": "miles",
+            "Name": "Lifespan"
+        },
+        {
+            "Description": "Trailer Towing Capacity",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 1243.6448133084923,
+            "ID": null,
+            "Unit": "lbs",
+            "Name": "TowingCapacity"
+        },
+        {
+            "Description": "volume of interior",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 77.40874960552901,
+            "ID": null,
+            "Unit": "ft^3",
+            "Name": "CabinVolume"
+        },
+        {
+            "Description": "volume of trunk",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 11.484240557067096,
+            "ID": null,
+            "Unit": "ft^3",
+            "Name": "TrunkCapacity"
+        }
+    ],
+    "DesignID": "",
+    "Steps": [],
+    "TestBench": "Utility",
+    "PCCResults": {}
+}

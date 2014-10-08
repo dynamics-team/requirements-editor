@@ -1,0 +1,51 @@
+{
+    "Status": "OK",
+    "Parameters": [],
+    "Created": "",
+    "Artifacts": [],
+    "TierLevel": 0,
+    "DesignName": "MyDesign_3",
+    "LimitChecks": [],
+    "Metrics": [
+        {
+            "Description": "purchase price",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 9904.548806603998,
+            "ID": null,
+            "Unit": "dollars",
+            "Name": "PurchasePrice"
+        },
+        {
+            "Description": "maintenance costs per year",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 187.60824103374034,
+            "ID": null,
+            "Unit": "dollars",
+            "Name": "AnnualMaintenance"
+        },
+        {
+            "Description": "price to insure the car for one year",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 736.8509584106505,
+            "ID": null,
+            "Unit": "dollars",
+            "Name": "AnnualInsurance"
+        },
+        {
+            "Description": "miles traveled per gallon of fuel burned",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 23.833645248785615,
+            "ID": null,
+            "Unit": "mpg",
+            "Name": "Efficiency"
+        }
+    ],
+    "DesignID": "",
+    "Steps": [],
+    "TestBench": "Costing",
+    "PCCResults": {}
+}

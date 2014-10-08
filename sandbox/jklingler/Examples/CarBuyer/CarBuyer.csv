@@ -1,0 +1,12 @@
+name,unit,description,threshold,objective,test_bench,metric_name
+PurchasePrice,dollars,purchase price,12000,9000,Costing,PurchasePrice
+AnnualInsurance,dollars,price to insure the car for one year,1000,600,Costing,AnnualInsurance
+AnnualMaintenance,dollars,maintenance costs per year,250,150,Costing,AnnualMaintenance
+Lifespan,miles,Minimum lifetime of the car in miles,100000,200000,Utility,Lifespan
+Efficiency,mpg,miles traveled per gallon of fuel burned,22,45,Costing,Efficiency
+Seating,,number of seats,4,7,Utility,Seating
+CabinVolume,ft^3,volume of interior,60,80,Utility,CabinVolume
+TrunkCapacity,ft^3,volume of trunk,0,12,Utility,TrunkCapacity
+TowingCapacity,lbs,Trailer Towing Capacity,0,3000,Utility,TowingCapacity
+Headroom,m,space above a 1.9 m tall person,0.08,0.15,Utility,Headroom
+Traction,,number of drive wheels,2,4,Utility,Traction
