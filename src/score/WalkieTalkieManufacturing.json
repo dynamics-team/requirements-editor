@@ -1,0 +1,42 @@
+{
+    "Status": "OK",
+    "Parameters": [],
+    "Created": "",
+    "Artifacts": [],
+    "TierLevel": 0,
+    "DesignName": "MyDesign_1",
+    "LimitChecks": [],
+    "Metrics": [
+        {
+            "Description": "The cost of the parts and materials to manufacture this walkie-talkie",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 11.486956742592156,
+            "ID": null,
+            "Unit": "dollars",
+            "Name": "MaterialCost"
+        },
+        {
+            "Description": "The time to assemble one walkie-talkie",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 1.575687029864639,
+            "ID": null,
+            "Unit": "hours",
+            "Name": "Labor"
+        },
+        {
+            "Description": "The ratio of unit price to unit cost; reflects profitability",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 1.9838274573907257,
+            "ID": null,
+            "Unit": "N/A",
+            "Name": "ProfitRatio"
+        }
+    ],
+    "DesignID": "",
+    "Steps": [],
+    "TestBench": "WalkieTalkieManufacturing",
+    "PCCResults": {}
+}

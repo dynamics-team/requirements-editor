@@ -11,6 +11,9 @@
 // unit conversion?
 // functions are all linear?  do they have a fixed format? score = A x (threshold - value)/(objective - threshold) + B perhaps?
 
+// how to use: node score.js requirement_json_file, testbench1_of_design1_file, testbench2_of_design1_file, ...
+// e.g. node score.js TopLevelRequirementGroup.json WalkieTalkieManufacturing.json WalkieTalkiePerformance.json WalkieTalkieStaticMeasurements.json
+
 var CHILDREN = "children";
 var NAME = "name";
 
@@ -55,6 +58,46 @@ var score = function () {
 
     processDesigns(designFileNames);
     processRqmtFile(rqmtFileName);
+};
+
+/**
+ * process all input design files by calling getMetricsFromDesign()
+ * @param filenames - list of design files
+ */
+var processDesigns = function (filenames) {
+    var i,
+        design;
+
+    for (i = 0; i < filenames.length; i += 1) {
+        design = require('./' + filenames[i]);
+        getMetricsFromDesign(design);
+    }
+};
+
+/**
+ * Store all metrics from design files to a lookup table,
+ * as the rmqt tree is traversed, rqmts are compared
+ * against each entry in the look up table
+ * @param design
+ */
+var getMetricsFromDesign = function (design) {
+    var testbench = design[DESIGN_TB],
+        metrics = design[METRICS],
+        i,
+        metric,
+        key,
+        metricValue;
+
+    for (i = 0; i < metrics.length; i += 1) {
+        metric = metrics[i];
+        key = testbench + DELIM + metric["Name"];
+        metricValue = {
+            Value: metric[VALUE],
+            unit: metric[METRIC_UNIT],
+            KPP: metric[KPP]
+        };
+        metricsTable[key] = metricValue;
+    }
 };
 
 /**
@@ -123,72 +166,6 @@ var evaluateRqmt = function (rqmtNode) {
     return result;
 };
 
-var generateOutput = function (node) {
-    var children,
-        i,
-        child,
-        result = {};
-
-    if (node.hasOwnProperty(CHILDREN)) {
-
-        result.name = node[NAME];
-        result.Priority = node[PRIORITY];
-        result.pass = node.pass !== false;
-        result.score = Math.round(node.score * ROUND) / ROUND;
-
-        children = node[CHILDREN];
-        result.children = [];
-        for (i = 0; i < children.length; i += 1) {
-            child = children[i];
-            result.children.push(generateOutput(child));
-        }
-    } else {
-        result = {
-            name: node[METRIC_NAME],
-            Priority: node[PRIORITY],
-            pass: node.result.score !== 0,
-            score: Math.round(node.result.score * ROUND) / ROUND,
-            type: node.result.type
-        }
-    }
-    return result;
-};
-
-/**
- *
- * @param filenames - list of design files
- */
-var processDesigns = function (filenames) {
-    var i,
-        design;
-
-    for (i = 0; i < filenames.length; i += 1) {
-        design = require('./' + filenames[i]);
-        getMetricsFromDesign(design);
-    }
-    console.log();
-};
-
-var getMetricsFromDesign = function (design) {
-    var testbench = design[DESIGN_TB],
-        metrics = design[METRICS],
-        i,
-        metric,
-        key,
-        metricValue;
-
-    for (i = 0; i < metrics.length; i += 1) {
-        metric = metrics[i];
-        key = testbench + DELIM + metric["Name"];
-        metricValue = {
-            Value: metric[VALUE],
-            unit: metric[METRIC_UNIT],
-            KPP: metric[KPP]
-        };
-        metricsTable[key] = metricValue;
-    }
-};
-
 /**
  * Strictly linear function, assuming score is 0.1 at Threshold
  * @param reqNode
@@ -238,6 +215,41 @@ var evaluate = function (reqNode, metricNode) {
     return resultNode;
 };
 
+/**
+ * a recursive function to generate the final result output
+ * @param node - node to start with
+ * @returns {{}}
+ */
+var generateOutput = function (node) {
+    var children,
+        i,
+        child,
+        result = {};
+
+    if (node.hasOwnProperty(CHILDREN)) {
+
+        result.name = node[NAME];
+        result.Priority = node[PRIORITY];
+        result.pass = node.pass !== false;
+        result.score = Math.round(node.score * ROUND) / ROUND;
+
+        children = node[CHILDREN];
+        result.children = [];
+        for (i = 0; i < children.length; i += 1) {
+            child = children[i];
+            result.children.push(generateOutput(child));
+        }
+    } else {
+        result = {
+            name: node[METRIC_NAME],
+            Priority: node[PRIORITY],
+            pass: node.result.score !== 0,
+            score: Math.round(node.result.score * ROUND) / ROUND,
+            type: node.result.type
+        }
+    }
+    return result;
+};
 
 /**
  * Evaluate design metric value against requirements
@@ -264,6 +276,7 @@ var convertUnit = function (unit, target) {
     return factor;
 };
 
+// main entry point
 var fs = require('fs');
 var path = require('path');
 score();
