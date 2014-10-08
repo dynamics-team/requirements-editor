@@ -1,0 +1,20 @@
+<div class="bar bar-header bar-light">
+    <h1 class="title">New requirement</h1>
+</div>
+<ion-content>
+    <div class="list">
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Requirement name</span>
+            <input type="text" placeholder="Name" data-ng-model="data.name">
+        </label>
+
+        <div class="button-bar">
+            <button class="button button-clear button-positive" data-ng-click="ok()">
+                Save
+            </button>
+            <button class="button button-clear button-assertive" data-ng-click="cancel()">
+                Cancel
+            </button>
+        </div>
+    </div>
+</ion-content>

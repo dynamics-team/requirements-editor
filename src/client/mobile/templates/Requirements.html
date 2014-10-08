@@ -1,5 +1,7 @@
 <ion-view title="Requirements">
     <ion-content class="padding">
+        <button class="button button-clear button-positive" data-ng-click="create()">Create New</button>
+
         <ion-list>
             <ion-item ng-repeat="req in dataModel.requirements"  type="item-text-wrap" href="#/tab/requirements/{{req.title}}">
                 {{req.title}}
