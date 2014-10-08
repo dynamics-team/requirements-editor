@@ -210,7 +210,7 @@ function start() {
         });
     });
 
-    app.post('/requirement/', function (req, res) {
+    function getReqJSON(req, callback) {
         var bodyStr = '';
         req.setEncoding('utf8');
         req.on("data", function (chunk) {
@@ -218,9 +218,15 @@ function start() {
         });
         req.on("end", function () {
             try {
-                var requirement = JSON.parse(bodyStr);
+                var json = JSON.parse(bodyStr);
             } catch (e) {
             }
+            callback(json);
+        });
+    };
+
+    app.post('/requirement/', function (req, res) {
+        getReqJSON(req, function(requirement) {
             if (!requirement || !requirement.title) {
                 res.send(400);
                 return;
@@ -246,16 +252,7 @@ function start() {
             res.send(400);
             return;
         }
-        var bodyStr = '';
-        req.setEncoding('utf8');
-        req.on("data", function (chunk) {
-            bodyStr += chunk.toString();
-        });
-        req.on("end", function () {
-            try {
-                var requirement = JSON.parse(bodyStr);
-            } catch (e) {
-            }
+        getReqJSON(req, function(requirement) {
             if (!requirement || !requirement.title) {
                 res.send(400);
                 return;
@@ -265,7 +262,6 @@ function start() {
                     return res.status(500).end();
                 if (doc === null)
                     return res.status(404).end();
-                var docObj = doc.toObject();
                 RequirementSchema.eachPath(function (key) {
                     if (key in requirement) {
                         doc[key] = requirement[key];
