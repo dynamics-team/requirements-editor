@@ -93,7 +93,7 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
             jsonStr = JSON.stringify($scope.dataModel, replacer, 0);
             console.log(jsonStr);
             console.log(JSON.parse(jsonStr));
-            RequirementsService.postRequirement(jsonStr)
+            RequirementsService.updateRequirement($scope.dataModel.title, jsonStr)
                 .then(function (rData) {
                     console.log('Data-base updated with changes, rData:', rData);
                     refreshData();

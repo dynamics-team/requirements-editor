@@ -39,10 +39,25 @@ angular.module('RequirementsApp').service('RequirementsService', function ($q, $
         return deferred.promise;
     };
 
-    this.postRequirement = function (data) {
+    this.addNewRequirement = function (data) {
         var deferred = $q.defer(),
             url = baseUrl + 'requirement/';
         $http.post(url, data)
+            .success(function (data, status, headers, config) {
+                deferred.resolve(data);
+            })
+            .error(function (data, status, headers, config) {
+                console.error(data);
+                deferred.reject(status);
+            });
+
+        return deferred.promise;
+    };
+
+    this.updateRequirement = function (title, reqData) {
+        var deferred = $q.defer(),
+            url = baseUrl + 'requirement/' + title;
+        $http.put(url, reqData)
             .success(function (data, status, headers, config) {
                 deferred.resolve(data);
             })

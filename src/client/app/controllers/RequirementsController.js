@@ -27,7 +27,7 @@ angular.module('RequirementsApp').controller('RequirementsController', function 
             title: 'NewTest',
             children: []
         };
-        RequirementsService.postRequirement(JSON.stringify(newReq, null, 0))
+        RequirementsService.addNewRequirement(JSON.stringify(newReq, null, 0))
             .then(function (rData) {
                 console.log('Data-base updated with changes, rData:', rData);
                 refreshData();
