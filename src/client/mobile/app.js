@@ -97,5 +97,7 @@ require('../app/controllers/RequirementsController');
 require('../app/controllers/RequirementDetailsController');
 
 require('../app/controllers/EditRequirementController');
+require('../app/controllers/NewRequirementController');
 
 require('../app/controllers/SearchController');
+

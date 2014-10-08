@@ -4,9 +4,8 @@
 
 'use strict';
 
-function TopLevelRequirementsGroup(title, data, requirementsMap) {
+function TopLevelRequirementsGroup(data, requirementsMap) {
 
-    this.title = title;
     if (data.hasOwnProperty('weightNeg')) {
         this.weightNeg = data.weightNeg;
     } else {
