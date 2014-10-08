@@ -3,6 +3,8 @@
 var ReqApp = angular.module('RequirementsApp', [
     'ui.router',
     'ui.bootstrap',
+
+    'requirements.editor.config',
     'requirements.editor.templates'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
@@ -31,7 +33,6 @@ var ReqApp = angular.module('RequirementsApp', [
         $state.go('requirements');
     });
 
-require('./constants/constants.js');
 
 // Include the Service
 require('./services/RequirementsService');

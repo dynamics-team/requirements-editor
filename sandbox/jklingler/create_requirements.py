@@ -18,9 +18,13 @@ def make_requirements_json(csv_path):
 
         i = 0
         for row in csv_reader:
+
+            if len(row) < 7:
+                print "csv contains less than the optimal information"
+
             if i != 0:
 
-                args = tuple(row[:-1])
+                args = tuple(row[0:7])
                 new_requirement = req.Requirement(*args)
 
                 # Check if there is a group for this testbench

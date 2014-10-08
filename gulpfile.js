@@ -8,6 +8,8 @@ var argv = require('yargs').argv,
     debug = !argv.production,
     debugShim = false, //this is for toggling browserify shim debug
 
+    configFilename = argv.config || 'config_localhost.json',
+
     libraryName = 'requirements-editor',
     libraryTemplatesModule = 'requirements.editor.templates',
 
@@ -73,6 +75,8 @@ var argv = require('yargs').argv,
         images: 'src/build/mobile/images'
     },
 
+    fs = require('fs'),
+
     gulp = require('gulp'),
     jshint = require('gulp-jshint'),
     browserify = require('browserify'),
@@ -83,6 +87,7 @@ var argv = require('yargs').argv,
     runSequence = require('run-sequence'),
     clean = require('gulp-clean'),
     templateCache = require('gulp-angular-templatecache'),
+    ngConstant = require('gulp-ng-constant'),
 
     express = require('express'),
     server = express(),
@@ -98,6 +103,27 @@ require('path');
 
 gulp.task('clean-build', function () {
     return gulp.src(buildPaths.root).pipe(clean());
+});
+
+// deplyment specific configuration
+gulp.task('config', function () {
+    var CONFIG = JSON.parse(fs.readFileSync(configFilename, {encoding: 'utf-8'}));
+
+    gulp.src(configFilename)
+        .pipe(ngConstant({
+            name: 'requirements.editor.config',
+            deps: [],
+            constants: {
+                constants: {
+                    baseUrl: CONFIG.publicUrl + '/'
+                }
+            }
+
+//            wrap: 'commonjs'
+        }))
+        // Writes config.js to dist/ folder
+        .pipe(rename({basename: "config"}))
+        .pipe(gulp.dest(buildPaths.root));
 });
 
 // Library tasks
@@ -231,7 +257,7 @@ gulp.task('compile-library-images', function () {
 
 
 gulp.task('compile-library',
-    [ 'lint-library', 'browserify-library', 'browserify-library-mobile', 'compile-library-templates', 'compile-library-styles', 'compile-library-images'],
+    [ 'config', 'lint-library', 'browserify-library', 'browserify-library-mobile', 'compile-library-templates', 'compile-library-styles', 'compile-library-images'],
     function () {
         console.log('Compiling scripts...');
 
