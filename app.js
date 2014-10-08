@@ -1,6 +1,6 @@
 /**
  *
- * if you turn off auth, you can test like this:
+ * if you user auth_fake, you can test like this:
  * curl -d {\"title\":\"posted\"} -H "Content-Type: application/json" http://127.0.0.1:8844/requirement/
  * curl -X PUT -d {\"children\":123} -H "Content-Type: application/json" http://127.0.0.1:8844/requirement/posted
  * curl http://127.0.0.1:8844/requirement/posted
@@ -56,6 +56,7 @@ function start() {
     //app.use(express.bodyParser());
 
     var auth = require('./src/server/auth_google');
+    //var auth = require('./src/server/auth_fake');
     auth.init(app);
 
     var controller = require('./src/server/controller');

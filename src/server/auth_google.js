@@ -13,7 +13,6 @@ exports.init = function(app) {
 
     app.use(function (req, res, next) {
         if (req.isAuthenticated()) {
-            // req.session.passport.user = req.session.passport.user || "fake";
             res.set('X-User-Id', req.session.passport.user);
             return next();
         }
