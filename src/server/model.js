@@ -14,7 +14,7 @@ UserSchema.plugin(mongoosastic, {index: 'requirements-editor'});
 var User = mongoose.model('User', UserSchema);
 
 var RequirementSchema = new Schema({
-    author: ObjectId,
+    author: {type: ObjectId},
     version: Number,
     title: String,
     children: {},
@@ -22,6 +22,9 @@ var RequirementSchema = new Schema({
     auth_write: [String],
     auth_admin: [String]
 });
+
+// index requirements
+RequirementSchema.plugin(mongoosastic, {index: 'requirements-editor'});
 
 var Requirement = mongoose.model('Requirement', RequirementSchema);
 
@@ -34,11 +37,10 @@ var ResultSchema = new Schema({
     auth_admin: [String]
 });
 
-var Result = mongoose.model('Result', ResultSchema);
+// index results
+ResultSchema.plugin(mongoosastic, {index: 'requirements-editor'});
 
-// index requirements
-// TODO: index nested document
-//RequirementSchema.plugin(mongoosastic, {index: 'requirements-editor'});
+var Result = mongoose.model('Result', ResultSchema);
 
 exports.UserSchema = UserSchema;
 exports.User = User;
