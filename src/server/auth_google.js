@@ -1,4 +1,7 @@
-exports.init = function(User, app) {
+var model = require('./model');
+var User =  model.User;
+
+exports.init = function(app) {
     var SESSION_PARAMS = global.CONFIG.sessionParameters;
 
     var passport = require('passport'),
@@ -10,7 +13,6 @@ exports.init = function(User, app) {
 
     app.use(function (req, res, next) {
         if (req.isAuthenticated()) {
-            // req.session.passport.user = req.session.passport.user || "fake";
             res.set('X-User-Id', req.session.passport.user);
             return next();
         }

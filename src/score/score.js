@@ -41,120 +41,113 @@ var METRIC_UNIT = "Unit";
 // round to 1/ROUND decimal places
 var ROUND = 1000;
 
-var metricsTable = {};
 
 /**
  * score design file against requirement file
  */
-var score = function () {
-    var args = process.argv.slice(2),// get application arguments, i.e. file names passed in
-        rqmtFileName = args[0], // get the requirement file
-        designFileNames = [],
-        i,
-        designName;
+var score = function (requirementObj, testbenchObjArray) {
+    var subResult,
+        metricsTable,
+        result;
 
-    for (i = 1; i < args.length; i += 1) {
-        designFileNames.push(args[i]);
-    }
-
-    designName = processDesigns(designFileNames);
-    processRqmtFile(rqmtFileName, designName);
+    metricsTable = processDesigns(testbenchObjArray);
+    subResult = processRqmt(requirementObj, metricsTable);
+    result = generateOutput(subResult);
+    return result;
 };
 
 /**
  * process all input design files by calling getMetricsFromDesign()
- * @param filenames - list of design files
+ * @param testbenchObjArray
  */
-var processDesigns = function (filenames) {
+var processDesigns = function (testbenchObjArray) {
     var i,
-        design,
-        designName;
+        metricsTable = {},
+        _getMetricsFromDesign;
 
-    for (i = 0; i < filenames.length; i += 1) {
-        design = require('./' + filenames[i]);
-        if (!designName) {
-            designName = design.DesignName;
+    /**
+     * Store all metrics from design files to a lookup table,
+     * as the rmqt tree is traversed, rqmts are compared
+     * against each entry in the look up table
+     * @param design
+     * @private
+     */
+    _getMetricsFromDesign = function (design) {
+        var testbench = design[DESIGN_TB],
+            metrics = design[METRICS],
+            j,
+            metric,
+            key,
+            metricValue;
+
+        for (j = 0; j < metrics.length; j += 1) {
+            metric = metrics[j];
+            key = testbench + DELIM + metric["Name"];
+            metricValue = {
+                Value: metric[VALUE],
+                unit: metric[METRIC_UNIT],
+                KPP: metric[KPP]
+            };
+            metricsTable[key] = metricValue;
         }
-        getMetricsFromDesign(design);
+    };
+
+    for (i = 0; i < testbenchObjArray.length; i += 1) {
+        _getMetricsFromDesign(testbenchObjArray[i]);
     }
 
-    return designName;
-};
-
-/**
- * Store all metrics from design files to a lookup table,
- * as the rmqt tree is traversed, rqmts are compared
- * against each entry in the look up table
- * @param design
- */
-var getMetricsFromDesign = function (design) {
-    var testbench = design[DESIGN_TB],
-        metrics = design[METRICS],
-        i,
-        metric,
-        key,
-        metricValue;
-
-    for (i = 0; i < metrics.length; i += 1) {
-        metric = metrics[i];
-        key = testbench + DELIM + metric["Name"];
-        metricValue = {
-            Value: metric[VALUE],
-            unit: metric[METRIC_UNIT],
-            KPP: metric[KPP]
-        };
-        metricsTable[key] = metricValue;
-    }
+    return metricsTable;
 };
 
 /**
  * store all requirements along with the original hierarchy in a dictionary
  * key is unique name of metric
  * value is information needed to calculate the score for each metric along with parentNode
- * @param filename - name of requirement file
+ * @param requirementObj
+ * @param metricsTable
  */
-var processRqmtFile = function (filename, designName) {
-    var root = require('./' + filename),
-        result,
-        outFileName = path.join(__dirname, designName + '_result.json');
 
-    root = processRqmt(root);
-    result = generateOutput(root);
-    fs.writeFileSync(outFileName, JSON.stringify(result) , 'utf-8');
-};
+var processRqmt = function (requirementObj, metricsTable) {
+    var _processNode,
+        result;
 
-var processRqmt = function (node) {
-    var children,
-        child,
-        i,
-        subNode,
-        subScore;
+    _processNode = function (node) {
+        var children,
+            child,
+            i,
+            subNode,
+            subScore;
 
-    if (node.hasOwnProperty(CHILDREN)) {
-        // if node is not leaf
-        children = node[CHILDREN];
-        for (i = 0; i < children.length; i += 1) {
-            child = children[i];
-            // keep going until we reach leaf
-            if (!node.score) {
-                node.score = 0;
+        if (node.hasOwnProperty(CHILDREN)) {
+            // if node is not leaf
+            children = node[CHILDREN];
+            for (i = 0; i < children.length; i += 1) {
+                child = children[i];
+                // keep going until we reach leaf
+                if (!node.score) {
+                    node.score = 0;
+                }
+
+                subNode = _processNode(child);
+                subScore = subNode.hasOwnProperty("result") ? subNode.result.score : subNode.score;
+                if (subScore === 0) {
+                    node.pass = false;
+                }
+                node.score = node.pass === false ? 0 : node.score + subScore;
             }
-
-            subNode = processRqmt(child);
-            subScore = subNode.hasOwnProperty("result") ? subNode.result.score : subNode.score;
-            if (subScore === 0) {
-                node.pass = false;
-            }
-            node.score = node.pass === false ? 0 : node.score + subScore;
+        } else {
+            // if node is leaf - a requirement, evaluate it
+            node.result = evaluateRqmt(node, metricsTable);
         }
-    } else {
-        // if node is leaf - a requirement, evaluate it
-        node.result = evaluateRqmt(node);
-    }
-    return node;
+        return node;
+    };
+
+    result = _processNode(requirementObj);
+
+    return result;
 };
 
-var evaluateRqmt = function (rqmtNode) {
+var evaluateRqmt = function (rqmtNode, metricsTable) {
     var key = rqmtNode[TESTBENCH] + DELIM + rqmtNode[METRIC_NAME],
         metricNode = metricsTable[key],
         result = {
@@ -222,6 +215,7 @@ var evaluate = function (reqNode, metricNode) {
     return resultNode;
 };
 
+
 /**
  * a recursive function to generate the final result output
  * @param node - node to start with
@@ -248,6 +242,7 @@ var generateOutput = function (node) {
         }
     } else {
         result = {
+            testBench: node[TESTBENCH],
             name: node[METRIC_NAME],
             Priority: node[PRIORITY],
             pass: node.result.score !== 0,
@@ -283,7 +278,6 @@ var convertUnit = function (unit, target) {
     return factor;
 };
 
-// main entry point
-var fs = require('fs');
-var path = require('path');
-score();
+
+
+module.exports = score;
