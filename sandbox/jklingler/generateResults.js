@@ -7,6 +7,7 @@ var fs = require('fs');
 var Classes = require('./classes');
 
 function generateResults (requirementsObject, numberResults) {
+    console.log('generating results...');
     var flatRequirementsMap = {},
     requirements = new Classes.TopLevelRequirementsGroup(requirementsObject, flatRequirementsMap);
     return generateTestBenchManifests(flatRequirementsMap, "MyDesign", numberResults);

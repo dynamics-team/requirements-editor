@@ -66,9 +66,6 @@ function start() {
     //var auth = require('./src/server/auth_fake');
     auth.init(app);
 
-    var controller = require('./src/server/controller');
-    controller.init(app, esClient);
-
     function addTestData() {
         var model = require('./src/server/model');
         var Requirement = model.Requirement;
@@ -84,6 +81,7 @@ function start() {
             // test data
             Requirement.find({ title: 'Radio Example'}, function (err, docs) {
                 if (docs.length === 0) {
+                    console.log('test data was added');
                     var instance = new Requirement();
                     instance.title = 'Radio Example';
 
@@ -104,6 +102,11 @@ function start() {
         });
     }
     addTestData();
+
+    var controller = require('./src/server/controller');
+    controller.init(app, esClient);
+
+
 
     mongoose.connection.once('open', function (err) {
         console.log('Connected to db');

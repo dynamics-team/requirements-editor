@@ -57,7 +57,7 @@ var ReqApp = angular.module('RequirementsApp', [
                 }
             });
     })
-    .run(function ($state, $ionicPlatform, constants) {
+    .run(function ($state, $ionicPlatform, constants, $http, $q) {
         'use strict';
         // TODO: Connect to database here, or at least check if REST is available?
 
@@ -79,6 +79,23 @@ var ReqApp = angular.module('RequirementsApp', [
             // redirect
             window.location = constants.baseUrl;
         }
+
+
+//        var generate_results = function (requirement_id, num) {
+//            var deferred = $q.defer(),
+//                url = constants.baseUrl + 'generate_results/' + requirement_id + '?n=' + (num || 1);
+//            $http.post(url)
+//                .success(function (data, status, headers, config) {
+//                    deferred.resolve(data);
+//                })
+//                .error(function (data, status, headers, config) {
+//                    console.error(data);
+//                    deferred.reject(status);
+//                });
+//
+//            return deferred.promise;
+//        };
+//        generate_results('asdf', 3);
     });
 
 

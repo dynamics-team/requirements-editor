@@ -91,6 +91,7 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
 
     $scope.duplicate = function (data) {
         var modalInstance,
+            isCategory = data.hasOwnProperty('children'),
             categoryId = data.categoryId;
         if (!categoryId) {
             console.warn('Cannot duplicate root category');
@@ -107,11 +108,51 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
         });
 
         modalInstance.result.then(function (returnData) {
-            console.warn(categoryId, returnData);
-            // TODO: Save to data-base and then refresh data
+            var category,
+                jsonStr;
+            if (isCategory) {
+                returnData.children = [];
+            }
+            category = $scope.dataModel.flatCategories[categoryId];
+            console.log('Found parent category', category);
+            category.children.push(returnData);
+            jsonStr = JSON.stringify({children: $scope.dataModel.children}, RequirementsService.jsonReplacer, 0);
+            console.log(jsonStr);
+            console.log(JSON.parse(jsonStr));
+            RequirementsService.updateRequirement($scope.dataModel.title, jsonStr)
+                .then(function (rData) {
+                    console.log('Data-base updated with changes, rData:', rData);
+                    refreshData();
+                })
+                .catch(function (reason) {
+                    console.error('Could not save requirement', reason);
+                });
         }, function () {
             console.log('Modal dismissed at: ' + new Date());
         });
+    };
+
+    $scope.createNew = function (categoryData, isReq) {
+        var defaultData = {
+            name: '',
+            description: 'Give a description',
+            weightNeg: 1,
+            weightPos: 1,
+            Priority: 1,
+            categoryId: categoryData.id
+        };
+        if (isReq) {
+            defaultData.KPP = false;
+            defaultData.function = 'LIN';
+            defaultData.objective = 1;
+            defaultData.threshold = 0;
+            defaultData.unit = 'unitless';
+            defaultData.metricName = '';
+            defaultData.testBench = '';
+        } else {
+            defaultData.children = [];
+        }
+        $scope.duplicate(defaultData);
     };
 
     $scope.dataModel = {

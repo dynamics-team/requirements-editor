@@ -11,6 +11,8 @@ div.requirement-listing .btn-warning {
   padding: 1px 4px; }
 div.requirement-listing .btn-danger {
   padding: 1px 4px; }
+div.requirement-listing .btn-default {
+  padding: 1px 4px; }
 div.requirement-listing td {
   padding: 4px;
   vertical-align: middle; }
