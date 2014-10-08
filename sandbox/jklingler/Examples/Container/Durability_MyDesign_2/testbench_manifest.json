@@ -1,0 +1,33 @@
+{
+    "Status": "OK",
+    "Parameters": [],
+    "Created": "",
+    "Artifacts": [],
+    "TierLevel": 0,
+    "DesignName": "MyDesign_2",
+    "LimitChecks": [],
+    "Metrics": [
+        {
+            "Description": "Time in seconds until half of the containers are worthless",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 133.93047294579446,
+            "ID": null,
+            "Unit": "week",
+            "Name": "DurabilityHalfLife"
+        },
+        {
+            "Description": "Maximum moisture content that the material can contain without weakening",
+            "DisplayedName": null,
+            "GMEID": null,
+            "Value": 13.784562791697681,
+            "ID": null,
+            "Unit": "%",
+            "Name": ""
+        }
+    ],
+    "DesignID": "",
+    "Steps": [],
+    "TestBench": "Durability",
+    "PCCResults": {}
+}
