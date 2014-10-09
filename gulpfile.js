@@ -89,6 +89,8 @@ var argv = require('yargs').argv,
     templateCache = require('gulp-angular-templatecache'),
     ngConstant = require('gulp-ng-constant'),
 
+    minifyCSS = require('gulp-minify-css'),
+
     express = require('express'),
     server = express(),
     livereload = require('connect-livereload'),
@@ -221,6 +223,7 @@ gulp.task('compile-library-styles', function () {
             path.dirname = '';
         }))
         .pipe(concat(libraryName + '.css'))
+        .pipe(minifyCSS({keepBreaks:true}))
         .pipe(gulp.dest(buildPaths.styles));
 
 
@@ -234,6 +237,7 @@ gulp.task('compile-library-styles', function () {
             path.dirname = '';
         }))
         .pipe(concat(libraryName + '.css'))
+        .pipe(minifyCSS({keepBreaks:true}))
         .pipe(gulp.dest(buildPathsMobile.styles));
 });
 
