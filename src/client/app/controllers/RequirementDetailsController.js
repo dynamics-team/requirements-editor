@@ -27,6 +27,7 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
             $scope.dataModel.children = [];
             $scope.dataModel.flatRequirements = {};
             $scope.dataModel.flatCategories = {};
+            $scope.dataModel.hasScoreData = false;
             RequirementsService.getRequirementByTitle(reqTitle)
                 .then(function (data) {
                     console.log(data);
@@ -74,7 +75,6 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
         children: [],
         flatRequirements: {},
         flatCategories: {},
-        requirementDetails: false,
         permissionLevel: 1,
         view: 'default',
         hasScoreData: false
