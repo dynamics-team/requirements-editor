@@ -297,8 +297,8 @@ exports.init = function(app, esClient) {
     // This server's API
     // http://localhost:8844/search/?q=WalkieTalkieMass&per_page=1&page=1
     app.get('/search', function (req, res) {
-        var pageNum = req.param('page', 1),
-            perPage = req.param('per_page', 15),
+        var pageNum = parseInt(req.param('page', 1)),
+            perPage = parseInt(req.param('per_page', 15)),
             userQuery = req.param('q'),
             userId = req.session.userId;
 

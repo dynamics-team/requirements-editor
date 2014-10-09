@@ -1,20 +1,39 @@
-<ion-view title="Search">
+<ion-view>
+    <ion-header-bar align-title="center" class="bar-stale">
+        <div class="buttons">
+            <!--<button class="button" ng-click="doSomething()">Left Button</button>-->
+        </div>
+        <h1 class="title">
+            <span data-ng-if="!model.data.results">Search</span>
+            <span data-ng-if="model.data.results && model.data.results.length === 0">No items found</span>
+
+            <span data-ng-if="model.data.results && model.data.results.length > 0">
+                {{model.data.total}} items
+                <span>({{model.data.page}} of {{model.data.pages}} page)</span>
+                 <!--{{model.data.perPage}} items per page-->
+            </span>
+        </h1>
+        <div class="buttons">
+            <button class="button button-clear button-positive" data-ng-click="nextPage()" data-ng-disabled="model.data.pages === 0 || model.data.page === model.data.pages">
+                <i class="icon ion-ios7-arrow-down"></i>
+            </button>
+
+            <button class="button button-clear button-positive" data-ng-click="prevPage()" data-ng-disabled="model.data.page === 1">
+                <i class="icon ion-ios7-arrow-up"></i>
+            </button>
+        </div>
+    </ion-header-bar>
+
     <ion-content class="padding">
 
-        <a class="positive" target="_blank" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax">Syntax</a>
-
-        <span data-ng-if="model.data.results && model.data.results.length > 0">
-            {{model.data.total}} results
-            <span data-ng-if="model.data.pages > 1">{{model.data.page}}/{{model.data.pages}} {{model.data.perPage}} items per page</span>
-        </span>
 
         <div class="list list-inset">
             <label class="item item-input">
+                <a class="icon ion-ios7-information-outline placeholder-icon positive" target="_blank" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax"></a>
                 <i class="icon ion-search placeholder-icon"></i>
-                <input type="text" placeholder="Search" data-ng-model="search_query" data-ng-change="search(search_query)">
+                <input type="text" placeholder="Search" data-ng-model="model.search_query" data-ng-change="search()">
             </label>
         </div>
-
 
         <div class="assertive" data-ng-if="model.data.message">
             Search is not available. Message: {{model.data.message}}
