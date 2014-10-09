@@ -41,6 +41,11 @@ var METRIC_UNIT = "Unit";
 // round to 1/ROUND decimal places
 var ROUND = 1000;
 
+// enumeration functions
+var LINEAR = "Linear";
+var EXPONETIAL = "Exponential";
+var LOGRITHMIC = "Logrithmic";
+
 
 /**
  * score design file against requirement file
@@ -173,39 +178,62 @@ var evaluateRqmt = function (rqmtNode, metricsTable) {
  */
 var evaluate = function (reqNode, metricNode) {
     var weight = reqNode[WEIGHT_POS],
+        func = reqNode[FUNCTION],
         T = reqNode[THRESH],
         O = reqNode[OBJECTIVE],
-        A = 0.9 / (O - T), // todo: handle the divideZero case
-        B = 1 - A * O,
         factor = convertUnit(metricNode[UNIT], reqNode[UNIT]), // todo: apply unit conversion if necessary
         adjusted_metric = metricNode[VALUE] === null ? null : metricNode[VALUE] * factor,
         score,
         type,
         resultNode,
-        _score; // fn
+        _scoreLinear,
+        _scoreExp,
+        _scoreLog; // fn
 
-    _score = function (val) {
-        if (val === null) {
-            score = 0;
-            type = "no data";
-        } else if (T <= O && val < T || T > O && val > T) {
-            score = 0;
-            type = "does not meet threshold";
-        } else if (T <= O && val >= O || T > O && val <= O) {
-            score = 1;
-            type = "meet objective";
-        } else {
-            score = (val * A + B); // weighted score
-            type = "above threshold";
-        }
+    _scoreLinear = function (val) {
+        var A = 0.9 / (O - T), // todo: handle the divideZero case
+            B = 1 - A * O;
+
+        score = (val * A + B); // weighted score
+        type = "meet threshold";
+    };
+
+    _scoreExp = function (val) {
+        var A = 0.9 / (Math.exp(T) - Math.exp(O)),
+            B = 1 - A * Math.exp(T);
+
+        score = (A * Math.exp(val) + B);
+        type = "meet threshold";
+    };
+
+    _scoreLog = function (val) {
+        var A = 0.9 / (Math.log(O / T)),
+            B = 1 - A * Math.log(O);
+
+        score = (A * Math.log(val) + B);
+        type = "meet threshold";
     };
 
     if (reqNode[KPP] && metricNode[KPP] === false) {
         score = 0;
         type = "violated kpp";
     } else {
-        _score(adjusted_metric);
-        // applyFunction(requirement[FUNCTION], metricVal); // todo: apply function to metricVal and output to score
+        if (adjusted_metric === null) {
+            score = 0;
+            type = "no data";
+        } else if (T <= O && adjusted_metric < T || T > O && adjusted_metric > T) {
+            score = 0;
+            type = "does not meet threshold";
+        } else if (T <= O && adjusted_metric >= O || T > O && adjusted_metric <= O) {
+            score = 1;
+            type = "meet objective";
+        } else if (func === "" || func === LINEAR) {
+            _scoreLinear(adjusted_metric);
+        } else if (func === EXPONETIAL) {
+            _scoreExp(adjusted_metric);
+        } else if (func === LOGRITHMIC) {
+            _scoreLog(adjusted_metric);
+        }
     }
 
     resultNode = {
@@ -251,15 +279,6 @@ var generateOutput = function (node) {
         }
     }
     return result;
-};
-
-/**
- * Evaluate design metric value against requirements
- * @param metricValue
- * @param func
- */
-var applyFunction = function (func, metricValue) {
-    // todo: when function is defined, evaluate it
 };
 
 /**
