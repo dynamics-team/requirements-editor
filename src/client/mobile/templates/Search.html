@@ -1,6 +1,12 @@
 <ion-view title="Search">
     <ion-content class="padding">
-        <a class="button button-clear button-positive" target="_blank" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax">Syntax</a>
+
+        <a class="positive" target="_blank" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax">Syntax</a>
+
+        <span data-ng-if="model.data.results && model.data.results.length > 0">
+            {{model.data.total}} results
+            <span data-ng-if="model.data.pages > 1">{{model.data.page}}/{{model.data.pages}} {{model.data.perPage}} items per page</span>
+        </span>
 
         <div class="list list-inset">
             <label class="item item-input">
@@ -9,9 +15,6 @@
             </label>
         </div>
 
-        <div data-ng-if="model.data.results && model.data.results.length > 0">
-            Found {{model.data.results.length}} {{model.data.page}}/{{model.data.pages}} page
-        </div>
 
         <div class="assertive" data-ng-if="model.data.message">
             Search is not available. Message: {{model.data.message}}

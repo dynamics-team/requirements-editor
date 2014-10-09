@@ -317,6 +317,8 @@ exports.init = function(app, esClient) {
             res.send({
                 results: response.hits.hits,
                 page: pageNum,
+                perPage: perPage,
+                total: response.hits.total,
                 pages: Math.ceil(response.hits.total / perPage)
             })
         });
