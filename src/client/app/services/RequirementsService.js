@@ -207,6 +207,11 @@ angular.module('RequirementsApp').service('RequirementsService', function ($q, $
         if (illegals[key]) {
             return undefined;
         }
+        if (key === 'weightNeg' || key === 'weightPos') {
+            if (typeof value !== 'number') {
+                value = 1;
+            }
+        }
         return value;
     };
 

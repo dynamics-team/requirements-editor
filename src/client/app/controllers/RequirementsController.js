@@ -84,7 +84,8 @@ angular.module('RequirementsApp').controller('RequirementsController', function 
     $scope.deleteItem = function (title) {
         RequirementsService.deleteRequirementByTitle(title)
             .then(function (data) {
-                console.log(data);
+//                console.log('deleteed', data);
+//                console.log('delete', $scope.dataModel.requirements);
                 refreshData();
             })
             .catch(function (reason) {

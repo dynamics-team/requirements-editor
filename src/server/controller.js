@@ -294,7 +294,7 @@ exports.init = function(app, esClient) {
                     return res.send(500);
                 if (!requirement)
                     return res.status(404).send("Could not find requirement " + req.query.requirement);
-                res.status(200).send(score(requirement.children, result.testbench_manifests));
+                res.status(200).send(score(requirement.children[0], result.testbench_manifests));
             });
         });
     });

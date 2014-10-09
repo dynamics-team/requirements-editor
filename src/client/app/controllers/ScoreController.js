@@ -8,6 +8,7 @@ angular.module('RequirementsApp').controller('ScoreController', function ($scope
     var title = data.title;
     $scope.dataModel = {
         title: data.title,
+        permissionLevel: data.permissionLevel,
         results: []
     };
 
@@ -57,6 +58,11 @@ angular.module('RequirementsApp').controller('ScoreController', function ($scope
         RequirementsService.calculateScore(title, res.name)
             .then(function (rData) {
                 console.log('Scored result', res, rData);
+                if (rData.score === null) {
+                    res.score = { score: 'Corrupt result/requirement!'};
+                } else {
+                    res.score = rData;
+                }
             })
             .catch(function (reason) {
                 console.error('Could not score result', res, reason);
@@ -69,5 +75,9 @@ angular.module('RequirementsApp').controller('ScoreController', function ($scope
 
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
+    };
+
+    $scope.viewDetails = function (result) {
+        console.log(result);
     };
 });
