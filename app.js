@@ -124,7 +124,7 @@ function start() {
 
             var sampleRequirements = {
                 'Radio Example': 'sandbox/jklingler/Examples/Radio/TopLevelRequirementGroup.json',
-                'Container Example': 'sandbox/jklingler/Examples/Container/ContainerRequirements.json',
+                'Container Example': 'sandbox/jklingler/Examples/Container/ContainerDesign.json',
                 'CarShopping Example': 'sandbox/jklingler/Examples/CarBuyer/CarBuyer.json'
 
                 // TODO: add other requirement name and file pairs here
