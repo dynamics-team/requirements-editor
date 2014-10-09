@@ -8,17 +8,20 @@ angular.module('RequirementsApp').controller('EditUsersController', function ($s
     var currentUser;
     $scope.dataModel = {
         title: data.title,
-        users: {}
+        users: {},
+        noOtherUsers: true
     };
 
     RequirementsService.getUsers().
         then(function (users) {
             var id,
                 i;
+            $scope.dataModel.noOtherUsers = true;
             for (i = 0; i < users.length; i += 1) {
                 if (users[i].current) {
                     currentUser = users[i].id;
                 } else {
+                    $scope.dataModel.noOtherUsers = false;
                     id = users[i].id;
                     $scope.dataModel.users[id] = {
                         id: id,

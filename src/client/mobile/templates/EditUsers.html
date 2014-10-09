@@ -15,7 +15,7 @@
     <ion-content>
         <h4 class="subtitle">{{dataModel.title}}</h4>
 
-        <div class="assertive" data-ng-if="dataModel.users.length === 0">No other users.</div>
+        <div class="assertive" data-ng-show="dataModel.noOtherUsers">No other users.</div>
 
         <div class="list">
             <label class="item item-input item-select" data-ng-repeat="user in dataModel.users">
