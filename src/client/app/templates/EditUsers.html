@@ -3,11 +3,21 @@
         <h3 class="modal-title">Edit Users for {{dataModel.title}}</h3>
     </div>
     <div class="modal-body">
-        <ul>
-            <li ng-repeat="user in dataModel.users">
-                {{user.name}}, permission : {{user.permissionLevel}} -({{user.id}})
-            </li>
-        </ul>
+        <table class="table table-striped users">
+            <tr ng-repeat="user in dataModel.users">
+                <td>
+                    {{user.name}}
+                </td>
+                <td class="edit-buttons" align="right">
+                    <div class="btn-group">
+                        <label class="btn btn-default" ng-model="user.permissionLevel" btn-radio="0">None</label>
+                        <label class="btn btn-default" ng-model="user.permissionLevel" btn-radio="1">Read</label>
+                        <label class="btn btn-default" ng-model="user.permissionLevel" btn-radio="2">Write</label>
+                        <label class="btn btn-default" ng-model="user.permissionLevel" btn-radio="3">Admin</label>
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" ng-click="ok()">OK</button>

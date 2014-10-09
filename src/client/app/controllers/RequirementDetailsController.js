@@ -31,6 +31,7 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
                 .then(function (data) {
                     console.log(data);
                     $scope.dataModel.children = data.children;
+                    $scope.dataModel.permissionLevel = data.permissionLevel;
                     flatten(data.children);
                 })
                 .catch(function (reason) {
@@ -198,7 +199,8 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
         children: [],
         flatRequirements: {},
         flatCategories: {},
-        requirementDetails: false
+        requirementDetails: false,
+        permissionLevel: 1
     };
 
     $scope.onSelection = function (data) {

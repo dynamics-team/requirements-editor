@@ -94,7 +94,6 @@ angular.module('RequirementsApp').controller('RequirementsController', function 
 
     $scope.editUsers = function (data) {
         var modalInstance;
-        debugger;
         modalInstance = $modal.open({
             templateUrl: 'templates/EditUsers.html',
             controller: 'EditUsersController',
@@ -106,7 +105,15 @@ angular.module('RequirementsApp').controller('RequirementsController', function 
         });
 
         modalInstance.result.then(function (users) {
-            console.log(users);
+            var jsonStr = JSON.stringify(users, RequirementsService.jsonReplacer, users);
+            RequirementsService.updateRequirement(users.title, jsonStr)
+                .then(function (rData) {
+                    console.log('Data-base updated with user changes, rData:', rData);
+                    refreshData();
+                })
+                .catch(function (reason) {
+                    console.error('Could not update users', reason);
+                });
         }, function () {
             console.log('Modal dismissed at: ' + new Date());
         });

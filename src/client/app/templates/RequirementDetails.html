@@ -29,7 +29,7 @@
                     <br>
                     <span class="details-header">WeightPos :</span> {{cat.weightPos}}
                     <br>
-                    <div class="edit-buttons-details">
+                    <div ng-if="dataModel.permissionLevel > 1" class="edit-buttons-details">
                         <a class="btn btn-primary" ng-click="edit(cat)">Edit</a>
                         <a class="btn btn-success" ng-click="duplicate(cat)">Duplicate</a>
                         <a class="btn btn-default" ng-click="createNew(cat, true)">New Requirement</a>
@@ -65,7 +65,7 @@
                     <br>
                     <span class="details-header">Unit :</span> {{req.unit}}
                     <br>
-                    <div class="edit-buttons-details">
+                    <div ng-if="dataModel.permissionLevel > 1" class="edit-buttons-details">
                         <a class="btn btn-primary" ng-click="edit(req)">Edit</a>
                         <a class="btn btn-success" ng-click="duplicate(req)">Duplicate</a>
                         <a class="btn btn-danger" ng-click="deleteItem(req)">Delete</a>
