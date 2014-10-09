@@ -73,7 +73,7 @@ exports.init = function(app) {
     passport.deserializeUser(function (id, done) {
         User.findOne({ id: id}, function (err, user) {
             if (!user)
-                done("Could not find user", null);
+                return done("Could not find user", null);
             user = user.toObject();
             delete user._id;
             delete user.__v;
