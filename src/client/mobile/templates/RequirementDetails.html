@@ -22,7 +22,7 @@
             <ion-item ng-repeat="cat in dataModel.flatCategories | orderBy: 'name'" type="item-text-wrap" data-ng-click="onSelection(cat)">
 
                 <span data-ng-class="{'dark': !cat.isSelected, 'positive': cat.isSelected, 'royal': cat.inSelections > 0}">
-                    <i class="icon" data-ng-class="{'ion-ios7-circle-outline': !cat.isSelected, 'ion-ios7-checkmark': cat.isSelected}"></i>
+                    <i class="icon" data-ng-class="{'ion-ios7-circle-outline': !cat.isSelected, 'ion-ios7-checkmark-outline': cat.isSelected}"></i>
                     {{cat.name}}
                 </span>
 
@@ -68,7 +68,7 @@
         <div class="card" ng-repeat="req in dataModel.flatRequirements | orderBy: 'name'">
             <div class="item item-divider" data-ng-click="onSelection(req)">
                 <span data-ng-class="{'dark': !req.isSelected, 'positive': req.isSelected, 'royal': req.inSelections > 0}">
-                    <i class="icon" data-ng-class="{'ion-ios7-circle-outline': !req.isSelected, 'ion-ios7-checkmark': req.isSelected}"></i>
+                    <i class="icon" data-ng-class="{'ion-ios7-circle-outline': !req.isSelected, 'ion-ios7-checkmark-outline': req.isSelected}"></i>
                     {{req.name}}
                 </span>
             </div>
