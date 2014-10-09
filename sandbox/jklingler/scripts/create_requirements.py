@@ -19,21 +19,36 @@ def make_requirements_json(csv_path):
         i = 0
         for row in csv_reader:
 
-            if len(row) < 7:
-                print "csv contains less than the optimal information"
+            if len(row) < 8:
+                msg = "csv row ({0}) does not contain enough information".format(row)
+                print msg
+                continue
 
             if i != 0:
 
                 args = tuple(row[0:7])
                 new_requirement = req.Requirement(*args)
 
-                # Check if there is a group for this testbench
+                # Make sure there is a group for this test_bench
                 test_bench_name = row[5]
                 if test_bench_name not in test_bench_groups:
                     test_bench_groups[test_bench_name] = req.RequirementsGroup(test_bench_name)
 
-                # Add the requirement to the appropriate group
-                test_bench_groups[test_bench_name].children[new_requirement.name] = new_requirement
+                # Check if there is a specified group_name, and if it is different from test_bench_name
+                sub_group_name = row[7]
+                if sub_group_name != test_bench_name:
+                    # Make sure there is a sub-group in this test_bench_group
+                    if sub_group_name not in test_bench_groups[test_bench_name].children:
+                        test_bench_groups[test_bench_name].children[sub_group_name] = \
+                            req.RequirementsGroup(sub_group_name)
+
+                    # Add the requirement to the sub-group
+                    test_bench_groups[test_bench_name].children[sub_group_name].children[new_requirement.name] = \
+                        new_requirement
+
+                else:
+                    # Add the requirement to the test_bench group
+                    test_bench_groups[test_bench_name].children[new_requirement.name] = new_requirement
 
             i += 1
 
