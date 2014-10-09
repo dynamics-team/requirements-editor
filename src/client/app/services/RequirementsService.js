@@ -96,8 +96,9 @@ angular.module('RequirementsApp').service('RequirementsService', function ($q, $
 
     this.listAssociatedResults = function (reqTitle) {
         var deferred = $q.defer(),
-            url = baseUrl + 'result/?requirement=' + reqTitle;
-        $http.get(url)
+            params = {params: {requirement: reqTitle}},
+            url = baseUrl + 'result';
+        $http.get(url, params)
             .success(function (data, status, headers, config) {
                 var currentUser = headers()['x-user-id'],
                     i;
@@ -129,10 +130,11 @@ angular.module('RequirementsApp').service('RequirementsService', function ($q, $
         return deferred.promise;
     };
 
-    this.generateNewResults = function (reqTitle, n) {
+    this.generateNewResults = function (reqTitle, n, shouldPass) {
         var deferred = $q.defer(),
-            url = baseUrl + 'generate_results/' + reqTitle + '?n=' + n.toString();
-        $http.post(url)
+            params = {params: {n: n, should_pass: shouldPass}},
+            url = baseUrl + 'generate_results/' + reqTitle;
+        $http.post(url, null, params)
             .success(function (data, status, headers, config) {
                 deferred.resolve(data);
             })
@@ -146,8 +148,9 @@ angular.module('RequirementsApp').service('RequirementsService', function ($q, $
 
     this.calculateScore = function (reqTitle, resultName) {
         var deferred = $q.defer(),
-            url = baseUrl + 'score/?requirement=' + reqTitle + '&result=' + resultName;
-        $http.get(url)
+            params = {params: {requirement: reqTitle, result: resultName}},
+            url = baseUrl + 'score';
+        $http.get(url, params)
             .success(function (data, status, headers, config) {
                 deferred.resolve(data);
             })

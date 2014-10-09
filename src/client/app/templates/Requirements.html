@@ -5,7 +5,7 @@
     </header>
     <div class="requirement-listing col-lg-8" align="center">
         <table class="table table-striped">
-            <tr ng-repeat="req in dataModel.requirements">
+            <tr ng-repeat="req in dataModel.requirements | orderBy: 'title'">
                 <td>
                     <a ui-sref="requirementDetails({ requirementId: req.title})">{{req.title}}</a>
                 </td>

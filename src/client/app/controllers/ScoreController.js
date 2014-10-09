@@ -27,7 +27,8 @@ angular.module('RequirementsApp').controller('ScoreController', function ($scope
         });
 
     $scope.generateResults = function (n) {
-        RequirementsService.generateNewResults(title, n, false)
+        var shouldPass = Math.random() > 0.2;
+        RequirementsService.generateNewResults(title, n, shouldPass)
             .then(function (newResData) {
                 var i;
                 for (i = 0; i < newResData.length; i += 1) {

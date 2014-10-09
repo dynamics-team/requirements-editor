@@ -10,7 +10,7 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
             var i,
                 id;
             for (i = 0; i < children.length; i += 1) {
-                id = RequirementsService.generateGuid();
+                id = children[i].name + RequirementsService.generateGuid();
                 children[i].id = id;
                 children[i].categoryId = parentId;
                 children[i].isSelected = false;

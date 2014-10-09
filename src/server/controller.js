@@ -255,7 +255,8 @@ exports.init = function(app, esClient) {
             if (err)
                 return res.send(500);
             var num = req.query.n || 1;
-            var results = generateResults.generateResults(doc.children[0], num);
+            var pass = req.query.should_pass === "true";
+            var results = generateResults.generateResults(doc.children[0], num, pass);
             var names = [];
             var saveResult = function (i) {
                 if (i == results.length) {
