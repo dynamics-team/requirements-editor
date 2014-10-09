@@ -2,6 +2,13 @@
     <header class="main-header">
         <h1>{{dataModel.title}}</h1>
         <a class="btn btn-default" ui-sref="requirements">Back</a>
+        <a class="btn btn-default" ng-click="showScore()">Score</a>
+        <h4>View</h4>
+        <div class="btn-group btn-group-view">
+            <label class="btn btn-default" ng-model="user.permissionLevel" btn-radio="0">Default</label>
+            <label class="btn btn-default" ng-model="user.permissionLevel" btn-radio="1">Edit/Details</label>
+            <label class="btn btn-default" ng-model="user.permissionLevel" btn-radio="2">Score</label>
+        </div>
     </header>
     <script type="text/ng-template"  id="tree_item_renderer.html">
         <a ng-class="{'selected': child.isSelected, 'in-selections': child.inSelections > 0}" ng-click="onSelection(child)">{{child.name}}</a>
