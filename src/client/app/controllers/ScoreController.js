@@ -76,15 +76,15 @@ angular.module('RequirementsApp').controller('ScoreController', function ($scope
             });
     };
 
-    $scope.ok = function () {
-        $modalInstance.close($scope.dataModel);
-    };
+//    $scope.ok = function () {
+//        $modalInstance.close($scope.dataModel);
+//    };
 
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
 
     $scope.viewDetails = function (result) {
-        $modalInstance.close($scope.dataModel);
+        $modalInstance.close(result.score);
     };
 });
