@@ -97,6 +97,11 @@ exports.init = function(app, esClient) {
                     return res.status(500).end();
                 if (doc === null)
                     return res.status(404).end();
+                if (doc.auth_admin.indexOf(req.session.passport.user) === -1) { // only auth_admins may update perms
+                    ['auth_read', 'auth_write', 'auth_admin'].forEach(function (key) {
+                        delete requirement[key];
+                    });
+                }
                 RequirementSchema.eachPath(function (key) {
                     if (key in requirement) {
                         doc[key] = requirement[key];
