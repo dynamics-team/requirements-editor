@@ -6,14 +6,13 @@
 var fs = require('fs');
 var Classes = require('./classes');
 
-function generateResults (requirementsObject, numberResults) {
-    console.log('generating results...');
+function generateResults (requirementsObject, numberResults, resultsShouldPass) {
     var flatRequirementsMap = {},
     requirements = new Classes.TopLevelRequirementsGroup(requirementsObject, flatRequirementsMap);
-    return generateTestBenchManifests(flatRequirementsMap, "MyDesign", numberResults);
+    return generateTestBenchManifests(flatRequirementsMap, "MyDesign", numberResults, resultsShouldPass);
 }
 
-function generateTestBenchManifests (requirementsMap, seedDesignName, numberResults) {
+function generateTestBenchManifests (requirementsMap, seedDesignName, numberResults, resultsShouldPass) {
     var testbenchManifestGrid = {};
     var metricMap = {};
     var name;
@@ -37,7 +36,7 @@ function generateTestBenchManifests (requirementsMap, seedDesignName, numberResu
             var uniqueName = tbName + '_' + dName;
             var tb;
 
-            giveMetricValues(metric, requirement);
+            giveMetricValues(metric, requirement, resultsShouldPass);
 
             if (testbenchManifestGrid.hasOwnProperty(dName)) {
                 if (testbenchManifestGrid[dName].hasOwnProperty(tbName)) {
@@ -74,13 +73,22 @@ function generateTestBenchManifests (requirementsMap, seedDesignName, numberResu
     return results;
 }
 
-function giveMetricValues (metricInstance, requirementInstance) {
+function giveMetricValues (metricInstance, requirementInstance, shouldPass) {
     var difference = Math.abs(requirementInstance.objective - requirementInstance.threshold),
         average = (requirementInstance.objective + requirementInstance.threshold)/ 2,
         randomNumber = Math.random(),
         unitScale = (randomNumber - 0.5);
 
-    metricInstance.Value = average + difference*unitScale;
+    if (shouldPass) {
+        metricInstance.Value = average + difference*unitScale;
+    } else {
+        if (Math.random() < 0.9) {
+            metricInstance.Value = average + 1.1*difference*unitScale;
+        } else {
+            metricInstance.Value = null;
+        }
+    }
+
 }
 
 function saveFile(tbManifestObject) {

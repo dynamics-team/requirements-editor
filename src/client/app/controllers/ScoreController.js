@@ -27,7 +27,7 @@ angular.module('RequirementsApp').controller('ScoreController', function ($scope
         });
 
     $scope.generateResults = function (n) {
-        RequirementsService.generateNewResults(title, n)
+        RequirementsService.generateNewResults(title, n, false)
             .then(function (newResData) {
                 var i;
                 for (i = 0; i < newResData.length; i += 1) {
