@@ -43,7 +43,8 @@ def make_requirements_json(csv_path):
 
                 # Check if there is a specified group_name, and if it is different from test_bench_name
                 sub_group_name = row[7]
-                if sub_group_name != test_bench_name:
+                if sub_group_name and \
+                                sub_group_name != test_bench_name:
                     # Make sure there is a sub-group in this test_bench_group
                     if sub_group_name not in test_bench_groups[test_bench_name].children:
                         test_bench_groups[test_bench_name].children[sub_group_name] = \
