@@ -156,46 +156,106 @@
                 "Priority": 1,
                 "children": [
                     {
-                        "KPP": true,
-                        "function": "",
                         "weightNeg": 1.0,
-                        "description": "Width of the Container",
-                        "Priority": 1,
-                        "testBench": "PhysicalTraits",
-                        "threshold": 1.0,
-                        "unit": "m",
-                        "name": "Width",
+                        "description": null,
                         "weightPos": 1.0,
-                        "objective": 0.5,
-                        "metricName": "Width"
+                        "Priority": 1,
+                        "children": [
+                            {
+                                "KPP": true,
+                                "function": "",
+                                "weightNeg": 1.0,
+                                "description": "Exterior Width of the Container",
+                                "Priority": 1,
+                                "testBench": "PhysicalTraits",
+                                "threshold": 1.0,
+                                "unit": "m",
+                                "name": "ExteriorWidth",
+                                "weightPos": 1.0,
+                                "objective": 0.5,
+                                "metricName": "ExteriorWidth"
+                            },
+                            {
+                                "KPP": true,
+                                "function": "",
+                                "weightNeg": 1.0,
+                                "description": "Exterior Length of the Container",
+                                "Priority": 1,
+                                "testBench": "PhysicalTraits",
+                                "threshold": 2.0,
+                                "unit": "m",
+                                "name": "Exterior Length",
+                                "weightPos": 1.0,
+                                "objective": 1.0,
+                                "metricName": "Exterior Length"
+                            },
+                            {
+                                "KPP": true,
+                                "function": "",
+                                "weightNeg": 1.0,
+                                "description": "Exterior Height of the Container",
+                                "Priority": 1,
+                                "testBench": "PhysicalTraits",
+                                "threshold": 1.0,
+                                "unit": "m",
+                                "name": "ExteriorHeight",
+                                "weightPos": 1.0,
+                                "objective": 0.5,
+                                "metricName": "ExteriorHeight"
+                            }
+                        ],
+                        "name": "ExteriorDimensions"
                     },
                     {
-                        "KPP": true,
-                        "function": "",
                         "weightNeg": 1.0,
-                        "description": "Length of the Container",
-                        "Priority": 1,
-                        "testBench": "PhysicalTraits",
-                        "threshold": 2.0,
-                        "unit": "m",
-                        "name": "Length",
+                        "description": null,
                         "weightPos": 1.0,
-                        "objective": 1.0,
-                        "metricName": "Length"
-                    },
-                    {
-                        "KPP": true,
-                        "function": "",
-                        "weightNeg": 1.0,
-                        "description": "Height of the Container",
                         "Priority": 1,
-                        "testBench": "PhysicalTraits",
-                        "threshold": 1.0,
-                        "unit": "m",
-                        "name": "Height",
-                        "weightPos": 1.0,
-                        "objective": 0.5,
-                        "metricName": "Height"
+                        "children": [
+                            {
+                                "KPP": true,
+                                "function": "",
+                                "weightNeg": 1.0,
+                                "description": "Width inside the Container",
+                                "Priority": 1,
+                                "testBench": "PhysicalTraits",
+                                "threshold": 0.99,
+                                "unit": "m",
+                                "name": "InteriorWidth",
+                                "weightPos": 1.0,
+                                "objective": 0.49,
+                                "metricName": "InteriorWidth"
+                            },
+                            {
+                                "KPP": true,
+                                "function": "",
+                                "weightNeg": 1.0,
+                                "description": "Length inside the Container",
+                                "Priority": 1,
+                                "testBench": "PhysicalTraits",
+                                "threshold": 1.99,
+                                "unit": "m",
+                                "name": "InteriorLength",
+                                "weightPos": 1.0,
+                                "objective": 0.99,
+                                "metricName": "InteriorLength"
+                            },
+                            {
+                                "KPP": true,
+                                "function": "",
+                                "weightNeg": 1.0,
+                                "description": "Height of the Container",
+                                "Priority": 1,
+                                "testBench": "PhysicalTraits",
+                                "threshold": 0.99,
+                                "unit": "m",
+                                "name": "InteriorHeight",
+                                "weightPos": 1.0,
+                                "objective": 0.49,
+                                "metricName": "InteriorHeight"
+                            }
+                        ],
+                        "name": "InteriorDimensions"
                     }
                 ],
                 "name": "Dimensions"
