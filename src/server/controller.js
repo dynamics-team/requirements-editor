@@ -354,5 +354,6 @@ exports.init = function(app, esClient) {
     //});
     app.use(express.static(__dirname + '/../../public'));
     app.use(express.static(__dirname + '/../../src/build'));
+    app.use('/cad.js/data/', express.static(__dirname + '/../../public/cad.js/data'));
 
 };
