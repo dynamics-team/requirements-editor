@@ -6,7 +6,7 @@
             </a>
         </div>
 
-        <h1 class="title">{{dataModel.title}}</h1>
+        <h1 class="title">Details</h1>
 
         <div class="buttons">
             <button class="button button-clear button-positive" data-ng-click="showScore()">
@@ -16,6 +16,7 @@
     </ion-header-bar>
 
     <ion-content class="padding">
+        <h3>{{dataModel.title}}</h3>
         <h4>Categories</h4>
         <ion-list>
             <ion-item ng-repeat="cat in dataModel.flatCategories | orderBy: 'name'" type="item-text-wrap" data-ng-click="onSelection(cat)">
