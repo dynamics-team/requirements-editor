@@ -200,7 +200,8 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
         flatRequirements: {},
         flatCategories: {},
         requirementDetails: false,
-        permissionLevel: 1
+        permissionLevel: 1,
+        view: 'Default'
     };
 
     $scope.onSelection = function (data) {

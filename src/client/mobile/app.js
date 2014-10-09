@@ -105,18 +105,6 @@ ReqApp.controller('DebugController', function ($scope) {
     $scope.device = ionic.Platform.device();
 });
 
-// Include the Service
-require('../app/services/RequirementsService');
-require('../app/services/SearchService');
-
-// Include the controllers
-require('../app/controllers/RequirementsController');
-require('../app/controllers/RequirementDetailsController');
-
-require('../app/controllers/EditRequirementController');
-require('../app/controllers/NewRequirementController');
-
-require('../app/controllers/EditUsersController');
-
-require('../app/controllers/SearchController');
+// Include app dependencies
+require('../app/angularRequire');
 

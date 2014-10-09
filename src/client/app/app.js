@@ -33,12 +33,4 @@ var ReqApp = angular.module('RequirementsApp', [
         $state.go('requirements');
     });
 
-
-// Include the Service
-require('./services/RequirementsService');
-// Include the controllers
-require('./controllers/RequirementsController');
-require('./controllers/RequirementDetailsController');
-require('./controllers/EditRequirementController');
-require('./controllers/NewRequirementController');
-require('./controllers/EditUsersController');
+require('./angularRequire');
