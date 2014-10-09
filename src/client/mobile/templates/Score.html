@@ -14,15 +14,37 @@
     </ion-header-bar>
     <ion-content>
         <h4 class="subtitle">Manage</h4>
-        <button class="button button-clear button-positive" data-ng-click="generateResults(1)">
-            Generate New Result
-        </button>
+
+        <div class="button-bar">
+            <button class="button button-clear button-positive" data-ng-click="generateResults(1)">
+                New Result
+            </button>
+            <button class="button button-clear button-positive" data-ng-click="">
+                Score All
+            </button>
+        </div>
+
 
         <h4 class="subtitle">Results</h4>
 
         <ion-list>
             <ion-item ng-repeat="res in dataModel.results">
-                {{res.score || 'No score'}} - {{res.name}}
+                <span>{{res.name}}</span>
+
+                <span class="item-note">
+                    {{res.score.score}}
+                    <i ng-if="res.score && res.score.pass" class="icon ion-ios7-checkmark-outline balanced"></i>
+                    <i ng-if="res.score && !res.score.pass" class="icon ion-ios7-close-outline assertive"></i>
+                </span>
+
+                <div class="button-bar">
+                    <button class="button button-clear button-positive" data-ng-click="scoreResult(res)">
+                        Score
+                    </button>
+                    <button class="button button-clear button-assertive" data-ng-click="deleteItem($index)">
+                        Delete
+                    </button>
+                </div>
             </ion-item>
         </ion-list>
     </ion-content>
