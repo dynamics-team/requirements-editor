@@ -7,18 +7,23 @@
         </div>
         <h1 class="title">User permissions</h1>
         <div class="buttons">
-            <!--<button class="button button-clear button-positive" data-ng-click="ok()">-->
-            <!--Done-->
-            <!--</button>-->
+            <button class="button button-clear button-positive" data-ng-click="ok()">
+                Done
+            </button>
         </div>
     </ion-header-bar>
     <ion-content>
         <h4 class="subtitle">{{dataModel.title}}</h4>
 
         <div class="list">
-            <label class="item item-input item-stacked-label" data-ng-repeat="user in dataModel.users">
+            <label class="item item-input item-select" data-ng-repeat="user in dataModel.users">
                 <span class="input-label">{{user.name}}</span>
-                <input type="text" placeholder="{{user.permissionLevel}} -({{user.id}})">
+                <select data-ng-model="user.permissionLevel">
+                    <option ng-selected="user.permissionLevel === 0" value="0">None</option>
+                    <option ng-selected="user.permissionLevel === 1" value="1">Read</option>
+                    <option ng-selected="user.permissionLevel === 2" value="2">Write</option>
+                    <option ng-selected="user.permissionLevel === 3" value="3">Admin</option>
+                </select>
             </label>
         </div>
     </ion-content>
