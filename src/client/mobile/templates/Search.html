@@ -46,7 +46,7 @@
         <ion-list>
             <ion-item ng-repeat="result in model.data.results">
 
-                <span data-ng-if="result._type !== 'requirement' && result._type !== 'user'">
+                <span data-ng-if="result._type !== 'requirement' && result._type !== 'user' && result._type !== 'result'">
                     {{result._type}}
                 </span>
 
@@ -60,6 +60,13 @@
                 <!-- TODO: user search result template-->
                 <span data-ng-if="result._type === 'user'">
                     {{result._type}} {{result._source.displayName}}
+                </span>
+
+                <span data-ng-if="result._type === 'result'">
+                    {{result._type}}
+                    <a class="positive" href="#/tab/requirements/{{result._source.requirement}}">
+                        {{result._source.requirement}}
+                    </a>
                 </span>
             </ion-item>
         </ion-list>

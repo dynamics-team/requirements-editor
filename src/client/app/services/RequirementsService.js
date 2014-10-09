@@ -202,7 +202,8 @@ angular.module('RequirementsApp').service('RequirementsService', function ($q, $
             flatCategories: true,
             requirementDetails: true,
             $$hashKey: true,
-            permissionLevel: true
+            permissionLevel: true,
+            score: true
         };
         if (illegals[key]) {
             return undefined;

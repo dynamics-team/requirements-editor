@@ -27,6 +27,7 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
             $scope.dataModel.children = [];
             $scope.dataModel.flatRequirements = {};
             $scope.dataModel.flatCategories = {};
+            $scope.dataModel.hasScoreData = false;
             RequirementsService.getRequirementByTitle(reqTitle)
                 .then(function (data) {
                     console.log(data);
@@ -74,7 +75,6 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
         children: [],
         flatRequirements: {},
         flatCategories: {},
-        requirementDetails: false,
         permissionLevel: 1,
         view: 'default',
         hasScoreData: false
@@ -259,13 +259,49 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
         });
 
         modalInstance.result.then(function (returnData) {
-            var scoreData,
-                key;
+            var scoreData = {},
+                key,
+                item,
+                categoryId,
+                name;
             $scope.dataModel.view = 'score';
             $scope.dataModel.hasScoreData = true;
             getFlatScore(scoreData, '', returnData);
-            for (key in $scope.modelData.flatCategories) {
+            console.log(Object.keys(scoreData));
+            for (key in $scope.dataModel.flatCategories) {
+                if ($scope.dataModel.flatCategories.hasOwnProperty(key)) {
+                    item = $scope.dataModel.flatCategories[key];
+                    item.score = null;
+                    name = '<<' + item.name;
+                    categoryId = item.categoryId;
+                    while (categoryId) {
+                        name = '<<' + $scope.dataModel.flatCategories[categoryId].name + name;
+                        categoryId = $scope.dataModel.flatCategories[categoryId].categoryId;
+                    }
+                    if (scoreData.hasOwnProperty(name)) {
+                        item.score = scoreData[name];
+                    } else {
+                        console.log(name);
+                    }
+                }
+            }
+            for (key in $scope.dataModel.flatRequirements) {
+                if ($scope.dataModel.flatRequirements.hasOwnProperty(key)) {
+                    item = $scope.dataModel.flatRequirements[key];
+                    item.score = null;
+                    name = '<<' + item.testBench + '<' + item.metricName;
+                    categoryId = item.categoryId;
+                    while (categoryId) {
+                        name = '<<' + $scope.dataModel.flatCategories[categoryId].name + name;
+                        categoryId = $scope.dataModel.flatCategories[categoryId].categoryId;
+                    }
 
+                    if (scoreData.hasOwnProperty(name)) {
+                        item.score = scoreData[name];
+                    } else {
+                        console.log(name);
+                    }
+                }
             }
         }, function () {
             console.log('Modal dismissed at: ' + new Date());

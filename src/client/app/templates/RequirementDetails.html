@@ -41,15 +41,21 @@
                     </span>
                     </div>
                 </td>
-                <td class="solo-description" align="left" ng-show="dataModel.view === 'default'">
+                <td  ng-show="dataModel.view === 'default'" class="solo-description" align="left">
                     {{cat.description}}
                 </td>
-                <td class="details" align="left" ng-show="dataModel.view === 'edit'">
+                <td ng-show="dataModel.view === 'edit'" class="details" align="left">
                     <span class="details-header">Priority :</span> {{cat.Priority}}
                     <br>
                     <span class="details-header">WeightNeg :</span> {{cat.weightNeg}}
                     <br>
                     <span class="details-header">WeightPos :</span> {{cat.weightPos}}
+                    <br>
+                </td>
+                <td ng-show="dataModel.view === 'score'" class="details" align="left">
+                    <span class="details-header">Score :</span> {{cat.score.score}}
+                    <br>
+                    <span class="details-header">Passed :</span> {{cat.score.pass}}
                     <br>
                 </td>
             </tr>
@@ -72,10 +78,10 @@
                         </span>
                     </div>
                 </td>
-                <td class="solo-description" align="left" ng-show="dataModel.view === 'default'">
+                <td  ng-show="dataModel.view === 'default'" class="solo-description" align="left">
                     {{req.description}}
                 </td>
-                <td class="details" align="left" ng-show="dataModel.view === 'edit'">
+                <td ng-show="dataModel.view === 'edit'" class="details" align="left">
                     <span class="details-header">Test-Bench :</span> {{req.testBench}}
                     <br>
                     <span class="details-header">Metric Name :</span> {{req.metricName}}
@@ -85,6 +91,14 @@
                     <span class="details-header">Threshold :</span> {{req.threshold}}
                     <br>
                     <span class="details-header">Unit :</span> {{req.unit}}
+                    <br>
+                </td>
+                <td ng-show="dataModel.view === 'score'" class="details" align="left">
+                    <span class="details-header">Score :</span> {{req.score.score}}
+                    <br>
+                    <span class="details-header">Passed :</span> {{req.score.pass}}
+                    <br>
+                    <span class="details-header">Type :</span> {{req.score.type}}
                     <br>
                 </td>
             </tr>
