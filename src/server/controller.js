@@ -240,30 +240,34 @@ exports.init = function(app, esClient) {
     var generateResults = require('../../sandbox/jklingler/scripts/generateResults');
     app.post('/generate_results/:requirement', function (req, res) {
         if (!req.params.requirement) {
-            console.log('here');
-            return res.send(400);
+            return res.status(400).send("Invalid request: requirement name is required");
         }
         model.Requirement.findOne({title: req.params.requirement, auth_read: req.session.passport.user}, function (err, doc) {
             if (err)
                 return res.send(500);
             var num = req.query.n || 1;
-            var results = generateResults.generateResults(doc, num);
-            for (var i = 0; i < results.length; i += 1) {
+            var results = generateResults.generateResults(doc.children, num);
+            var names = [];
+            var saveResult = function (i) {
+                if (i == results.length) {
+                    return res.status(200).send(names);
+                }
                 var result = new model.Result();
-                result.requirement = req.query.requirement;
+                result.requirement = req.params.requirement;
                 result.auth_read = doc.auth_read;
                 result.auth_write = doc.auth_write;
                 result.auth_admin = doc.auth_admin;
                 result.testbench_manifests = results[i];
+                result.name = "Result_" + Math.round(new Date().getTime() / 1000) + "_" + i;
+                names.push(result.name);
                 result.save(function (err) {
                     if (err)
-                        console.log(err);
-                        //return res.status(500).send({ error: err });
+                        return res.status(500).send({ error: err });
                     //res.status(200).send('created');
+                    saveResult(i + 1);
                 });
             }
-            // TODO: fix me we need to wait for all async calls and then return?
-            res.send(200);
+            saveResult(0);
         });
     });
 
@@ -275,13 +279,13 @@ exports.init = function(app, esClient) {
             if (err)
                 return res.send(500);
             if (!result)
-                return res.send(404);
+                return res.status(404).send("Could not find result " + req.query.result);
             model.Requirement.findOne({title: req.query.requirement, auth_read: req.session.passport.user}, function (err, requirement) {
                 if (err)
                     return res.send(500);
                 if (!requirement)
-                    return res.send(404);
-                score(requirement, result.testbench_manifests);
+                    return res.status(404).send("Could not find requirement " + req.query.requirement);
+                res.status(200).send(score(requirement.children, result.testbench_manifests));
             });
         });
     });
