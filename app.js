@@ -123,17 +123,25 @@ function start() {
             };
 
             var sampleRequirements = {
-                'Radio Example': 'sandbox/jklingler/Examples/Radio/TopLevelRequirementGroup.json'
+                'Radio Example': 'sandbox/jklingler/Examples/Radio/TopLevelRequirementGroup.json',
+                'Container Example': 'sandbox/jklingler/Examples/Container/ContainerRequirements.json',
+                'CarShopping Example': 'sandbox/jklingler/Examples/CarBuyer/CarBuyer.json'
+
                 // TODO: add other requirement name and file pairs here
-            }
+            };
 
             for (var i = 0; i < numberTestDataToCreate; i += 1) {
                 var ext = (Math.floor(Math.random()*1000)).toString();
 
                 // TODO: randomly pick from sampleRequirements
+                var exampleTitles = Object.keys(sampleRequirements);
+                var randomIndex = Math.floor(Math.random()*exampleTitles.length);
 
-                var title = 'Radio Example';
-                var fname = 'sandbox/jklingler/Examples/Radio/TopLevelRequirementGroup.json';
+                var title = exampleTitles[randomIndex];
+                var fname = sampleRequirements[title];
+
+                //title = 'Radio Example';
+                //fname = 'sandbox/jklingler/Examples/Radio/TopLevelRequirementGroup.json';
 
                 addRequirement(title + ' ' + ext, fname);
             }
