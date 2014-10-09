@@ -88,7 +88,7 @@ function start() {
                 return;
             }
             // test data
-            var numberTestDataToCreate = 100;
+            var numberTestDataToCreate = CONFIG.numberOfTestRequirements || 0;
             var testDataCounter = numberTestDataToCreate;
 
 
@@ -133,7 +133,7 @@ function start() {
             };
 
             for (var i = 0; i < numberTestDataToCreate; i += 1) {
-                var ext = (Math.floor(Math.random()*1000)).toString();
+                var ext = (Math.floor(Math.random()*numberTestDataToCreate*2)).toString();
 
                 var exampleTitles = Object.keys(sampleRequirements);
                 var randomIndex = Math.floor(Math.random()*exampleTitles.length);

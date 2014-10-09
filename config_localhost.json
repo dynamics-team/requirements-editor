@@ -2,6 +2,7 @@
     "publicUrl": "http://localhost:8844",
     "listenPort": 8844,
     "mongoConnection": "mongodb://localhost/requirements-editor",
+    "numberOfTestRequirements": 2,
     "sessionParameters": {
         "saveUninitialized": true,
         "resave": true,
