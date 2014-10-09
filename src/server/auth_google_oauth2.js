@@ -24,6 +24,7 @@ exports.init = function(app) {
         if (req.path.substr(0, 6) === '/auth/') {
             return next();
         }
+        req.session.authRedirect = req.path;
         res.redirect('/auth/google');
     });
 
@@ -71,6 +72,8 @@ exports.init = function(app) {
 
     passport.deserializeUser(function (id, done) {
         User.findOne({ id: id}, function (err, user) {
+            if (!user)
+                done("Could not find user", null);
             user = user.toObject();
             delete user._id;
             delete user.__v;
@@ -82,7 +85,11 @@ exports.init = function(app) {
         'https://www.googleapis.com/auth/userinfo.email'] }));
 
     app.get('/auth/google/callback',
-        passport.authenticate('google', { successRedirect: '/', failureRedirect: '/auth/login' }));
+        passport.authenticate('google', { successRedirect: '/auth/success', failureRedirect: '/auth/login' }));
+
+    app.get('/auth/success', function (req, res) {
+        res.redirect(req.session.authRedirect || '/');
+    });
 
     // app.get('/auth/login', TODO user didnt authorize us
 
