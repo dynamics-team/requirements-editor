@@ -2,11 +2,12 @@
   "name": "requirements-editor",
   "private": "true",
   "devDependencies": {
-    "ionic": "driftyco/ionic-bower#1.0.0-beta.13"
   },
   "dependencies": {
     "jquery": "~2.1.1",
     "bootstrap": "~3.2.0",
-    "angular-bootstrap": "~0.11.2"
+    "angular-bootstrap": "~0.11.2",
+    "ionic": "driftyco/ionic-bower#1.0.0-beta.13",
+    "cad.js": "ghemingway/cad.js"
   }
 }
