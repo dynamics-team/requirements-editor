@@ -9,7 +9,8 @@ angular.module('RequirementsApp').service('RequirementsService', function ($q, $
         baseUrl = constants.baseUrl;
     console.log('RequirementsService');
 
-    this.listAll = function () {
+    // Requirement functions
+    this.listAllRequirements = function () {
         var deferred = $q.defer(),
             url = baseUrl + 'requirement/';
         $http.get(url)
@@ -17,7 +18,7 @@ angular.module('RequirementsApp').service('RequirementsService', function ($q, $
                 var currentUser = headers()['x-user-id'],
                     i;
                 for (i = 0; i < data.length; i += 1) {
-                    data[i].permissionLevel = self._getPermissionLevel(currentUser, data[i]);
+                    data[i].permissionLevel = self.getPermissionLevel(currentUser, data[i]);
                 }
                 deferred.resolve(data);
             })
@@ -29,13 +30,13 @@ angular.module('RequirementsApp').service('RequirementsService', function ($q, $
         return deferred.promise;
     };
 
-    this.getByName = function (name) {
+    this.getRequirementByTitle = function (title) {
         var deferred = $q.defer(),
-            url = baseUrl + 'requirement/' + name;
+            url = baseUrl + 'requirement/' + title;
         $http.get(url)
             .success(function (data, status, headers, config) {
                 var currentUser = headers()['x-user-id'];
-                data.permissionLevel = self._getPermissionLevel(currentUser, data);
+                data.permissionLevel = self.getPermissionLevel(currentUser, data);
                 deferred.resolve(data);
             })
             .error(function (data, status, headers, config) {
@@ -76,24 +77,9 @@ angular.module('RequirementsApp').service('RequirementsService', function ($q, $
         return deferred.promise;
     };
 
-    this.getUsers = function () {
+    this.deleteRequirementByTitle = function (title) {
         var deferred = $q.defer(),
-            url = baseUrl + 'user/';
-        $http.get(url)
-            .success(function (data, status, headers, config) {
-                deferred.resolve(data);
-            })
-            .error(function (data, status, headers, config) {
-                console.error(data);
-                deferred.reject(status);
-            });
-
-        return deferred.promise;
-    };
-
-    this.deleteByName = function (name) {
-        var deferred = $q.defer(),
-            url = baseUrl + 'requirement/' + name;
+            url = baseUrl + 'requirement/' + title;
         $http.delete(url)
             .success(function (data, status, headers, config) {
                 deferred.resolve(data);
@@ -106,6 +92,31 @@ angular.module('RequirementsApp').service('RequirementsService', function ($q, $
         return deferred.promise;
     };
 
+    // User functions
+    this.getUsers = function () {
+        var deferred = $q.defer(),
+            url = baseUrl + 'user/';
+        $http.get(url)
+            .success(function (data, status, headers, config) {
+                var currentUser = headers()['x-user-id'],
+                    i;
+                for (i = 0; i < data.length; i += 1) {
+                    if (data[i].id === currentUser) {
+                        data[i].current = true;
+                        break;
+                    }
+                }
+                deferred.resolve(data);
+            })
+            .error(function (data, status, headers, config) {
+                console.error(data);
+                deferred.reject(status);
+            });
+
+        return deferred.promise;
+    };
+
+    // Helper functions
     this.generateGuid = function () {
         var s4 = function () {
             return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
@@ -132,16 +143,16 @@ angular.module('RequirementsApp').service('RequirementsService', function ($q, $
         return value;
     };
 
-    this._getPermissionLevel = function (currentUser, data) {
+    this.getPermissionLevel = function (userId, data) {
         var level = 0;
-        if (data.auth_admin.indexOf(currentUser) > -1) {
+        if (data.auth_admin.indexOf(userId) > -1) {
             level = 3;
-        } else if (data.auth_write.indexOf(currentUser) > -1) {
+        } else if (data.auth_write.indexOf(userId) > -1) {
             level = 2;
-        } else if (data.auth_read.indexOf(currentUser) > -1) {
+        } else if (data.auth_read.indexOf(userId) > -1) {
             level = 1;
         } else {
-            console.warn('User did not have any permission for..', data);
+            //console.warn('User did not have any permission for..', data);
         }
 
         return level;

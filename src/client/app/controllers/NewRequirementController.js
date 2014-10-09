@@ -6,8 +6,7 @@
 angular.module('RequirementsApp').controller('NewRequirementController', function ($scope, $modalInstance, data) {
     'use strict';
     $scope.data = {
-        name: data.name
-        //TODO: Add user permissions etc...
+        title: data.title
     };
 
     $scope.ok = function () {

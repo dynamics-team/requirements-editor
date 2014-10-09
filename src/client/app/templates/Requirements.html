@@ -10,7 +10,7 @@
                     <a ui-sref="requirementDetails({ requirementId: req.title})">{{req.title}}</a>
                 </td>
                 <td class="edit-buttons" align="right">
-                    <a ng-if="req.permissionLevel > 2" class="btn btn-primary" ng-click="editUsers(req.title)">Edit Users</a>
+                    <a ng-if="req.permissionLevel > 2" class="btn btn-primary" ng-click="editUsers(req)">Edit Users</a>
                     <a ng-if="req.permissionLevel > 1" class="btn btn-danger" ng-click="deleteItem(req.title)">Delete</a>
                     <a ng-if="req.permissionLevel > 0" class="btn btn-success" ng-click="duplicate(req.title)">Duplicate</a>
                 </td>

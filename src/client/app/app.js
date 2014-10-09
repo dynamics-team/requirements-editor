@@ -41,3 +41,4 @@ require('./controllers/RequirementsController');
 require('./controllers/RequirementDetailsController');
 require('./controllers/EditRequirementController');
 require('./controllers/NewRequirementController');
+require('./controllers/EditUsersController');

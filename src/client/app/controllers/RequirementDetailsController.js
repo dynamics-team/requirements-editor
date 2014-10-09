@@ -5,7 +5,7 @@
 
 angular.module('RequirementsApp').controller('RequirementDetailsController', function (RequirementsService, $scope, $stateParams, $modal) {
     'use strict';
-    var reqName = $stateParams.requirementId,
+    var reqTitle = $stateParams.requirementId,
         flatten = function (children, parentId) {
             var i,
                 id;
@@ -27,7 +27,7 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
             $scope.dataModel.children = [];
             $scope.dataModel.flatRequirements = {};
             $scope.dataModel.flatCategories = {};
-            RequirementsService.getByName(reqName)
+            RequirementsService.getRequirementByTitle(reqTitle)
                 .then(function (data) {
                     console.log(data);
                     $scope.dataModel.children = data.children;
@@ -53,7 +53,7 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
 
 
     console.log('RequirementDetailsController');
-    console.log(reqName);
+    console.log(reqTitle);
     $scope.edit = function (data) {
         var modalInstance = $modal.open({
             templateUrl: 'templates/EditRequirement.html',
@@ -194,7 +194,7 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
     };
 
     $scope.dataModel = {
-        title: reqName,
+        title: reqTitle,
         children: [],
         flatRequirements: {},
         flatCategories: {},

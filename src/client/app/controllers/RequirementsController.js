@@ -7,7 +7,7 @@ angular.module('RequirementsApp').controller('RequirementsController', function 
     'use strict';
     var refreshData = function () {
             $scope.dataModel.requirements = [];
-            RequirementsService.listAll()
+            RequirementsService.listAllRequirements()
                 .then(function (data) {
                     console.log(data);
                     $scope.dataModel.requirements = data;
@@ -24,13 +24,13 @@ angular.module('RequirementsApp').controller('RequirementsController', function 
                 resolve: {
                     data: function () {
                         return {
-                            name: defaultData.title
+                            title: defaultData.title
                         };
                     }
                 }
             });
             modalInstance.result.then(function (newReq) {
-                defaultData.title = newReq.name;
+                defaultData.title = newReq.title;
                 //TODO: Add the users...
                 RequirementsService.addNewRequirement(JSON.stringify(defaultData, RequirementsService.jsonReplacer, 0))
                     .then(function (rData) {
@@ -39,8 +39,8 @@ angular.module('RequirementsApp').controller('RequirementsController', function 
                     })
                     .catch(function (reason) {
                         if (reason === 409) {
-                            console.warn('Name already existed in data-base..Could be from another user.');
-                            promptNewRequirement({name: 'Name already existed in data-base..'});
+                            console.warn('Title already existed in data-base.. (Could be from another user.)');
+                            promptNewRequirement({title: 'Title already existed in data-base..'});
                         } else {
                             console.error('Something went really wrong..');
                         }
@@ -70,7 +70,7 @@ angular.module('RequirementsApp').controller('RequirementsController', function 
     };
 
     $scope.duplicate = function (currTitle) {
-        RequirementsService.getByName(currTitle)
+        RequirementsService.getRequirementByTitle(currTitle)
             .then(function (data) {
                 console.log('about ot duplicate', data);
                 delete data.title;
@@ -82,7 +82,7 @@ angular.module('RequirementsApp').controller('RequirementsController', function 
     };
 
     $scope.deleteItem = function (title) {
-        RequirementsService.deleteByName(title)
+        RequirementsService.deleteRequirementByTitle(title)
             .then(function (data) {
                 console.log(data);
                 refreshData();
@@ -92,7 +92,23 @@ angular.module('RequirementsApp').controller('RequirementsController', function 
             });
     };
 
-    $scope.editUsers = function (title) {
-        console.log('')
+    $scope.editUsers = function (data) {
+        var modalInstance;
+        debugger;
+        modalInstance = $modal.open({
+            templateUrl: 'templates/EditUsers.html',
+            controller: 'EditUsersController',
+            resolve: {
+                data: function () {
+                    return data;
+                }
+            }
+        });
+
+        modalInstance.result.then(function (users) {
+            console.log(users);
+        }, function () {
+            console.log('Modal dismissed at: ' + new Date());
+        });
     };
 });
