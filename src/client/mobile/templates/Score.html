@@ -19,7 +19,7 @@
             <button class="button button-clear button-positive" data-ng-click="generateResults(1)">
                 New Result
             </button>
-            <button class="button button-clear button-positive" data-ng-click="">
+            <button class="button button-clear button-positive" data-ng-click="scoreAll()">
                 Score All
             </button>
         </div>
@@ -44,10 +44,9 @@
                     <button class="button button-clear button-assertive" data-ng-click="deleteItem($index)">
                         Delete
                     </button>
-                    <button data-ng-if="res.score" class="button button-clear button-assertive" data-ng-click="details($index)">
+                    <button data-ng-if="res.score && res.score.type" class="button button-clear button-assertive" data-ng-click="details($index)">
                         {{res.score.type}}
                     </button>
-
                 </div>
             </ion-item>
         </ion-list>
