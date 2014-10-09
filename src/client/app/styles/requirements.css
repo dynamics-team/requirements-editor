@@ -27,6 +27,12 @@ a.selected {
 a.in-selections {
   background-color: lightgreen; }
 
+div.requirements header.main-header {
+  margin: 10px 16px; }
+
+div.requirement-details header.main-header {
+  margin: 10px 16px; }
+
 div.modal-body .row {
   padding: 7px 1px; }
   div.modal-body .row .title {

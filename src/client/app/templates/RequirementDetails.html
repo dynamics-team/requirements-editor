@@ -1,5 +1,8 @@
-<div>
-    <h1>{{dataModel.title}}</h1>
+<div class="requirement-details">
+    <header class="main-header">
+        <h1>{{dataModel.title}}</h1>
+        <a class="btn btn-default" ui-sref="requirements">Back</a>
+    </header>
     <script type="text/ng-template"  id="tree_item_renderer.html">
         <a ng-class="{'selected': child.isSelected, 'in-selections': child.inSelections > 0}" ng-click="onSelection(child)">{{child.name}}</a>
         <ul class="requirement-graph">
@@ -74,6 +77,4 @@
             </tr>
         </table>
     </div>
-
-    <a class="btn navbar-btn" ui-sref="requirements">Back</a>
 </div>
