@@ -44,6 +44,10 @@
                     <button class="button button-clear button-assertive" data-ng-click="deleteItem($index)">
                         Delete
                     </button>
+                    <button data-ng-if="res.score" class="button button-clear button-assertive" data-ng-click="details($index)">
+                        {{res.score.type}}
+                    </button>
+
                 </div>
             </ion-item>
         </ion-list>
