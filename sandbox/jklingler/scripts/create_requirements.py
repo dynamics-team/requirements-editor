@@ -1,3 +1,10 @@
+__author__ = 'James Klingler - Institute for Software Integrated Systems, Vanderbilt University'
+
+# NOTE: This will generate a requirements.json file based on a csv description of requirements:
+# (name, unit,  description, threshold, objective, test_bench, metric_name, group_name)
+# Requirements will be "Grouped" according to test_bench name, and can contain 1 level of sub-groups
+# *IF* the group_name differs from the test_bench name
+
 import os
 import requirements_creation as req
 import csv

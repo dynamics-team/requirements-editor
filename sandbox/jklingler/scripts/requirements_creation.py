@@ -1,4 +1,4 @@
-__author__ = 'J'
+__author__ = 'James Klingler - Institute for Software Integrated Systems, Vanderbilt University'
 
 import json
 import random
