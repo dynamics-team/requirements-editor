@@ -12,7 +12,7 @@
             "children": [
                 {
                     "testBench": "WalkieTalkieStaticMeasurements",
-                    "name": "WalkieTalkieMass",
+                    "metricName": "WalkieTalkieMass",
                     "Priority": 1,
                     "pass": true,
                     "score": 1,
@@ -20,7 +20,7 @@
                 },
                 {
                     "testBench": "WalkieTalkieStaticMeasurements",
-                    "name": "WalkieTalkieLength",
+                    "metricName": "WalkieTalkieLength",
                     "Priority": 1,
                     "pass": true,
                     "score": 0.444,
@@ -28,7 +28,7 @@
                 },
                 {
                     "testBench": "WalkieTalkieStaticMeasurements",
-                    "name": "WalkieTalkieWidth",
+                    "metricName": "WalkieTalkieWidth",
                     "Priority": 1,
                     "pass": true,
                     "score": 0.489,
@@ -36,7 +36,7 @@
                 },
                 {
                     "testBench": "WalkieTalkieStaticMeasurements",
-                    "name": "WalkieTalkieDepth",
+                    "metricName": "WalkieTalkieDepth",
                     "Priority": 1,
                     "pass": true,
                     "score": 0.731,
@@ -52,7 +52,7 @@
             "children": [
                 {
                     "testBench": "WalkieTalkiePerformance",
-                    "name": "Range",
+                    "metricName": "Range",
                     "Priority": 1,
                     "pass": false,
                     "score": 0,
@@ -60,7 +60,7 @@
                 },
                 {
                     "testBench": "WalkieTalkiePerformance",
-                    "name": "AvgPowerTx",
+                    "metricName": "AvgPowerTx",
                     "Priority": 1,
                     "pass": true,
                     "score": 0.581,
@@ -68,7 +68,7 @@
                 },
                 {
                     "testBench": "WalkieTalkiePerformance",
-                    "name": "AvgPowerRx",
+                    "metricName": "AvgPowerRx",
                     "Priority": 1,
                     "pass": true,
                     "score": 0.719,
@@ -76,7 +76,7 @@
                 },
                 {
                     "testBench": "WalkieTalkiePerformance",
-                    "name": "AvgPowerIdle",
+                    "metricName": "AvgPowerIdle",
                     "Priority": 1,
                     "pass": false,
                     "score": 0,
@@ -84,7 +84,7 @@
                 },
                 {
                     "testBench": "WalkieTalkiePerformance",
-                    "name": "BatteryCapacity",
+                    "metricName": "BatteryCapacity",
                     "Priority": 1,
                     "pass": true,
                     "score": 0.107,
@@ -100,7 +100,7 @@
             "children": [
                 {
                     "testBench": "WalkieTalkieManufacturing",
-                    "name": "MaterialCost",
+                    "metricName": "MaterialCost",
                     "Priority": 1,
                     "pass": true,
                     "score": 1,
@@ -108,7 +108,7 @@
                 },
                 {
                     "testBench": "WalkieTalkieManufacturing",
-                    "name": "Labor",
+                    "metricName": "Labor",
                     "Priority": 1,
                     "pass": true,
                     "score": 0.482,
@@ -116,7 +116,7 @@
                 },
                 {
                     "testBench": "WalkieTalkieManufacturing",
-                    "name": "ProfitRatio",
+                    "metricName": "ProfitRatio",
                     "Priority": 1,
                     "pass": true,
                     "score": 0.492,

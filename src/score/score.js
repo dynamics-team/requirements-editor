@@ -44,7 +44,7 @@ var ROUND = 1000;
 // enumeration functions
 var LINEAR = "Linear";
 var EXPONETIAL = "Exponential";
-var LOGRITHMIC = "Logrithmic";
+var LOGARITHMIC = "Logarithmic";
 
 
 /**
@@ -231,7 +231,7 @@ var evaluate = function (reqNode, metricNode) {
             _scoreLinear(adjusted_metric);
         } else if (func === EXPONETIAL) {
             _scoreExp(adjusted_metric);
-        } else if (func === LOGRITHMIC) {
+        } else if (func === LOGARITHMIC) {
             _scoreLog(adjusted_metric);
         }
     }
@@ -271,7 +271,7 @@ var generateOutput = function (node) {
     } else {
         result = {
             testBench: node[TESTBENCH],
-            name: node[METRIC_NAME],
+            metricName: node[METRIC_NAME],
             Priority: node[PRIORITY],
             pass: node.result.score !== 0,
             score: Math.round(node.result.score * ROUND) / ROUND,
