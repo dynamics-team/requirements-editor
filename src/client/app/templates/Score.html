@@ -1,20 +1,21 @@
 <form>
     <div class="modal-header">
         <h3 class="modal-title">Edit Users for {{dataModel.title}}</h3>
+        <button class="btn btn-default" ng-click="generateResults(1)">Generate New Result</button>
     </div>
     <div class="modal-body">
         <table class="table table-striped users">
-            <tr ng-repeat="user in dataModel.users">
+            <tr ng-repeat="res in dataModel.results">
                 <td>
-                    {{user.name}}
+                    {{res.name}}
+                </td>
+                <td>
+                    {{res.points}}
                 </td>
                 <td class="edit-buttons" align="right">
-                    <div class="btn-group">
-                        <label class="btn btn-default" ng-model="user.permissionLevel" btn-radio="0">None</label>
-                        <label class="btn btn-default" ng-model="user.permissionLevel" btn-radio="1">Read</label>
-                        <label class="btn btn-default" ng-model="user.permissionLevel" btn-radio="2">Write</label>
-                        <label class="btn btn-default" ng-model="user.permissionLevel" btn-radio="3">Admin</label>
-                    </div>
+                        <a class="btn btn-primary glyphicon glyphicon-edit" ng-click="edit(req)" tooltip="Edit"></a>
+                        <a class="btn btn-success glyphicon glyphicon-file" ng-click="duplicate(req)" tooltip="Score"></a>
+                        <a class="btn btn-danger glyphicon glyphicon-trash" ng-click="deleteItem(req)" tooltip="Delete"></a>
                 </td>
             </tr>
         </table>

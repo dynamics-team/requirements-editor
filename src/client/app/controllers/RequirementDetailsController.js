@@ -55,6 +55,17 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
 
     console.log('RequirementDetailsController');
     console.log(reqTitle);
+    $scope.dataModel = {
+        title: reqTitle,
+        children: [],
+        flatRequirements: {},
+        flatCategories: {},
+        requirementDetails: false,
+        permissionLevel: 1,
+        view: 'default',
+        hasScoreData: false
+    };
+
     $scope.edit = function (data) {
         var modalInstance = $modal.open({
             templateUrl: 'templates/EditRequirement.html',
@@ -194,17 +205,6 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
             });
     };
 
-    $scope.dataModel = {
-        title: reqTitle,
-        children: [],
-        flatRequirements: {},
-        flatCategories: {},
-        requirementDetails: false,
-        permissionLevel: 1,
-        view: 'default',
-        hasScoreData: false
-    };
-
     $scope.onSelection = function (data) {
         var toAdd,
             categoryId,
@@ -228,6 +228,28 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
                 categoryId = parent.categoryId;
             }
         }
+    };
+
+    $scope.showScore = function () {
+        var modalInstance = $modal.open({
+            templateUrl: 'templates/Score.html',
+            controller: 'ScoreController',
+            resolve: {
+                data: function () {
+                    return {
+                        title: reqTitle,
+                        children: $scope.dataModel.children
+                    };
+                }
+            }
+        });
+
+        modalInstance.result.then(function (returnData) {
+            $scope.dataModel.view = 'score';
+            $scope.dataModel.hasScoreData = true;
+        }, function () {
+            console.log('Modal dismissed at: ' + new Date());
+        });
     };
 
     refreshData();

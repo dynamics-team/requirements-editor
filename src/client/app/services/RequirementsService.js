@@ -92,6 +92,73 @@ angular.module('RequirementsApp').service('RequirementsService', function ($q, $
         return deferred.promise;
     };
 
+    // Result/Scoring functions
+
+    this.listAssociatedResults = function (reqTitle) {
+        var deferred = $q.defer(),
+            url = baseUrl + 'result/?requirement=' + reqTitle;
+        $http.get(url)
+            .success(function (data, status, headers, config) {
+                var currentUser = headers()['x-user-id'],
+                    i;
+                for (i = 0; i < data.length; i += 1) {
+                    data[i].permissionLevel = self.getPermissionLevel(currentUser, data[i]);
+                }
+                deferred.resolve(data);
+            })
+            .error(function (data, status, headers, config) {
+                console.error(data);
+                deferred.reject(status);
+            });
+
+        return deferred.promise;
+    };
+
+    this.deleteResultByName = function (resultName) {
+        var deferred = $q.defer(),
+            url = baseUrl + 'result/' + resultName;
+        $http.delete(url)
+            .success(function (data, status, headers, config) {
+                deferred.resolve(data);
+            })
+            .error(function (data, status, headers, config) {
+                console.error(data);
+                deferred.reject(status);
+            });
+
+        return deferred.promise;
+    };
+
+    this.generateNewResults = function (reqTitle, n) {
+        var deferred = $q.defer(),
+            url = baseUrl + 'generate_results/' + reqTitle + '?n=' + n.toString();
+        $http.post(url)
+            .success(function (data, status, headers, config) {
+                deferred.resolve(data);
+            })
+            .error(function (data, status, headers, config) {
+                console.error(data);
+                deferred.reject(status);
+            });
+
+        return deferred.promise;
+    };
+
+    this.getScore = function (reqTitle, resultName) {
+        var deferred = $q.defer(),
+            url = baseUrl + 'score/?requirement=' + reqTitle + '^&result=' + resultName;
+        $http.get(url)
+            .success(function (data, status, headers, config) {
+                deferred.resolve(data);
+            })
+            .error(function (data, status, headers, config) {
+                console.error(data);
+                deferred.reject(status);
+            });
+
+        return deferred.promise;
+    };
+
     // User functions
     this.getUsers = function () {
         var deferred = $q.defer(),
