@@ -138,7 +138,11 @@ exports.init = function(app, esClient) {
 
 
     app.get('/result/', function (req, res) {
-        model.Result.find({auth_read: req.session.passport.user})
+        var query = {auth_read: req.session.passport.user};
+        if (req.query.requirement) {
+            query.requirement = req.query.requirement;
+        }
+        model.Result.find(query)
             .select('-testbench_manifests')
             .exec(function (err, docs) {
                 res.json(docs.map(function (v) { return cleanRequirement(v.toObject()); }));

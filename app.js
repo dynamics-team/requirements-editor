@@ -17,6 +17,7 @@ curl -d @sandbox/test_requirements.json -H "Content-Type: application/json" http
 curl http://127.0.0.1:8844/requirement/Test1
 curl -X POST http://127.0.0.1:8844/generate_results/Test1?n=10
 curl http://127.0.0.1:8844/result/Result_1412864086_0
+curl http://127.0.0.1:8844/result/?requirement=Test1
 curl http://127.0.0.1:8844/score/?requirement=Test1^&result=Result_1412864086_0
  */
 
