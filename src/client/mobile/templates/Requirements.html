@@ -17,18 +17,17 @@
             <ion-item ng-repeat="req in dataModel.requirements"  type="item-text-wrap" href="#/tab/requirements/{{req.title}}">
                 {{req.title}}
 
-
-                <ion-option-button class="button-positive"
+                <ion-option-button ng-if="req.permissionLevel > 2" class="button-positive"
                                    ng-click="editUsers(req)">
                     <i class="icon ion-person"></i>
                 </ion-option-button>
 
-                <ion-option-button class="button-balanced"
+                <ion-option-button ng-if="req.permissionLevel > 0" class="button-balanced"
                                    ng-click="duplicate(req.title)">
                     <i class="icon ion-ios7-copy"></i>
                 </ion-option-button>
 
-                <ion-option-button class="button-assertive"
+                <ion-option-button ng-if="req.permissionLevel > 1" class="button-assertive"
                                    ng-click="delete(req)">
                     <i class="icon ion-ios7-trash"></i>
                 </ion-option-button>
