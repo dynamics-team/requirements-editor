@@ -30,7 +30,7 @@ var runScore = function () {
 
     output = new score(requirementObj, designObjects);
     outFileName = path.join(__dirname, designName + '_result.json');
-    fs.writeFileSync(outFileName, JSON.stringify(output) , 'utf-8');
+    fs.writeFileSync(outFileName, JSON.stringify(output, null, 4) , 'utf-8');
 };
 
 
