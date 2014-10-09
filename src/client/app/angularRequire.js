@@ -14,3 +14,4 @@ require('./controllers/EditUsersController');
 require('./controllers/SearchController');
 require('./controllers/ScoreController');
 require('./controllers/UsersController');
+require('./controllers/CadController');

@@ -30,10 +30,8 @@ var ReqApp = angular.module('RequirementsApp', [
             // FIXME: put controller template to its own file
             .state('cad', {
                 url: "/cad.js/data/:resource/index.json",
-                template: '<div style="position:absolute; left: 0; right: 0; bottom: 0; top: 0px;"><iframe src="{{ resource }}" width="100%" height="100%"></iframe></div>',
-                controller: function ($scope, $stateParams) {
-                    $scope.resource = '/lib/cad.js/public/?resource_url=/cad.js/data/' + $stateParams.resource + '/index.json';
-                }
+                template: '<div style="position:absolute; left: 0; right: 0; bottom: 0; top: 0;"><iframe src="{{ resource }}" width="100%" height="100%"></iframe></div>',
+                controller: 'CadController'
             });
     })
     .run(function ($state) {
