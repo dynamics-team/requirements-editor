@@ -81,7 +81,7 @@ function start() {
             // test data
             var numberTestDataToCreate = 100;
             var testDataCounter = numberTestDataToCreate;
-            var title = 'Radio Example ';
+
 
             var createTestDataCounterCallback = function () {
                 testDataCounter -= 1;
@@ -91,17 +91,15 @@ function start() {
                 }
             };
 
-            for (var i=0;i<numberTestDataToCreate;i++) {
-                var extension = (Math.floor(Math.random()*1000)).toString();
-
-                Requirement.find({ title: title + extension}, function (err, docs) {
+            var addRequirement = function (name, filename) {
+                Requirement.find({ title: name}, function (err, docs) {
                     if (docs.length === 0) {
-                        console.log('test data (' + i.toString() + ') was added: ' + extension);
+                        //console.log('test data (' + i.toString() + ') was added: ' + extension);
                         var instance = new Requirement();
-                        instance.title = title + extension;
+                        instance.title = name;
 
                         instance.children = [
-                            JSON.parse(fs.readFileSync('sandbox/jklingler/Examples/Radio/TopLevelRequirementGroup.json', {encoding: 'utf-8'}))
+                            JSON.parse(fs.readFileSync(filename, {encoding: 'utf-8'}))
                         ];
                         instance.auth_read = [req.session.passport.user];
                         instance.auth_write = [req.session.passport.user];
@@ -114,6 +112,22 @@ function start() {
                         createTestDataCounterCallback();
                     }
                 });
+            };
+
+            var sampleRequirements = {
+                'Radio Example': 'sandbox/jklingler/Examples/Radio/TopLevelRequirementGroup.json'
+                // TODO: add other requirement name and file pairs here
+            }
+
+            for (var i = 0; i < numberTestDataToCreate; i += 1) {
+                var ext = (Math.floor(Math.random()*1000)).toString();
+
+                // TODO: randomly pick from sampleRequirements
+
+                var title = 'Radio Example';
+                var fname = 'sandbox/jklingler/Examples/Radio/TopLevelRequirementGroup.json';
+
+                addRequirement(title + ' ' + ext, fname);
             }
         });
     }
