@@ -9,23 +9,33 @@
 
                 <ion-option-button class="button-positive"
                                    ng-click="edit(cat)">
-                    Edit
+                    <!-- Edit -->
+                    <i class="icon ion-compose"></i>
                 </ion-option-button>
 
                 <ion-option-button class="button-balanced"
                                    ng-click="duplicate(cat)">
-                    Duplicate
+                    <!-- Duplicate -->
+                    <i class="icon ion-ios7-copy"></i>
                 </ion-option-button>
 
                 <ion-option-button class="button-energized"
-                                   ng-click="newChild(cat)">
-                    New Child
+                                   ng-click="createNew(cat, true)">
+                    <!-- New requirement -->
+                    <i class="icon ion-plus-circled"></i>
+                </ion-option-button>
+
+                <ion-option-button class="button-calm"
+                                   ng-click="createNew(cat, false)">
+                    <!-- New requirement group -->
+                    <i class="icon ion-filing"></i>
                 </ion-option-button>
 
 
                 <ion-option-button class="button-assertive"
-                                   ng-click="delete(cat)">
-                    Delete
+                                   ng-click="deleteItem(cat)">
+                    <!-- Delete -->
+                    <i class="icon ion-minus-circled"></i>
                 </ion-option-button>
             </ion-item>
         </ion-list>
@@ -47,9 +57,9 @@
                     <span>Unit[{{req.unit}}]</span>
 
                 <div class="button-bar">
-                    <button class="button button-light button-clear button-positive" ng-click="edit(req)">Edit</button>
-                    <button class="button button-light button-clear button-balanced">Duplicate</button>
-                    <button class="button button-light button-clear button-assertive">Delete</button>
+                    <button class="button button-light button-clear button-positive" data-ng-click="edit(req)"><i class="icon ion-compose"></i></button>
+                    <button class="button button-light button-clear button-balanced" data-ng-click="duplicate(req)"><i class="icon ion-ios7-copy"></i></button>
+                    <button class="button button-light button-clear button-assertive" data-ng-click="deleteItem(req)"><i class="icon ion-minus-circled"></i></button>
                 </div>
             </div>
             <!--<div class="item item-divider">-->
