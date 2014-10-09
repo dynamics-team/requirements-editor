@@ -1,0 +1,29 @@
+<ion-view>
+    <ion-header-bar align-title="center" class="bar-dark">
+        <div class="buttons">
+            <button class="button button-clear button-assertive" data-ng-click="cancel()">
+                Dismiss
+            </button>
+        </div>
+        <h1 class="title">Score</h1>
+        <div class="buttons">
+            <button class="button button-clear button-positive" data-ng-click="ok()">
+                Done
+            </button>
+        </div>
+    </ion-header-bar>
+    <ion-content>
+        <h4 class="subtitle">Manage</h4>
+        <button class="button button-clear button-positive" data-ng-click="generateResults(1)">
+            Generate New Result
+        </button>
+
+        <h4 class="subtitle">Results</h4>
+
+        <div class="list">
+            <label class="item item-input item-select" ng-repeat="res in dataModel.results">
+                {{res.name}} - {{res.points}}
+            </label>
+        </div>
+    </ion-content>
+</ion-view>
