@@ -11,20 +11,45 @@ angular.module('RequirementsApp').controller('ScoreController', function ($scope
         results: []
     };
 
+    RequirementsService.listAssociatedResults(title)
+        .then(function (resData) {
+            var i;
+            for (i = 0; i < resData.length; i += 1) {
+                $scope.dataModel.results.push({
+                    name: resData[i].name,
+                    score: ''
+                });
+            }
+        })
+        .catch(function (reason) {
+            console.error('Could not list results', reason);
+        });
+
     $scope.generateResults = function (n) {
         RequirementsService.generateNewResults(title, n)
-            .then(function (data) {
-                console.log('gen-data', data);
-                RequirementsService.listAssociatedResults(title)
-                    .then(function (data) {
-                        console.log('list-results', data);
-                    })
-                    .catch(function (reason) {
-                        console.error('Could not list results', reason);
+            .then(function (newResData) {
+                var i;
+                for (i = 0; i < newResData.length; i += 1) {
+                    $scope.dataModel.results.push({
+                        name: newResData[i],
+                        score: ''
                     });
+                }
             })
             .catch(function (reason) {
                 console.error('Could not generate new results', reason);
+            });
+    };
+
+    $scope.deleteItem = function (index) {
+        var res = $scope.dataModel.results[index];
+        RequirementsService.deleteResultByName(res.name)
+            .then(function (rData) {
+                console.log('Deleted result', rData);
+                $scope.dataModel.results.splice(index, 1);
+            })
+            .catch(function (reason) {
+                console.error('Could not delete results', res);
             });
     };
 

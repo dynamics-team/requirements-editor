@@ -10,12 +10,11 @@
                     {{res.name}}
                 </td>
                 <td>
-                    {{res.points}}
+                    {{res.score}}
                 </td>
                 <td class="edit-buttons" align="right">
-                        <a class="btn btn-primary glyphicon glyphicon-edit" ng-click="edit(req)" tooltip="Edit"></a>
-                        <a class="btn btn-success glyphicon glyphicon-file" ng-click="duplicate(req)" tooltip="Score"></a>
-                        <a class="btn btn-danger glyphicon glyphicon-trash" ng-click="deleteItem(req)" tooltip="Delete"></a>
+                        <a class="btn btn-primary glyphicon glyphicon-tasks" ng-click="scoreResult(res)" tooltip="Score"></a>
+                        <a class="btn btn-danger glyphicon glyphicon-trash" ng-click="deleteItem($index)" tooltip="Delete"></a>
                 </td>
             </tr>
         </table>
