@@ -116,5 +116,7 @@ require('../app/controllers/RequirementDetailsController');
 require('../app/controllers/EditRequirementController');
 require('../app/controllers/NewRequirementController');
 
+require('../app/controllers/EditUsersController');
+
 require('../app/controllers/SearchController');
 

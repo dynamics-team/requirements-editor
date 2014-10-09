@@ -6,14 +6,20 @@
             <ion-item ng-repeat="req in dataModel.requirements"  type="item-text-wrap" href="#/tab/requirements/{{req.title}}">
                 {{req.title}}
 
+
+                <ion-option-button class="button-positive"
+                                   ng-click="editUsers(req)">
+                    <i class="icon ion-person"></i>
+                </ion-option-button>
+
                 <ion-option-button class="button-balanced"
                                    ng-click="duplicate(req.title)">
-                    Duplicate
+                    <i class="icon ion-ios7-copy"></i>
                 </ion-option-button>
 
                 <ion-option-button class="button-assertive"
                                    ng-click="delete(req)">
-                    Delete
+                    <i class="icon ion-minus-circled"></i>
                 </ion-option-button>
             </ion-item>
         </ion-list>

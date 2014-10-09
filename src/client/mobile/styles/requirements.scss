@@ -15,4 +15,8 @@ div.modal {
 // fix up slide menus
 ion-option-button.button {
   line-height: 49px;
+
+  .icon {
+    vertical-align: middle;
+  }
 }

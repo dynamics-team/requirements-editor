@@ -9,3 +9,5 @@ div.modal {
 
 ion-option-button.button {
   line-height: 49px; }
+  ion-option-button.button .icon {
+    vertical-align: middle; }
