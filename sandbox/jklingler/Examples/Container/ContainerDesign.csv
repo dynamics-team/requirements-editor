@@ -5,10 +5,10 @@ Width,m,Width of the Container,1,0.5,PhysicalTraits,Width,Dimensions
 Height,m,Height of the Container,1,0.5,PhysicalTraits,Height,Dimensions
 MaxThickness,m,Thickness of the container walls,0.01,0.005,PhysicalTraits,MaxThickness,PhysicalTraits
 MinThickness,m,Thickness of the container walls,0.003,0.005,PhysicalTraits,MinThickness,PhysicalTraits
-DurabilityHalfLife,week,Time in seconds until half of the containers are worthless,20,200,Durability,DurabilityHalfLife,Durability
+DurabilityHalfLife,week,Time in seconds until half of the containers are worthless,20,200,Performance,DurabilityHalfLife,Durability
 MuStatic,,Coefficient of static friction between the containers,0.2,0.5,PhysicalTraits,MuStatic,PhysicalTraits
 MuKinetic,,Coefficient of kinetic friction between the containers,0.1,0.5,Performance,MuKinetic,Performance
 MinPressureWall,kPa,Minimum pressure the wall materials can withstand,3,5,Performance,MinPressureWall,Performance
 MinHeightStack,,Number of containers that can be stacked without failing,7,10,Performance,MinHeightStack,Performance
 BurnRate,mm/sec,How fast does the material burn in ambient conditions,2,1,Performance,BurnRate,Performance
-MaximumMoisture,%,Maximum moisture content that the material can contain without weakening,5,15,Durability,,Durability
+MaximumMoisture,%,Maximum moisture content that the material can contain without weakening,5,15,Performance,MaximumMoisture,Durability
