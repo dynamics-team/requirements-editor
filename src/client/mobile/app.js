@@ -47,6 +47,28 @@ var ReqApp = angular.module('RequirementsApp', [
                 }
             })
 
+            .state('tab.scoring', {
+                url: '/scoring',
+                views: {
+                    'tab-scoring': {
+                        templateUrl: 'templates/Scoring.html',
+                        controller: function ($scope) {
+                            console.error('No controller yet.');
+                        }
+                    }
+                }
+            })
+
+            .state('tab.users', {
+                url: '/users',
+                views: {
+                    'tab-users': {
+                        templateUrl: 'templates/Users.html',
+                        controller: 'UsersController'
+                    }
+                }
+            })
+
             .state('tab.search', {
                 url: '/search',
                 views: {

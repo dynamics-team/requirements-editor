@@ -1,0 +1,21 @@
+<ion-view>
+    <ion-header-bar align-title="center" class="bar-dark">
+        <div class="buttons">
+        </div>
+        <h1 class="title">
+            Users
+        </h1>
+        <div class="buttons">
+        </div>
+    </ion-header-bar>
+
+    <ion-content class="padding">
+        <ion-list>
+            <ion-item ng-repeat="user in dataModel.users | orderBy : 'name'">
+                <span ng-class="{'energized': user.id === dataModel.currentUserId}">
+                    {{user.name}}
+                </span>
+            </ion-item>
+        <ion-list>
+    </ion-content>
+</ion-view>
