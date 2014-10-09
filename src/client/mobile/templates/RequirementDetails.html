@@ -1,11 +1,15 @@
 <ion-view title="{{dataModel.title}}">
     <ion-content class="padding">
-        <a class="button button-clear button-dark" href="#/tab/requirements">View all requirements</a>
+        <a class="button button-full button-clear button-positive" href="#/tab/requirements">View all requirements</a>
 
-        <h2>Categories</h2>
+        <h4>Categories</h4>
         <ion-list>
-            <ion-item ng-repeat="cat in dataModel.flatCategories"  type="item-text-wrap">
-                {{cat.name}}
+            <ion-item ng-repeat="cat in dataModel.flatCategories | orderBy: 'name'" type="item-text-wrap">
+
+                <span data-ng-click="onSelection(cat)" data-ng-class="{'dark': !cat.isSelected, 'positive': cat.isSelected, 'royal': cat.inSelections > 0}">
+                    <i class="icon" data-ng-class="{'ion-ios7-circle-outline': !cat.isSelected, 'ion-ios7-circle-filled': cat.isSelected}"></i>
+                    {{cat.name}}
+                </span>
 
                 <ion-option-button class="button-positive"
                                    ng-click="edit(cat)">
@@ -40,12 +44,17 @@
             </ion-item>
         </ion-list>
 
-        <h2>Requirements</h2>
-        <div class="card" ng-repeat="req in dataModel.flatRequirements">
+        <h4>Requirements</h4>
+        <div class="card" ng-repeat="req in dataModel.flatRequirements | orderBy: 'name'">
             <div class="item item-divider">
-                {{req.name}}
+                <!--{{req.name}}-->
 
+                <span data-ng-click="onSelection(req)" data-ng-class="{'dark': !req.isSelected, 'positive': req.isSelected, 'royal': req.inSelections > 0}">
+                    <i class="icon" data-ng-class="{'ion-ios7-circle-outline': !req.isSelected, 'ion-ios7-circle-filled': req.isSelected}"></i>
+                    {{req.name}}
+            </span>
             </div>
+
 
 
             <div class="item item-text-wrap">
