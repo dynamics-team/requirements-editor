@@ -75,8 +75,12 @@ angular.module('RequirementsApp').controller('SearchController', function (Searc
         }
     };
 
+    $scope.clear = function () {
+        $scope.model.search_query = '';
+
+        $scope.search();
+    };
+
     // initial actions
-    if ($scope.model.search_query) {
-        $scope.search($scope.model.search_query, urlQuery.page, urlQuery.per_page);
-    }
+    $scope.search();
 });

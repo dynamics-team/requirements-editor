@@ -1,7 +1,9 @@
 <ion-view>
     <ion-header-bar align-title="center" class="bar-stale">
         <div class="buttons">
-            <!--<button class="button" ng-click="doSomething()">Left Button</button>-->
+            <button class="button button-clear button-positive" data-ng-click="clear()" data-ng-disabled="!model.search_query">
+                Clear
+            </button>
         </div>
         <h1 class="title">
             <span data-ng-if="!model.data.results">Search</span>
@@ -14,11 +16,11 @@
             </span>
         </h1>
         <div class="buttons">
-            <button class="button button-clear button-positive" data-ng-click="nextPage()" data-ng-disabled="model.data.pages === 0 || model.data.page === model.data.pages">
+            <button class="button button-clear button-positive" data-ng-click="nextPage()" data-ng-if="model.data.total" data-ng-disabled="model.data.pages === 0 || model.data.page === model.data.pages">
                 <i class="icon ion-ios7-arrow-down"></i>
             </button>
 
-            <button class="button button-clear button-positive" data-ng-click="prevPage()" data-ng-disabled="model.data.page === 1">
+            <button class="button button-clear button-positive" data-ng-click="prevPage()" data-ng-if="model.data.total" data-ng-disabled="!model.data.page || model.data.page === 1">
                 <i class="icon ion-ios7-arrow-up"></i>
             </button>
         </div>
@@ -33,6 +35,7 @@
                 <i class="icon ion-search placeholder-icon"></i>
                 <input type="text" placeholder="Search" data-ng-model="model.search_query" data-ng-change="search()">
             </label>
+
         </div>
 
         <div class="assertive" data-ng-if="model.data.message">
