@@ -3,11 +3,11 @@
         <h1>{{dataModel.title}}</h1>
         <a class="btn btn-default" ui-sref="requirements">Back</a>
         <a class="btn btn-default" ng-click="showScore()">Score</a>
-        <h4>View</h4>
-        <div class="btn-group btn-group-view">
-            <label class="btn btn-default" ng-model="user.permissionLevel" btn-radio="0">Default</label>
-            <label class="btn btn-default" ng-model="user.permissionLevel" btn-radio="1">Edit/Details</label>
-            <label class="btn btn-default" ng-model="user.permissionLevel" btn-radio="2">Score</label>
+        <br>
+        <div class="btn-group btn-group-view btn-group-view">
+            <label class="btn btn-default" ng-model="dataModel.view" btn-radio="'default'">Default</label>
+            <label class="btn btn-default" ng-model="dataModel.view" btn-radio="'edit'">Edit/Details</label>
+            <label class="btn btn-default" ng-model="dataModel.view" btn-radio="'score'">Score</label>
         </div>
     </header>
     <script type="text/ng-template"  id="tree_item_renderer.html">
@@ -27,10 +27,24 @@
         <span class="title">Categories</span>
         <table class="table table-striped">
             <tr class='row' data-ng-repeat="cat in dataModel.flatCategories | orderBy: 'name' ">
-                <td>
+                <td class='edit-first-column'>
                     <a ng-class="{'selected': cat.isSelected, 'in-selections': cat.inSelections > 0}" ng-click="onSelection(cat)">{{cat.name}}</a>
+                    <div ng-show="dataModel.view === 'edit'">
+                        {{cat.description}}
+
+                    <span ng-if="dataModel.permissionLevel > 1" class="edit-buttons-details">
+                        <a class="btn btn-primary glyphicon glyphicon-edit" ng-click="edit(cat)" tooltip="Edit"></a>
+                        <a class="btn btn-success glyphicon glyphicon-file" ng-click="duplicate(cat)" tooltip="Duplicate"></a>
+                        <a class="btn btn-warning glyphicon glyphicon-plus-sign" ng-click="createNew(cat, false)" tooltip="New Requirement"></a>
+                        <a class="btn btn-info glyphicon glyphicon glyphicon-folder-open" ng-click="createNew(cat, true)" tooltip="New Category"></a>
+                        <a class="btn btn-danger glyphicon glyphicon-trash" ng-click="deleteItem(cat)" tooltip="Delete"></a>
+                    </span>
+                    </div>
                 </td>
-                <td class="details" align="left">
+                <td class="solo-description" align="left" ng-show="dataModel.view === 'default'">
+                    {{cat.description}}
+                </td>
+                <td class="details" align="left" ng-show="dataModel.view === 'edit'">
                     <span class="details-header">Description :</span> {{cat.description}}
                     <br>
                     <span class="details-header">Priority :</span> {{cat.Priority}}
@@ -39,32 +53,31 @@
                     <br>
                     <span class="details-header">WeightPos :</span> {{cat.weightPos}}
                     <br>
-                    <div ng-if="dataModel.permissionLevel > 1" class="edit-buttons-details">
-                        <a class="btn btn-primary" ng-click="edit(cat)">Edit</a>
-                        <a class="btn btn-success" ng-click="duplicate(cat)">Duplicate</a>
-                        <a class="btn btn-default" ng-click="createNew(cat, true)">New Requirement</a>
-                        <a class="btn btn-warning" ng-click="createNew(cat, false)">New Category</a>
-                        <a class="btn btn-danger" ng-click="deleteItem(cat)">Delete</a>
-                    </div>
                 </td>
             </tr>
         </table>
     </div>
 
     <div class="requirement-listing requirements-table col-lg-4">
-        <span class="title">Requirements
-            <button class="btn btn-default" ng-model="dataModel.requirementDetails" btn-checkbox>Details</button>
-        </span>
+        <span class="title">Requirements </span>
         <br>
         <table class="table table-striped">
             <tr class='row' data-ng-repeat="req in dataModel.flatRequirements | orderBy: 'name'">
-                <td>
+                <td class='edit-first-column'>
                     <a ng-class="{'selected': req.isSelected, 'in-selections': req.inSelections > 0}" ng-click="onSelection(req)">{{req.name}}</a>
+                    <div ng-show="dataModel.view === 'edit'">
+                            {{req.description}}
+                        <span ng-if="dataModel.permissionLevel > 1" class="edit-buttons-details">
+                            <a class="btn btn-primary glyphicon glyphicon-edit" ng-click="edit(req)" tooltip="Edit"></a>
+                            <a class="btn btn-success glyphicon glyphicon-file" ng-click="duplicate(req)" tooltip="Duplicate"></a>
+                            <a class="btn btn-danger glyphicon glyphicon-trash" ng-click="deleteItem(req)" tooltip="Delete"></a>
+                        </span>
+                    </div>
                 </td>
-                <td class="solo-description" align="left" ng-show="dataModel.requirementDetails === false">
+                <td class="solo-description" align="left" ng-show="dataModel.view === 'default'">
                     {{req.description}}
                 </td>
-                <td class="details" align="left" ng-show="dataModel.requirementDetails">
+                <td class="details" align="left" ng-show="dataModel.view === 'edit'">
                     <span class="details-header">Test-Bench :</span> {{req.testBench}}
                     <br>
                     <span class="details-header">Metric Name :</span> {{req.metricName}}
@@ -75,11 +88,6 @@
                     <br>
                     <span class="details-header">Unit :</span> {{req.unit}}
                     <br>
-                    <div ng-if="dataModel.permissionLevel > 1" class="edit-buttons-details">
-                        <a class="btn btn-primary" ng-click="edit(req)">Edit</a>
-                        <a class="btn btn-success" ng-click="duplicate(req)">Duplicate</a>
-                        <a class="btn btn-danger" ng-click="deleteItem(req)">Delete</a>
-                    </div>
                 </td>
             </tr>
         </table>

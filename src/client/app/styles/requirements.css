@@ -3,21 +3,17 @@ div.requirement-listing span.title {
 div.requirement-listing table {
   border-style: solid;
   border-width: 2px; }
-div.requirement-listing .btn-primary {
-  padding: 1px 16px; }
-div.requirement-listing .btn-success {
-  padding: 1px 3px; }
-div.requirement-listing .btn-warning {
-  padding: 1px 4px; }
-div.requirement-listing .btn-danger {
-  padding: 1px 4px; }
-div.requirement-listing .btn-default {
+div.requirement-listing .btn {
   padding: 1px 4px; }
 div.requirement-listing td {
   padding: 4px;
   vertical-align: middle; }
-div.requirement-listing .edit-buttons-details {
-  text-align: right; }
+div.requirement-listing td.edit-first-column {
+  position: relative; }
+div.requirement-listing span.edit-buttons-details {
+  position: absolute;
+  bottom: 5px;
+  left: 5px; }
 div.requirement-listing span.details-header {
   font-weight: bold; }
 
@@ -32,6 +28,11 @@ div.requirements header.main-header {
 
 div.requirement-details header.main-header {
   margin: 10px 16px; }
+  div.requirement-details header.main-header div.btn-group-view {
+    margin-top: 6px; }
+    div.requirement-details header.main-header div.btn-group-view .btn {
+      padding: 3px 9px;
+      font-size: 12px; }
 
 div.modal-body .row {
   padding: 7px 1px; }
