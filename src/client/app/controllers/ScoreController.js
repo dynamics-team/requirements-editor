@@ -54,6 +54,13 @@ angular.module('RequirementsApp').controller('ScoreController', function ($scope
             });
     };
 
+    $scope.scoreAll = function () {
+        var i;
+        for (i = 0; i < $scope.dataModel.results.length; i += 1) {
+            $scope.scoreResult($scope.dataModel.results[i]);
+        }
+    };
+
     $scope.scoreResult = function (res) {
         RequirementsService.calculateScore(title, res.name)
             .then(function (rData) {
@@ -78,6 +85,6 @@ angular.module('RequirementsApp').controller('ScoreController', function ($scope
     };
 
     $scope.viewDetails = function (result) {
-        console.log(result);
+        $modalInstance.close($scope.dataModel);
     };
 });

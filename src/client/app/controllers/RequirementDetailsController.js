@@ -50,6 +50,20 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
                     }
                 }
             }
+        },
+        getFlatScore = function (flatDic, pName, scoreNode) {
+            var i = 0,
+                name;
+            if (scoreNode.hasOwnProperty('children')) {
+                name = pName + '<<' + scoreNode.name;
+                flatDic[name] = scoreNode;
+                for (i = 0; i < scoreNode.children.length; i += 1) {
+                    getFlatScore(flatDic, name, scoreNode.children[i]);
+                }
+            } else {
+                name = pName + '<<' + scoreNode.testBench + '<' + scoreNode.metricName;
+                flatDic[name] = scoreNode;
+            }
         };
 
 
@@ -245,8 +259,14 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
         });
 
         modalInstance.result.then(function (returnData) {
+            var scoreData,
+                key;
             $scope.dataModel.view = 'score';
             $scope.dataModel.hasScoreData = true;
+            getFlatScore(scoreData, '', returnData);
+            for (key in $scope.modelData.flatCategories) {
+
+            }
         }, function () {
             console.log('Modal dismissed at: ' + new Date());
         });
