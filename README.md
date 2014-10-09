@@ -32,22 +32,17 @@ node node_modules/gulp/bin/gulp.js compile-all --config config_zsolt-ws.json`
 ...
 ```
 
-### Add a new requirement ###
 
-Make sure the file conforms to the expected format.
-
-`curl -d @sandbox/jklingler/Examples/Radio/TopLevelRequirementGroup.json  -H "Content-Type: application/json" http://127.0.0.1:8844/requirement/`
-
-
-## Build for mobile ##
+## Build hybrid mobile application ##
 
 Assuming all dependencies are installed for android and iOS development.
 
 ```bash
 sudo npm install -g cordova ionic
 
-./utils/build_mobile.sh
+node node_modules/gulp/bin/gulp.js compile-all --config config_zsolt-ws.json`
 
+./utils/build_mobile.sh
 
 ionic emulate ios --target="iPhone (Retina 4-inch)"
 ionic emulate android
