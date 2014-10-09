@@ -49,7 +49,17 @@ angular.module('RequirementsApp').controller('ScoreController', function ($scope
                 $scope.dataModel.results.splice(index, 1);
             })
             .catch(function (reason) {
-                console.error('Could not delete results', res);
+                console.error('Could not delete result', reason, res);
+            });
+    };
+
+    $scope.scoreResult = function (res) {
+        RequirementsService.calculateScore(title, res.name)
+            .then(function (rData) {
+                console.log('Scored result', res, rData);
+            })
+            .catch(function (reason) {
+                console.error('Could not score result', res, reason);
             });
     };
 

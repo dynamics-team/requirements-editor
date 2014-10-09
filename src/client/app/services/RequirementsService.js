@@ -144,9 +144,9 @@ angular.module('RequirementsApp').service('RequirementsService', function ($q, $
         return deferred.promise;
     };
 
-    this.getScore = function (reqTitle, resultName) {
+    this.calculateScore = function (reqTitle, resultName) {
         var deferred = $q.defer(),
-            url = baseUrl + 'score/?requirement=' + reqTitle + '^&result=' + resultName;
+            url = baseUrl + 'score/?requirement=' + reqTitle + '&result=' + resultName;
         $http.get(url)
             .success(function (data, status, headers, config) {
                 deferred.resolve(data);
