@@ -44,7 +44,7 @@ var ROUND = 1000;
 // enumeration functions
 var LINEAR = "Linear";
 var EXPONETIAL = "Exponential";
-var LOGRITHMIC = "Logrithmic";
+var LOGARITHMIC = "Logarithmic";
 
 
 /**
@@ -231,7 +231,7 @@ var evaluate = function (reqNode, metricNode) {
             _scoreLinear(adjusted_metric);
         } else if (func === EXPONETIAL) {
             _scoreExp(adjusted_metric);
-        } else if (func === LOGRITHMIC) {
+        } else if (func === LOGARITHMIC) {
             _scoreLog(adjusted_metric);
         }
     }
