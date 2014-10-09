@@ -47,11 +47,11 @@ var ReqApp = angular.module('RequirementsApp', [
                 }
             })
 
-            .state('tab.scoring', {
+            .state('tab.cad', {
                 url: '/cad.js/data/:resource/index.json',
                 views: {
-                    'tab-scoring': {
-                        templateUrl: 'templates/Scoring.html',
+                    'tab-cad': {
+                        templateUrl: 'templates/Cad.html',
                         controller: 'CadController'
                     }
                 }
