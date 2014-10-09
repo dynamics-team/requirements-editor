@@ -20,10 +20,10 @@
 
         <h4 class="subtitle">Results</h4>
 
-        <div class="list">
-            <label class="item item-input item-select" ng-repeat="res in dataModel.results">
-                {{res.name}} - {{res.points}}
-            </label>
-        </div>
+        <ion-list>
+            <ion-item ng-repeat="res in dataModel.results">
+                {{res.score || 'No score'}} - {{res.name}}
+            </ion-item>
+        </ion-list>
     </ion-content>
 </ion-view>
