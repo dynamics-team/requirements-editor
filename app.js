@@ -133,7 +133,6 @@ function start() {
             for (var i = 0; i < numberTestDataToCreate; i += 1) {
                 var ext = (Math.floor(Math.random()*1000)).toString();
 
-                // TODO: randomly pick from sampleRequirements
                 var exampleTitles = Object.keys(sampleRequirements);
                 var randomIndex = Math.floor(Math.random()*exampleTitles.length);
 
