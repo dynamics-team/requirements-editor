@@ -271,7 +271,7 @@ var generateOutput = function (node) {
     } else {
         result = {
             testBench: node[TESTBENCH],
-            name: node[METRIC_NAME],
+            metricName: node[METRIC_NAME],
             Priority: node[PRIORITY],
             pass: node.result.score !== 0,
             score: Math.round(node.result.score * ROUND) / ROUND,
