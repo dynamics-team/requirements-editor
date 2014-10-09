@@ -1,22 +1,25 @@
-<div class="bar bar-header bar-light">
-    <h1 class="title">User permissions</h1>
-</div>
-<ion-content>
-    <h2 class="subtitle">{{dataModel.title}}</h2>
-
-    <div class="list">
-        <label class="item item-input item-stacked-label" data-ng-repeat="user in dataModel.users">
-            <span class="input-label">{{user.name}}</span>
-            <input type="text" placeholder="{{user.permissionLevel}} -({{user.id}})">
-        </label>
-
-        <div class="button-bar">
-            <!--<button class="button button-clear button-positive" data-ng-click="ok()">-->
-                <!--Save-->
-            <!--</button>-->
+<ion-view>
+    <ion-header-bar align-title="center" class="bar-stale">
+        <div class="buttons">
             <button class="button button-clear button-assertive" data-ng-click="cancel()">
-                Cancel
+                Dismiss
             </button>
         </div>
-    </div>
-</ion-content>
+        <h1 class="title">User permissions</h1>
+        <div class="buttons">
+            <!--<button class="button button-clear button-positive" data-ng-click="ok()">-->
+            <!--Done-->
+            <!--</button>-->
+        </div>
+    </ion-header-bar>
+    <ion-content>
+        <h4 class="subtitle">{{dataModel.title}}</h4>
+
+        <div class="list">
+            <label class="item item-input item-stacked-label" data-ng-repeat="user in dataModel.users">
+                <span class="input-label">{{user.name}}</span>
+                <input type="text" placeholder="{{user.permissionLevel}} -({{user.id}})">
+            </label>
+        </div>
+    </ion-content>
+</ion-view>

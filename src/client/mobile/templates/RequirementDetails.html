@@ -1,12 +1,23 @@
-<ion-view title="{{dataModel.title}}">
-    <ion-content class="padding">
-        <a class="button button-full button-clear button-positive" href="#/tab/requirements">View all requirements</a>
+<ion-view>
+    <ion-header-bar align-title="center" class="bar-stale">
+        <div class="buttons">
+            <a class="button button-clear button-positive" href="#/tab/requirements">
+                <i class="icon ion-ios7-arrow-back"></i>
+            </a>
+        </div>
 
+        <h1 class="title">{{dataModel.title}}</h1>
+
+        <div class="buttons">
+        </div>
+    </ion-header-bar>
+
+    <ion-content class="padding">
         <h4>Categories</h4>
         <ion-list>
-            <ion-item ng-repeat="cat in dataModel.flatCategories | orderBy: 'name'" type="item-text-wrap">
+            <ion-item ng-repeat="cat in dataModel.flatCategories | orderBy: 'name'" type="item-text-wrap" data-ng-click="onSelection(cat)">
 
-                <span data-ng-click="onSelection(cat)" data-ng-class="{'dark': !cat.isSelected, 'positive': cat.isSelected, 'royal': cat.inSelections > 0}">
+                <span data-ng-class="{'dark': !cat.isSelected, 'positive': cat.isSelected, 'royal': cat.inSelections > 0}">
                     <i class="icon" data-ng-class="{'ion-ios7-circle-outline': !cat.isSelected, 'ion-ios7-circle-filled': cat.isSelected}"></i>
                     {{cat.name}}
                 </span>
@@ -39,23 +50,19 @@
                 <ion-option-button class="button-assertive"
                                    ng-click="deleteItem(cat)">
                     <!-- Delete -->
-                    <i class="icon ion-minus-circled"></i>
+                    <i class="icon ion-ios7-trash"></i>
                 </ion-option-button>
             </ion-item>
         </ion-list>
 
         <h4>Requirements</h4>
         <div class="card" ng-repeat="req in dataModel.flatRequirements | orderBy: 'name'">
-            <div class="item item-divider">
-                <!--{{req.name}}-->
-
-                <span data-ng-click="onSelection(req)" data-ng-class="{'dark': !req.isSelected, 'positive': req.isSelected, 'royal': req.inSelections > 0}">
+            <div class="item item-divider" data-ng-click="onSelection(req)">
+                <span data-ng-class="{'dark': !req.isSelected, 'positive': req.isSelected, 'royal': req.inSelections > 0}">
                     <i class="icon" data-ng-class="{'ion-ios7-circle-outline': !req.isSelected, 'ion-ios7-circle-filled': req.isSelected}"></i>
                     {{req.name}}
-            </span>
+                </span>
             </div>
-
-
 
             <div class="item item-text-wrap">
                 <p>{{req.description}}</p>
@@ -67,8 +74,8 @@
 
                 <div class="button-bar">
                     <button class="button button-light button-clear button-positive" data-ng-click="edit(req)"><i class="icon ion-compose"></i></button>
-                    <button class="button button-light button-clear button-balanced" data-ng-click="duplicate(req)"><i class="icon ion-ios7-copy"></i></button>
-                    <button class="button button-light button-clear button-assertive" data-ng-click="deleteItem(req)"><i class="icon ion-minus-circled"></i></button>
+                    <button class="button button-light button-clear button-balanced" data-ng-click="duplicate(req)"><i class="icon ion-ios7-copy-outline"></i></button>
+                    <button class="button button-light button-clear button-assertive" data-ng-click="deleteItem(req)"><i class="icon ion-ios7-trash-outline"></i></button>
                 </div>
             </div>
             <!--<div class="item item-divider">-->
