@@ -42,9 +42,5 @@ src/build
 platforms/
 plugins/
 www
-mongodatabase/local.0
-mongodatabase/local.ns
-mongodatabase/mongod.lock
-mongodatabase/requirements-editor.0
-mongodatabase/requirements-editor.ns
+mongodatabase/
 *.pyc
