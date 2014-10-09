@@ -124,7 +124,7 @@ function start() {
             };
 
             var sampleRequirements = {
-                'Radio Example': 'sandbox/jklingler/Examples/Radio/TopLevelRequirementGroup.json',
+                'Radio Example': 'sandbox/jklingler/Examples/Radio/WalkieTalkieDesign.json',
                 'Container Example': 'sandbox/jklingler/Examples/Container/ContainerDesign.json',
                 'Container Hierarchy Example': 'sandbox/jklingler/Examples/Container/ContainerDesign2.json',
                 'CarShopping Example': 'sandbox/jklingler/Examples/CarBuyer/CarBuyer.json'
