@@ -52,7 +52,7 @@ function generateTestBenchManifests (requirementsMap, seedDesignName, numberResu
             }
 
             // These two lines are to remove the reference to the "Metric" object.
-            var metricString =JSON.stringify(metric, null, 4);
+            var metricString = JSON.stringify(metric);
             var metricJson = JSON.parse(metricString);
 
             tb.Metrics.push(metricJson);
@@ -62,12 +62,16 @@ function generateTestBenchManifests (requirementsMap, seedDesignName, numberResu
     var results = [];
 
     for (dName in testbenchManifestGrid) {
-        var singleResult = [];
-        for (tbName in testbenchManifestGrid[dName]) {
-            singleResult.push(testbenchManifestGrid[dName][tbName]);
-        }
+        if (testbenchManifestGrid.hasOwnProperty(dName)) {
+            var singleResult = [];
+            for (tbName in testbenchManifestGrid[dName]) {
+                if (testbenchManifestGrid[dName].hasOwnProperty(tbName)) {
+                    singleResult.push(testbenchManifestGrid[dName][tbName]);
+                }
+            }
 
-        results.push(singleResult);
+            results.push(singleResult);
+        }
     }
 
     return results;
