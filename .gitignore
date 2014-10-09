@@ -47,3 +47,4 @@ mongodatabase/local.ns
 mongodatabase/mongod.lock
 mongodatabase/requirements-editor.0
 mongodatabase/requirements-editor.ns
+*.pyc
