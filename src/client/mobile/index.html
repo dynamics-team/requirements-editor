@@ -5,29 +5,17 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title></title>
 
-    <link href="../lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="../lib/ionic/css/ionic.min.css" rel="stylesheet">
     <link href="styles/requirements-editor.css" rel="stylesheet">
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
-
     <!-- ionic/angularjs js -->
-    <script src="../lib/ionic/js/ionic.bundle.js"></script>
-
-    <script src="../lib/jquery/dist/jquery.min.js"></script>
-    <script src="../lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="../lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="../lib/ionic/js/ionic.bundle.min.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
-
-    <!-- Deployment configuration -->
-    <script src="../config.js"></script>
-
-    <!-- your app's js -->
-    <script src="requirements-editor.js"></script>
-    <script src="requirements-editor-templates.js"></script>
 </head>
 <body ng-app="RequirementsApp" animation="slide-left-right-ios7">
 
@@ -47,5 +35,16 @@
     -->
     <ion-nav-view></ion-nav-view>
 
+    
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
+    <!-- Deployment configuration -->
+    <script src="../config.js"></script>
+
+    <!-- your app's js -->
+    <script src="requirements-editor.js"></script>
+    <script src="requirements-editor-templates.js"></script>
 </body>
 </html>

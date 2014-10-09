@@ -59,7 +59,9 @@ function start() {
 
     var express = require('express');
     var app = express();
+    var compression = require('compression');
     app.use(require('cookie-parser')());
+    app.use(compression({threshold: 512 }));
     //app.use(express.bodyParser());
 
     var auth = require('./src/server/auth_google_oauth2');
