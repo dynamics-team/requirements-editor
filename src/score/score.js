@@ -207,10 +207,10 @@ var evaluate = function (reqNode, metricNode) {
     };
 
     _scoreLog = function (val) {
-        var A = 0.9 / (Math.log(O / T)),
-            B = 1 - A * Math.log(O);
+        var A = (O - T * Math.exp(0.9)) / (1 - Math.exp(0.9)),
+            B = T < O ? 1 - Math.log(O - A) : 1 - Math.log(A - O);
 
-        score = (A * Math.log(val) + B);
+        score = T < O ? Math.log(val - A) + B : Math.log(A - val) + B;
         type = "meet threshold";
     };
 
@@ -221,12 +221,15 @@ var evaluate = function (reqNode, metricNode) {
         if (adjusted_metric === null) {
             score = 0;
             type = "no data";
-        } else if (T <= O && adjusted_metric < T || T > O && adjusted_metric > T) {
+        } else if (T < O && adjusted_metric < T || T > O && adjusted_metric > T) {
             score = 0;
             type = "does not meet threshold";
-        } else if (T <= O && adjusted_metric >= O || T > O && adjusted_metric <= O) {
+        } else if (T < O && adjusted_metric >= O || T > O && adjusted_metric <= O) {
             score = 1;
             type = "meet objective";
+        } else if (T === O && adjusted_metric !== T) {
+            score = 0;
+            type = "does not meet threshold";
         } else if (func === LINEAR) {
             _scoreLinear(adjusted_metric);
         } else if (func === EXPONETIAL) {
