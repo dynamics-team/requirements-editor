@@ -21,6 +21,7 @@ ion-option-button.button {
   }
 }
 
+// cad full screen iframe
 ion-content.cad {
   position: absolute;
   bottom: 0;
@@ -39,8 +40,16 @@ ion-content.cad {
   }
 }
 
+// header text
 .bar {
   .button.button-clear {
     font-weight: 500;
+  }
+}
+
+// requirements category's scores
+ion-item.item-complex {
+  .item-content {
+    padding-right: 16px;
   }
 }

@@ -33,8 +33,8 @@
 
                 <span class="item-note">
                     {{res.score.score}}
-                    <i ng-if="res.score && res.score.pass" class="icon ion-ios7-checkmark-outline balanced"></i>
-                    <i ng-if="res.score && !res.score.pass" class="icon ion-ios7-close-outline assertive"></i>
+                    <i data-ng-if="res.score && res.score.pass" class="icon ion-ios7-checkmark-outline balanced"></i>
+                    <i data-ng-if="res.score && !res.score.pass" class="icon ion-ios7-close-outline assertive"></i>
                 </span>
 
                 <div class="button-bar">
@@ -44,8 +44,11 @@
                     <button class="button button-clear button-assertive" data-ng-click="deleteItem($index)">
                         Delete
                     </button>
-                    <button data-ng-if="res.score && res.score.type" class="button button-clear button-assertive" data-ng-click="details($index)">
-                        {{res.score.type}}
+                    <button data-ng-if="res.score && res.score.hasOwnProperty('children')"
+                            data-ng-click="viewDetails(res)"
+                            class="button button-clear"
+                            data-ng-class="{'button-balanced': res.score.pass, 'button-assertive': !res.score.pass}">
+                        Details
                     </button>
                 </div>
             </ion-item>

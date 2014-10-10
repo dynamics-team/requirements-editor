@@ -26,3 +26,6 @@ ion-content.cad {
 
 .bar .button.button-clear {
   font-weight: 500; }
+
+ion-item.item-complex .item-content {
+  padding-right: 16px; }

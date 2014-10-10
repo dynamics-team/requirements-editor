@@ -51,7 +51,7 @@
                                    ng-click="createNew(cat, false)"
                                    ng-disabled="dataModel.permissionLevel < 2">
                     <!-- New requirement group -->
-                    <i class="icon ion-filing"></i>
+                    <i class="icon ion-ios7-folder"></i>
                 </ion-option-button>
 
 
@@ -61,6 +61,12 @@
                 <!-- Delete -->
                     <i class="icon ion-ios7-trash"></i>
                 </ion-option-button>
+
+                <span class="item-note" data-ng-if="cat.score">
+                    {{cat.score.score}}
+                    <i data-ng-if="cat.score && cat.score.pass" class="icon ion-ios7-checkmark-outline balanced"></i>
+                    <i data-ng-if="cat.score && !cat.score.pass" class="icon ion-ios7-close-outline assertive"></i>
+                </span>
             </ion-item>
         </ion-list>
 
@@ -71,15 +77,25 @@
                     <i class="icon" data-ng-class="{'ion-ios7-circle-outline': !req.isSelected, 'ion-ios7-checkmark-outline': req.isSelected}"></i>
                     {{req.name}}
                 </span>
+
+                <span class="item-note" data-ng-if="req.score" data-ng-class="{'balanced': req.score.pass, 'assertive': !req.score.pass}">
+                    {{req.score.score}}
+                    <i data-ng-if="req.score && req.score.pass" class="icon ion-ios7-checkmark-outline balanced"></i>
+                    <i data-ng-if="req.score && !req.score.pass" class="icon ion-ios7-close-outline assertive"></i>
+                </span>
             </div>
 
             <div class="item item-text-wrap">
+                <span data-ng-class="{'balanced': req.score.pass, 'assertive': !req.score.pass}">
+                    {{req.score.type}}
+                </span>
+
                 <p>{{req.description}}</p>
                 <div>{{req.testBench}}.{{req.metricName}}</div>
 
-                    <span>Objective[{{req.objective}}] - </span>
-                    <span>Threshold[{{req.threshold}}] - </span>
-                    <span>Unit[{{req.unit}}]</span>
+                    <div>Objective[{{req.objective}}]</div>
+                    <div>Threshold[{{req.threshold}}]</div>
+                    <div>Unit[{{req.unit}}]</div>
 
                 <div class="button-bar" data-ng-if="dataModel.permissionLevel > 1">
                     <button class="button button-light button-clear button-positive" data-ng-click="edit(req)"><i class="icon ion-compose"></i></button>
