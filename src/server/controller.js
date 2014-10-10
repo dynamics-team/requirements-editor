@@ -295,7 +295,29 @@ exports.init = function(app, esClient) {
                     return res.send(500);
                 if (!requirement)
                     return res.status(404).send("Could not find requirement " + req.query.requirement);
-                res.status(200).send(score(requirement.children[0], result.testbench_manifests));
+                var scoreResult = score(requirement.children[0], result.testbench_manifests);
+                res.status(200).send(scoreResult);
+
+                // index score
+                var scoreIndex = {
+                    requirement: req.query.requirement,
+                    result: req.query.result,
+                    score: scoreResult.score,
+                    priority: scoreResult.Priority,
+                    pass: scoreResult.pass,
+                    name: scoreResult.name
+                };
+
+                esClient.index({
+                    index: 'requirements-editor',
+                    type: 'score',
+                    id: req.query.requirement + '_' + req.query.result,
+                    body: scoreIndex
+                }, function (err, resp) {
+                    // ...
+//                    if (err)
+//                        console.error(err);
+                });
             });
         });
     });
