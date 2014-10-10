@@ -26,6 +26,12 @@
                     {{cat.name}}
                 </span>
 
+                <span class="item-note" data-ng-if="cat.score">
+                    {{cat.score.score}}
+                    <i data-ng-if="cat.score && cat.score.pass" class="icon ion-ios7-checkmark-outline balanced"></i>
+                    <i data-ng-if="cat.score && !cat.score.pass" class="icon ion-ios7-close-outline assertive"></i>
+                </span>
+
                 <ion-option-button class="button-positive"
                                    ng-click="edit(cat)"
                                    ng-disabled="dataModel.permissionLevel < 2">
@@ -61,12 +67,6 @@
                 <!-- Delete -->
                     <i class="icon ion-ios7-trash"></i>
                 </ion-option-button>
-
-                <span class="item-note" data-ng-if="cat.score">
-                    {{cat.score.score}}
-                    <i data-ng-if="cat.score && cat.score.pass" class="icon ion-ios7-checkmark-outline balanced"></i>
-                    <i data-ng-if="cat.score && !cat.score.pass" class="icon ion-ios7-close-outline assertive"></i>
-                </span>
             </ion-item>
         </ion-list>
 

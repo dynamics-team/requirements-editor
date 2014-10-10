@@ -46,7 +46,7 @@
         <ion-list>
             <ion-item ng-repeat="result in model.data.results">
 
-                <span data-ng-if="result._type !== 'requirement' && result._type !== 'user' && result._type !== 'result'">
+                <span data-ng-if="result._type !== 'requirement' && result._type !== 'user' && result._type !== 'result' && result._type !== 'score'">
                     {{result._type}}
                 </span>
 
@@ -67,6 +67,22 @@
                     <a class="positive" href="#/tab/requirements/{{result._source.requirement}}">
                         {{result._source.requirement}}
                     </a>
+                </span>
+
+
+                <span data-ng-if="result._type === 'score'">
+                    <!--{{result._type}}-->
+                    [{{result._source.priority}}]
+                    <a class="positive" href="#/tab/requirements/{{result._source.requirement}}">
+                        {{result._source.requirement}}
+                    </a>
+                </span>
+
+                <span class="item-note" data-ng-if="result._type === 'score'">
+                    {{result._source.score}}
+                    <i data-ng-if="result._source.pass && result._source.pass" class="icon ion-ios7-checkmark-outline balanced"></i>
+                    <i data-ng-if="result._source.pass && !result._source.pass" class="icon ion-ios7-close-outline assertive"></i>
+
                 </span>
             </ion-item>
         </ion-list>
