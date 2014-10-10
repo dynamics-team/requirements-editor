@@ -216,6 +216,9 @@ angular.module('RequirementsApp').service('RequirementsService', function ($q, $
                 value = 1;
             }
         }
+        if (key === 'function') {
+            return 'Linear';
+        }
         return value;
     };
 
