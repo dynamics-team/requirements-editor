@@ -8,6 +8,18 @@
                 <span class="title">Name</span>
                 <input type="text" class="form-control" data-ng-model="data.name">
             </div>
+            <div class="col-md-4" ng-if="data.isReq">
+                <span class="title">Scoring Function</span>
+                <div class="btn-group btn-group-view">
+                    <label class="btn btn-default" ng-model="data.function" btn-radio="'Linear'">Lin</label>
+                    <label class="btn btn-default" ng-model="data.function" btn-radio="'Exponential'">Exp</label>
+                    <label class="btn btn-default" ng-model="data.function" btn-radio="'Logarithmic'">Log</label>
+                </div>
+            </div>
+            <div class="col-md-2" ng-if="data.isReq">
+                <span class="title"> View </span>
+                <a class="btn btn-info glyphicon glyphicon-fullscreen" ng-model="data.function" ng-click="viewFunction(data)"></a>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-12">

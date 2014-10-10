@@ -1,0 +1,12 @@
+<form>
+    <div class="modal-header">
+        <h3 class="modal-title"> {{dataModel.type}}</h3>
+    </div>
+    <div ng-if="dataModel.invert === false" class="function-body" ng-class="dataModel.type">
+    </div>
+    <div ng-if="dataModel.invert === true" class="function-body invert" ng-class="dataModel.type">
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="close()">Close</button>
+    </div>
+</form>

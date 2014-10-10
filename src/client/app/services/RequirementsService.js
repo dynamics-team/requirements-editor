@@ -233,4 +233,14 @@ angular.module('RequirementsApp').service('RequirementsService', function ($q, $
 
         return level;
     };
+
+    // Get CAD URL
+    this.getCadUrl = function (n) {
+        var cadModels = ['cutter', 'part_FRONT_SHOCK_ASM', 'part_FRONT_WHEEL_ASM', 'T100-Thruster-R1-Public'],
+            index = n % cadModels.length,
+            modelName;
+        modelName = cadModels[index];
+        console.log(index, modelName);
+        return baseUrl + '/app/#/cad.js/data/' + modelName + '/index.json';
+    };
 });

@@ -3,7 +3,7 @@
  * Created by pmeijer on 10/8/2014.
  */
 
-angular.module('RequirementsApp').controller('ScoreController', function ($scope, $modalInstance, RequirementsService, data) {
+angular.module('RequirementsApp').controller('ScoreController', function ($scope, $window, $modalInstance, RequirementsService, data) {
     'use strict';
     var title = data.title;
     $scope.dataModel = {
@@ -87,5 +87,11 @@ angular.module('RequirementsApp').controller('ScoreController', function ($scope
 
     $scope.viewDetails = function (result) {
         $modalInstance.close(result.score);
+    };
+
+    $scope.viewCAD = function (index) {
+        var url = RequirementsService.getCadUrl(index);
+        console.log(url);
+        $window.open(url);
     };
 });

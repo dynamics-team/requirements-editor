@@ -38,3 +38,19 @@ div.modal-body .row {
   padding: 7px 1px; }
   div.modal-body .row .title {
     font-weight: bold; }
+
+div.function-body {
+  width: 750px;
+  height: 600px; }
+  div.function-body.Linear {
+    background-image: url(../images/linear.svg); }
+    div.function-body.Linear.invert {
+      background-image: url(../images/neg_linear.svg); }
+  div.function-body.Exponential {
+    background-image: url(../images/exp.svg); }
+    div.function-body.Exponential.invert {
+      background-image: url(../images/neg_exp.svg); }
+  div.function-body.Logarithmic {
+    background-image: url(../images/log.svg); }
+    div.function-body.Logarithmic.invert {
+      background-image: url(../images/neg_log.svg); }

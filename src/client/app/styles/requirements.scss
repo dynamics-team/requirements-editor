@@ -56,3 +56,27 @@ div.modal-body {
     }
   }
 }
+
+div.function-body {
+  width: 750px;
+  height: 600px;
+  &.Linear {
+    background-image: url(../images/linear.svg);
+    &.invert {
+      background-image: url(../images/neg_linear.svg);
+    }
+
+  }
+  &.Exponential {
+    background-image: url(../images/exp.svg);
+    &.invert {
+      background-image: url(../images/neg_exp.svg);
+    }
+  }
+  &.Logarithmic {
+    background-image: url(../images/log.svg);
+    &.invert {
+      background-image: url(../images/neg_log.svg);
+    }
+  }
+}

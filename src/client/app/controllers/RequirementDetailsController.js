@@ -161,7 +161,7 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
     $scope.createNew = function (categoryData, isReq) {
         var defaultData = {
             name: '',
-            description: 'Give a description',
+            description: '',
             weightNeg: 1,
             weightPos: 1,
             Priority: 1,
@@ -169,7 +169,7 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
         };
         if (isReq) {
             defaultData.KPP = false;
-            defaultData.function = 'LIN';
+            defaultData.function = 'Linear';
             defaultData.objective = 1;
             defaultData.threshold = 0;
             defaultData.unit = 'unitless';

@@ -63,7 +63,22 @@ angular.module('RequirementsApp').controller('RequirementsController', function 
                 "description": "Some description",
                 "weightPos": 1,
                 "Priority": 1,
-                "children": []
+                "children": [
+                    {
+                        "metricName": "MetricName",
+                        "unit": "kg",
+                        "threshold": 0,
+                        "testBench": "TestBench",
+                        "objective": 1,
+                        "Priority": 1,
+                        "description": "Description",
+                        "weightPos": 1,
+                        "name": "Name",
+                        "weightNeg": 1,
+                        "function": "",
+                        "KPP": false
+                    }
+                ]
             }]
         });
     };

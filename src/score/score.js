@@ -227,12 +227,14 @@ var evaluate = function (reqNode, metricNode) {
         } else if (T <= O && adjusted_metric >= O || T > O && adjusted_metric <= O) {
             score = 1;
             type = "meet objective";
-        } else if (func === "" || func === LINEAR) {
+        } else if (func === LINEAR) {
             _scoreLinear(adjusted_metric);
         } else if (func === EXPONETIAL) {
             _scoreExp(adjusted_metric);
         } else if (func === LOGARITHMIC) {
             _scoreLog(adjusted_metric);
+        } else {
+            _scoreLinear(adjusted_metric);
         }
     }
 
