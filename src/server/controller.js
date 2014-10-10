@@ -346,7 +346,6 @@ exports.init = function(app, esClient) {
 //        authUserQuery = userQuery;
 //        authUserQuery = '(' + userQuery + ') AND (auth_read:' +  userId + ')';
         authUserQuery = '(' + userQuery + ') AND (auth_read:' +  userId + ' OR _missing_:auth_read)';
-        console.warn('(' + userQuery + ') AND (auth_read:' +  userId + ')');
         esClient.search({
             index: 'requirements-editor',
             from: (pageNum - 1) * perPage,
