@@ -111,6 +111,7 @@ exports.init = function(app, esClient) {
                     if (err)
                         return res.status(500).send({ error: err });
                     var auth = {auth_read: doc.auth_read, auth_write: doc.auth_write, auth_admin: doc.auth_admin};
+//                    // Index the optimiz
                     model.Result.update({requirement: doc.title}, auth, function (err, doc) {
                         if (err)
                             return res.status(500).send(err);
@@ -305,7 +306,10 @@ exports.init = function(app, esClient) {
                     score: scoreResult.score,
                     priority: scoreResult.Priority,
                     pass: scoreResult.pass,
-                    name: scoreResult.name
+                    name: scoreResult.name,
+                    auth_read: requirement.auth_read,
+                    auth_write: requirement.auth_write,
+                    auth_admin: requirement.auth_admin
                 };
 
                 esClient.index({
@@ -336,13 +340,18 @@ exports.init = function(app, esClient) {
         var pageNum = parseInt(req.param('page', 1)),
             perPage = parseInt(req.param('per_page', 15)),
             userQuery = req.param('q'),
-            userId = req.session.userId;
+            userId = req.session.passport.user,
+            authUserQuery;
 
+//        authUserQuery = userQuery;
+//        authUserQuery = '(' + userQuery + ') AND (auth_read:' +  userId + ')';
+        authUserQuery = '(' + userQuery + ') AND (auth_read:' +  userId + ' OR _missing_:auth_read)';
+        console.warn('(' + userQuery + ') AND (auth_read:' +  userId + ')');
         esClient.search({
             index: 'requirements-editor',
             from: (pageNum - 1) * perPage,
             size: perPage,
-            q: userQuery
+            q: authUserQuery
         }, function (error, response) {
             if (error) {
                 // handle error

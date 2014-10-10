@@ -17,7 +17,7 @@ var RequirementSchema = new Schema({
     author: {type: ObjectId},
     version: Number,
     title: String,
-    children: {},
+    children: {type: Object, es_indexed: false},
     auth_read: [String],
     auth_write: [String],
     auth_admin: [String]
@@ -31,7 +31,7 @@ var Requirement = mongoose.model('Requirement', RequirementSchema);
 var ResultSchema = new Schema({
     name: String,
     requirement: String,
-    testbench_manifests: {},
+    testbench_manifests: {type: Object, es_indexed: false},
     auth_read: [String],
     auth_write: [String],
     auth_admin: [String]

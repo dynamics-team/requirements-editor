@@ -9,7 +9,6 @@ var ReqApp = angular.module('RequirementsApp', [
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
         'use strict';
-        // For any unmatched url, redirect to /workspaces
         $urlRouterProvider.otherwise('/index');
         //
         // Now set up the states
@@ -26,6 +25,11 @@ var ReqApp = angular.module('RequirementsApp', [
                 url: "/requirementDetails/:requirementId",
                 templateUrl: "templates/RequirementDetails.html",
                 controller: "RequirementDetailsController"
+            })
+            .state('search', {
+                url: '/search',
+                templateUrl: 'templates/Search.html',
+                controller: 'SearchController'
             })
             // FIXME: put controller template to its own file
             .state('cad', {

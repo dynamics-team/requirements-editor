@@ -1,0 +1,31 @@
+<div>
+    <a class="btn btn-default" ui-sref="requirements">Back</a>
+    <input type="text" placeholder="Search" data-ng-model="model.search_query" data-ng-change="search()">
+    <ul>
+        <li ng-repeat="result in model.data.results">
+
+                <span data-ng-if="result._type !== 'requirement' && result._type !== 'user' && result._type !== 'result'">
+                    {{result._type}}
+                </span>
+
+            <!-- TODO: requirements search result template-->
+                <span data-ng-if="result._type === 'requirement'">
+                    {{result._type}}
+                    <a class="positive" href="#/requirementDetails/{{result._source.title}}">
+                        {{result._source.title}}
+                    </a>
+                </span>
+            <!-- TODO: user search result template-->
+                <span data-ng-if="result._type === 'user'">
+                    {{result._type}} {{result._source.displayName}}
+                </span>
+
+                <span data-ng-if="result._type === 'result'">
+                    {{result._type}}
+                    <a class="positive" href="#/requirementDetails/{{result._source.requirement}}">
+                        {{result._source.requirement}}
+                    </a>
+                </span>
+        </li>
+    </ul>
+</div>
