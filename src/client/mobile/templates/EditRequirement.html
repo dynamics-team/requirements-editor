@@ -20,6 +20,13 @@
             <span class="input-label">Requirement name</span>
             <input type="text" placeholder="Name" data-ng-model="data.name">
         </label>
+
+        <label class="item item-radio" ng-if="data.isReq">
+            <ion-radio ng-model="data.function" ng-value="'Linear'">Linear scoring function</ion-radio>
+            <ion-radio ng-model="data.function" ng-value="'Exponential'">Exponential scoring function</ion-radio>
+            <ion-radio ng-model="data.function" ng-value="'Logarithmic'">Logarithmic scoring function</ion-radio>
+        </label>
+
         <label class="item item-input item-stacked-label">
             <span class="input-label">Requirement description</span>
             <textarea placeholder="Description" data-ng-model="data.description"></textarea>
