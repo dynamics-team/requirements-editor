@@ -3,7 +3,7 @@
         <h3 class="modal-title">Edit Users for {{dataModel.title}}</h3>
     </div>
     <div class="modal-body">
-        <div ng-if="Object.keys(dataModel.users).length === 0"> You're the only user </div>
+        <div ng-if="dataModel.noOtherUsers"> You're the only user. </div>
         <table class="table table-striped users">
             <tr ng-repeat="user in dataModel.users">
                 <td>
