@@ -343,9 +343,12 @@ exports.init = function(app, esClient) {
             userId = req.session.passport.user,
             authUserQuery;
 
-//        authUserQuery = userQuery;
-//        authUserQuery = '(' + userQuery + ') AND (auth_read:' +  userId + ')';
         authUserQuery = '(' + userQuery + ') AND (auth_read:' +  userId + ' OR _missing_:auth_read)';
+
+        if (typeof userQuery === 'undefined' || userQuery === '') {
+            authUserQuery = '';
+        }
+
         esClient.search({
             index: 'requirements-editor',
             from: (pageNum - 1) * perPage,
