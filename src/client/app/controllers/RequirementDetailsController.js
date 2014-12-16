@@ -3,7 +3,7 @@
  * Created by pmeijer on 10/6/2014.
  */
 
-angular.module('RequirementsApp').controller('RequirementDetailsController', function (RequirementsService, $scope, $stateParams, $modal) {
+angular.module('RequirementsApp').controller('RequirementDetailsController', function (RequirementsService, $scope, $stateParams, $modal, $window) {
     'use strict';
     var reqTitle = $stateParams.requirementId,
         flatten = function (children, parentId) {
@@ -101,7 +101,7 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
             }
             jsonStr = JSON.stringify({children: $scope.dataModel.children}, RequirementsService.jsonReplacer, 0);
             console.log(jsonStr);
-            console.log(JSON.parse(jsonStr));
+            //console.log(JSON.parse(jsonStr));
             RequirementsService.updateRequirement($scope.dataModel.title, jsonStr)
                 .then(function (rData) {
                     console.log('Data-base updated with changes, rData:', rData);
@@ -306,6 +306,11 @@ angular.module('RequirementsApp').controller('RequirementDetailsController', fun
         }, function () {
             console.log('Modal dismissed at: ' + new Date());
         });
+    };
+
+    $scope.exportJson = function () {
+        var jsonStr = JSON.stringify($scope.dataModel.children[0], RequirementsService.jsonReplacer, 4);
+        $window.open("data:text/json;charset=utf-8," + encodeURIComponent(jsonStr));
     };
 
     refreshData();

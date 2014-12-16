@@ -7,6 +7,7 @@
 var ReqApp = angular.module('RequirementsApp', [
     'ui.router',
     'ui.bootstrap',
+    'angularFileUpload',
     'ionic',
 
     'requirements.editor.config',

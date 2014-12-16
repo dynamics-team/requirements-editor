@@ -3,6 +3,7 @@
 var ReqApp = angular.module('RequirementsApp', [
     'ui.router',
     'ui.bootstrap',
+    'angularFileUpload',
 
     'requirements.editor.config',
     'requirements.editor.templates'
