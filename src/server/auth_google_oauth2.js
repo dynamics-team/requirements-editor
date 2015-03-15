@@ -3,8 +3,8 @@
 var model = require('./model');
 var User =  model.User;
 
-var GOOGLE_CLIENT_ID = '1079203211547-mb3cu62cu4dargeco8act54dk1prklt2.apps.googleusercontent.com';
-var GOOGLE_CLIENT_SECRET = 'AqXrOQTQvF8KchvBeKNULe2u';
+var GOOGLE_CLIENT_ID = '<fill_in>';
+var GOOGLE_CLIENT_SECRET = '<fill_in>';
 
 exports.init = function(app) {
     var SESSION_PARAMS = global.CONFIG.sessionParameters;
